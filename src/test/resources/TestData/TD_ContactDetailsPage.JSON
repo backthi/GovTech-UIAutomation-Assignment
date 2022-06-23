@@ -1,0 +1,19 @@
+{
+  "personName": "Person1",
+  "personJobTitle": "Businessman",
+  "personContactNo": "82283822891",
+  "personEmail": "abc@gmail.com",
+  "personAlternateEmail": "xyz@gmail.com",
+  "mailingAddressPostalCode": "310145",
+  "mailingAddressBlkHouseNo": "145",
+  "mailingAddressStreetName": "LORONG 2 TOA PAYOH",
+  "mailngAddreSameAsChkBxPostalCode": "650320",
+  "mailngAddreSameAsChkBxBlkHouseNo": "320",
+  "mailngAddreSameAsChkBxStreetName": "BUKIT BATOK STREET 33",
+  "mailngAddreSameAsChkBxLevel": "03",
+  "mailngAddreSameAsChkBxUnit": "33",
+  "letterOfOfferAddresseeName": "Addressee1",
+  "letterOfOfferAddresseeJobTitle": "Supervisor",
+  "letterOfOfferAddresseeEmail": "supervisor@test.com",
+  "warningMessageText": "We need a response for this field"
+}

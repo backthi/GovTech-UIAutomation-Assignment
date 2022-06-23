@@ -20,10 +20,7 @@ import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 import static tests.BaseClass.ROOTPATH;
 import static tests.BaseClass.driver;
@@ -39,7 +36,7 @@ public class Utils {
     public By By;
     public By element;
     Properties prop = readConfigFile();
-    public JSONObject ExtractingJSONStringFromJSONFile(String JSON_FileName)
+    public JSONObject extractingJSONStringFromJSONFile(String JSON_FileName)
     {
         String ExtractedJSONString = "";
         JSONObject jsonObj = null;
@@ -83,7 +80,7 @@ public class Utils {
             return null;
         }
     }
-    public Object ExtractValueFromJSONName(JSONObject json_obj, String key) throws JSONException {
+    public Object extractValueFromJSONName(JSONObject json_obj, String key) throws JSONException {
         Object finalresult = null;
         try {
             JSONArray keys = json_obj.names();
@@ -100,11 +97,11 @@ public class Utils {
                 }
 
                 if (json_obj.get(current_key).getClass().getName().equals("org.json.JSONObject")) {
-                    ExtractValueFromJSONName((JSONObject) json_obj.get(current_key), key);
+                    extractValueFromJSONName((JSONObject) json_obj.get(current_key), key);
                 } else if (json_obj.get(current_key).getClass().getName().equals("org.json.JSONArray")) {
                     for (int j = 0; j < ((JSONArray) json_obj.get(current_key)).length(); j++) {
                         if (((JSONArray) json_obj.get(current_key)).get(j).getClass().getName().equals("org.json.JSONObject")) {
-                            ExtractValueFromJSONName((JSONObject) ((JSONArray) json_obj.get(current_key)).get(j), key);
+                            extractValueFromJSONName((JSONObject) ((JSONArray) json_obj.get(current_key)).get(j), key);
                         }
                     }
                 }
@@ -119,19 +116,19 @@ public class Utils {
     }
 
     // To Extract specific value from JSON Key
-    public String ExtractValueFromJSONFile(String JSON_FileName, String key)
+    public String extractValueFromJSONFile(String JSON_FileName, String key)
     {
         JSONObject json_obj = null;
         Object JSONValue_obj = null;
         String str_Value = "";
-        json_obj = ExtractingJSONStringFromJSONFile(JSON_FileName);
-        JSONValue_obj = ExtractValueFromJSONName(json_obj,key);
+        json_obj = extractingJSONStringFromJSONFile(JSON_FileName);
+        JSONValue_obj = extractValueFromJSONName(json_obj,key);
         str_Value = JSONValue_obj.toString();
         return str_Value;
     }
 
     //Wait
-    public void WaitForVisibility(By by, int seconds)
+    public void waitForVisibility(By by, int seconds)
     {
         try
         {
@@ -152,7 +149,7 @@ public class Utils {
         try
         {
             String[] str_locator_arr = objJSONKey.split("#");
-            str_obj_Locators = ExtractValueFromJSONFile(JSON_FileName, objJSONKey);
+            str_obj_Locators = extractValueFromJSONFile(JSON_FileName, objJSONKey);
             if ("ID".equals(str_locator_arr[0].toUpperCase()))
             {
                 By = By.id(str_obj_Locators);
@@ -184,11 +181,10 @@ public class Utils {
         }
     }
     //*******************************
-    public boolean ClickElement(By element,int seconds) {
+    public boolean clickElement(By element,int seconds) {
         try
         {
-//            element = CreateLocatorObjFromLocatorType(pagePropfileName,objJSONKey);
-            WaitForVisibility(element,seconds);
+            waitForVisibility(element,seconds);
             driver.findElement(element).click();
             return true;
         }
@@ -196,17 +192,16 @@ public class Utils {
         {
             e.printStackTrace();
             System.out.println(e.getMessage());
-            logger.error("ClickElement","Failed to click an element: " + element );
+            logger.error("clickElement","Failed to click an element: " + element );
             return false;
         }
     }
 
     //*******************************
-    public boolean SubmitElement(By element ,int seconds) {
+    public boolean submitElement(By element ,int seconds) {
         try
         {
-//            element = CreateLocatorObjFromLocatorType(pagePropfileName,objJSONKey);
-            WaitForVisibility(element,seconds);
+            waitForVisibility(element,seconds);
             driver.findElement(element).submit();
             return true;
         }
@@ -224,8 +219,7 @@ public class Utils {
         WebElement element;
         try
         {
-//            By = CreateLocatorObjFromLocatorType(pagePropfileName,objJSONKey);
-            WaitForVisibility(webElement,seconds);
+            waitForVisibility(webElement,seconds);
             element = driver.findElement(webElement);
             return element;
         }
@@ -239,12 +233,12 @@ public class Utils {
     }
     //*******************************
     //TypeTextToElement
-    public boolean TypeTextToElement(By element,  String ValueToType)
+    public boolean typeTextToElement(By element,  String ValueToType)
     {
         try
         {
-//            element = CreateLocatorObjFromLocatorType(pagePropfileName,objJSONKey);
-            WaitForVisibility(element, 20);
+            waitForVisibility(element, 20);
+            driver.findElement(element).click();
             driver.findElement(element).sendKeys(ValueToType);
             return true;
         }
@@ -258,13 +252,12 @@ public class Utils {
     }
     //*******************************
     //GetTextFromElement
-    public String GetTextFromElement(By element)
+    public String getTextFromElement(By element)
     {
         String str_getText = "";
         try
         {
-//            element = CreateLocatorObjFromLocatorType(pagePropfileName,objJSONKey);
-            WaitForVisibility(element, 20);
+            waitForVisibility(element, 20);
             str_getText = driver.findElement(element).getText();
             return str_getText;
         }
@@ -279,14 +272,13 @@ public class Utils {
     }
 
     //*******************************
-    //GetTextFromElement
-    public String GetAttributeFromElement(By element, String attributeName)
+    //GetAttributeFromElement
+    public String getAttributeFromElement(By element, String attributeName)
     {
         String str_getText = "";
         try
         {
-//            element = CreateLocatorObjFromLocatorType(pagePropfileName,objJSONKey);
-            WaitForVisibility(element, 20);
+            waitForVisibility(element, 20);
             str_getText = driver.findElement(element).getAttribute(attributeName);
             return str_getText;
         }
@@ -299,6 +291,125 @@ public class Utils {
             return null;
         }
     }
+
+    //*******************************
+    //getFutureYearFromCurrent
+    public String getFutureYearFromCurrent(int year, String format)
+    {
+        String specificDate = "";
+        Date date = new Date();
+        try
+        {
+            Calendar instance = Calendar.getInstance();
+            instance.setTime(date);
+            instance.add(Calendar.YEAR, + year);
+            SimpleDateFormat isoFormat = new SimpleDateFormat(format);
+            specificDate = isoFormat.format(instance.getTime());
+            return specificDate;
+        }
+
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            e.getMessage();
+            logger.error("GetTextFromElement", "Failed to get text from an element: " + element);
+            return null;
+        }
+    }
+
+    //*******************************
+    //getPreviousYearFromCurrent
+    public String getPreviousYearFromCurrent(int year, String format)
+    {
+        String specificDate = "";
+        Date date = new Date();
+        try
+        {
+            Calendar instance = Calendar.getInstance();
+            instance.setTime(date);
+            instance.add(Calendar.YEAR, - year);
+            SimpleDateFormat isoFormat = new SimpleDateFormat(format);
+            specificDate = isoFormat.format(instance.getTime());
+            return specificDate;
+        }
+
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            e.getMessage();
+            logger.error("GetTextFromElement", "Failed to get text from an element: " + element);
+            return null;
+        }
+    }
+
+    //*******************************
+    //getFutureMonthFromCurrent
+    public String getFutureMonthFromCurrent(int month, String format)
+    {
+        String specificDate = "";
+        Date date = new Date();
+        try
+        {
+            Calendar instance = Calendar.getInstance();
+            instance.setTime(date);
+            instance.add(Calendar.MONTH, + month);
+            SimpleDateFormat isoFormat = new SimpleDateFormat(format);
+            specificDate = isoFormat.format(instance.getTime());
+            return specificDate;
+        }
+
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            e.getMessage();
+            logger.error("GetTextFromElement", "Failed to get text from an element: " + element);
+            return null;
+        }
+    }
+
+
+    //*******************************
+    //getFutureMonthFromCurrent
+    public String getFutureDayFromCurrent(int days, String format)
+    {
+        String specificDate = "";
+        Date date = new Date();
+        try
+        {
+            Calendar instance = Calendar.getInstance();
+            instance.setTime(date);
+            instance.add(Calendar.DAY_OF_MONTH, + days);
+            SimpleDateFormat isoFormat = new SimpleDateFormat(format);
+            specificDate = isoFormat.format(instance.getTime());
+            return specificDate;
+        }
+
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            e.getMessage();
+            logger.error("GetTextFromElement", "Failed to get text from an element: " + element);
+            return null;
+        }
+    }
+
+    //*******************************
+    //getTestDataFromJSON
+    public String getTestDataFromJSON(String fileName, String JSONKey)
+    {
+        String strTestData = "";
+        try
+        {
+            strTestData = extractValueFromJSONFile(fileName, JSONKey);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return strTestData;
+    }
+
     //*******************************
     //getFrameSize
     public int getFrameSize()
@@ -334,11 +445,11 @@ public class Utils {
         File configFilePath;
         if(System.getProperty("os.name").toLowerCase().contains("mac") || System.getProperty("os.name").toLowerCase().contains("linux"))
         {
-            configFilePath = new File("./src/test/resources/Config.properties");
+            configFilePath = new File("./src/test/resources/Config/Config.properties");
         }
         else
         {
-            configFilePath = new File(".\\src\\test\\resources\\Config.properties");
+            configFilePath = new File(".\\src\\test\\resources\\Config\\Config.properties");
         }
         Properties props = null;
         try {
@@ -360,8 +471,7 @@ public class Utils {
         boolean flag = false;
         try
         {
-//            element = CreateLocatorObjFromLocatorType(pagePropfileName,objJSONKey);
-            WaitForVisibility(element,seconds);
+            waitForVisibility(element,seconds);
             if (driver.findElement(element).isDisplayed())
             {
                 logger.error("WebElement " + element + "was displayed");
@@ -390,8 +500,7 @@ public class Utils {
         boolean flag = false;
         try
         {
-//            element = CreateLocatorObjFromLocatorType(pagePropfileName,objJSONKey);
-            WaitForVisibility(element,seconds);
+            waitForVisibility(element,seconds);
             if (driver.findElement(element).isDisplayed())
             {
                 logger.info("WebElement " + element + "was displayed");
@@ -415,7 +524,6 @@ public class Utils {
     {
         List<WebElement> webElements = new ArrayList<WebElement>();
         try {
-//            element = CreateLocatorObjFromLocatorType(pagePropfileName,objJSONKey);
             webElements = driver.findElements(element);
             return webElements;
 

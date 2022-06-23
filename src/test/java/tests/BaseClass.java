@@ -98,6 +98,10 @@ public class BaseClass extends Utils
             {
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--disable-notifications");
+                if (props.getProperty("Headless").toUpperCase().equals("YES"))
+                {
+                    options.addArguments("--headless");
+                }
                 if(System.getProperty("os.name").toLowerCase().contains("mac") || System.getProperty("os.name").toLowerCase().contains("linux"))
                 {
                     System.setProperty("webdriver.chrome.driver", ROOTPATH + "/src/test/resources/DriverExe/Chrome/chromedriver");
