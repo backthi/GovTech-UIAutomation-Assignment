@@ -43,14 +43,20 @@ public class EligibilityPage
     By fourthQuestionWarningMessage_Text = By.xpath("//body[1]/div[2]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[11]/div[1]/span[1]");
     By fifthQuestionWarningMessage_Text = By.xpath("//body[1]/div[2]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[13]/div[1]/span[1]");
     By FAQ_Link = By.xpath("//a[contains(text(),'FAQ')]");
-
     String warningMessageText = "The applicant may not meet the eligibility criteria for this grant. Visit FAQ page for more information on other government grants.";
-    public boolean checkYourEligibility()
+
+    //*******************************
+    /**
+     * fillingEligibility - Function to fill Eligibility Page
+     * @param - nothing
+     * @return true or false
+     */
+    public boolean fillingEligibility()
     {
-        boolean status = false;
+        boolean status;
         try
         {
-            if(utils.isWebElementDisplayed(checkYourAvailability_Text, 10))
+            if(utils.isWebElementDisplayed(checkYourAvailability_Text, 25))
             {
                 Assert.assertTrue(utils.clickElement(firstQuestion_No_RadioBtn,15));
                 Assert.assertEquals(utils.getTextFromElement(firstQuestionWarningMessage_Text),utils.getTestDataFromJSON("TD_EligibilityPage","warningMessageText"));
@@ -96,8 +102,8 @@ public class EligibilityPage
         catch(Exception e)
         {
             e.printStackTrace();
-            System.out.println(e.getCause());
-            System.out.println(e.getMessage());
+            e.getCause();
+            e.getMessage();
             status = false;
         }
         return status;

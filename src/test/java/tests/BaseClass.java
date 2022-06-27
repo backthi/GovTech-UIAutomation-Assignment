@@ -2,15 +2,19 @@ package tests;
 
 import Utils.Utils;
 import Utils.*;
-import com.aventstack.extentreports.*;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
-import com.aventstack.extentreports.markuputils.Markup;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
-import com.aventstack.extentreports.MediaEntityModelProvider;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-//import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+//import com.relevantcodes.extentreports.ExtentReports;
+//import com.relevantcodes.extentreports.ExtentTest;
+//import com.relevantcodes.extentreports.HTMLReporter;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -20,19 +24,24 @@ import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-import com.aventstack.extentreports.Status;
 
 import static Utils.GlobalValues.*;
-import static com.aventstack.extentreports.Status.*;
+
+import static com.aventstack.extentreports.Status.FAIL;
+//import static com.relevantcodes.extentreports.LogStatus.*;
 import static org.openqa.selenium.OutputType.BASE64;
 
 public class BaseClass extends Utils
@@ -41,7 +50,6 @@ public class BaseClass extends Utils
     public static JavascriptExecutor js;
     public ExtentHtmlReporter htmlReporter;
     public ExtentReports extent;
-    public static ExtentTest Suite;
     public ExtentTest parent;
     public ExtentTest report;
     public ThreadLocal parentTest = new ThreadLocal();
@@ -71,8 +79,7 @@ public class BaseClass extends Utils
             htmlReporter.config().setTheme(Theme.DARK);
             htmlReporter.config().setDocumentTitle("ExtentReport");
             htmlReporter.config().setEncoding("utf-8");
-            htmlReporter.config().setReportName("Mavericks Web Automation Test Report");
-            //htmlReporter.loadXMLConfig(new File(System.getProperty("C:\\Users\\LocalAdmin\\IdeaProjects\\Android_Mobile_Testing\\extentreport-config.xml")));
+            htmlReporter.config().setReportName("GowTech Web Automation Test Report");
             extent = new ExtentReports();
             extent.attachReporter(htmlReporter);
         }
@@ -116,6 +123,7 @@ public class BaseClass extends Utils
             {
                 FirefoxOptions options = new FirefoxOptions();
                 options.addArguments("--disable-notifications");
+                options.addArguments("--disable-dev-shm-usage");
                 if(System.getProperty("os.name").toLowerCase().contains("mac") || System.getProperty("os.name").toLowerCase().contains("linux"))
                 {
                     System.setProperty("webdriver.gecko.driver", ROOTPATH + "/src/test/resources/DriverExe/FireFox/geckodriver");
@@ -140,7 +148,7 @@ public class BaseClass extends Utils
     }
 
     @BeforeMethod
-    public synchronized void setup(Method method) {
+    public synchronized void setupMethod(Method method) {
         report = parent.createNode(method.getName());
         childTest.set(report);
     }
@@ -153,13 +161,12 @@ public class BaseClass extends Utils
             if (result.getStatus() == ITestResult.FAILURE)
             {
                 report.log(FAIL, MarkupHelper.createLabel(result.getName() + " is FAILED due to below issues:", ExtentColor.RED ));
-                report.log(FAIL, "Issue is " + result.getThrowable());
-                //To capture screenshot path and store the path of the screenshot in the string "screenshotPath"
-                //We do pass the path captured by this mehtod in to the extent reports using "logger.addScreenCapture" method.
+                report.log(FAIL, "Issue is: " + Arrays.toString(result.getThrowable().getStackTrace()));
                 String screenshotPath = utils.getScreenShot(result.getName());
-                //To add it in the extent report
-                report.log(FAIL, "Screenshot: " + (Markup) report.addScreenCaptureFromPath(screenshotPath));
-//                report.log(FAIL,"Screenshot: " + MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath.build()));
+                InputStream in = new FileInputStream(screenshotPath);
+                byte[] imageBytes = IOUtils.toByteArray(in);
+                String base64 = Base64.getEncoder().encodeToString(imageBytes);
+                report.log(FAIL,"Failed Screenshot:  ", MediaEntityBuilder.createScreenCaptureFromBase64String("data:image/png;base64,"+base64).build());
             }
             else if (result.getStatus() == ITestResult.SUCCESS)
             {
@@ -169,7 +176,7 @@ public class BaseClass extends Utils
             {
                 report.createNode(result.getInstanceName());
                 report.log(Status.SKIP, MarkupHelper.createLabel(result.getName() + " : " + result.getTestName() + " is SKIPPED", ExtentColor.ORANGE));
-                report.log(SKIP, result.getThrowable());
+                report.log(Status.SKIP, result.getThrowable());
             }
             extent.flush();
         }
@@ -179,33 +186,6 @@ public class BaseClass extends Utils
             e.getMessage();
         }
     }
-
-        // ending test
-        //endTest(logger) : It ends the current test and prepares to create HTML report
-//        extent.endTest(report);
-
-
-//        if (result.getStatus() == ITestResult.FAILURE) {
-//
-//            String base64Screenshot = "data:image/png;base64," + ((TakesScreenshot) driver).getScreenshotAs(BASE64);
-//
-//            report.log(FAIL, MarkupHelper.createLabel(result.getName() + " is FAILED due to below issues:",
-//                    ExtentColor.RED ));
-//            report.fail(result.getThrowable().getMessage());
-//            report.log(FAIL,"Screenshot", MediaEntityBuilder.createScreenCaptureFromPath((base64Screenshot).build()));
-//
-//        } else if (result.getStatus() == ITestResult.SUCCESS) {
-//
-//            report.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " is PASSED", ExtentColor.GREEN));
-//        } else {
-//            report.createNode(result.getInstanceName());
-//            report.log(Status.SKIP,
-//                    MarkupHelper.createLabel(result.getMethod() + " : " + result.getTestName() + " is SKIPPED", ExtentColor.ORANGE));
-//            report.skip(result.getThrowable());
-//        }
-//        extent.flush();
-        //FileUtils.copyFile(new File(ExtentReport_FilePath), new File("C:\\Users\\LocalAdmin\\IdeaProjects\\ExtentReports_History\\ExtentReport_" + getcurrentdateandtime() + ".html"));
-//    }
 
     @AfterClass
     public void teardown()
@@ -220,7 +200,7 @@ public class BaseClass extends Utils
         try
         {
             extent.flush();
-            //FileUtils.copyFile(new File(ExtentReport_FilePath), new File(ExtentReportHistory_Path));
+//            extent.close();
         }
         catch(Exception e)
         {

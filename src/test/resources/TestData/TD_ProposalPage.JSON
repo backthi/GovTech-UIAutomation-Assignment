@@ -1,7 +1,13 @@
 {
   "projectTitle": "ProjectTitle1",
   "projectDescription": "It describes about WGP",
+  "projectDuration": "11 months",
+  "projectBugDuration": "10 months",
   "Activity": "Market Entry",
-  "Target Market": "Singapore",
-  "Remarks": "The project is really good and it explains about lot of new features"
+  "targetMarket": "Singapore",
+  "activityType": "Supervising",
+  "shareHoldingPercentage": "50",
+  "targetMarketSelectedItem": "Algeria",
+  "proposalFormErrorNumber": "1",
+  "proposalRemarks": "The project is really good and it explains about lot of new features"
 }

@@ -1,0 +1,23 @@
+{
+  "salaryName": "Pawan",
+  "salaryDesignation": "Operating Officer",
+  "salaryPassportNo": "Z4567347",
+  "salaryNationalityType": "Singaporean",
+  "salaryRoleInProject": "Should supervise and manage all the activities of Operation team",
+  "salaryProjectInvolvement": "9.0",
+  "salaryMonthlySalaryInBillingCountry": "3000",
+  "salaryEstimatedCostVerify": "SGD 27,000.00",
+  "salaryMonthlySalaryVerify": "SGD 3,000.00",
+  "salaryRemarks": "Good Package",
+  "thirdPartyNameOfVendor": "Amazon",
+  "thirdPartyOverseas": "Overseas",
+  "thirdPartyMonthlySalaryInBillingCountry": "2000",
+  "thirdPartyEstimatedCost": "SGD 2,000.00",
+  "thirdPartyRemarks": "The cost is little expensive for this vendor",
+  "officeRentalDescription": "Office Rental Agreement is required to occupy",
+  "officeRentalDuration": "9.0",
+  "officeMonthlyRentalBillingCountry": "2000",
+  "officeRentalRemarks": "Office Rental is too expensive",
+  "officeRentalsMonthlyRentalCostVerify": "SGD 2,000.00",
+  "officeRentalsEstimatedTotalCostVerify": "SGD 18,000.00"
+}

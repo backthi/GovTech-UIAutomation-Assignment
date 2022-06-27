@@ -7,6 +7,9 @@ import tests.BaseClass;
 
 import java.util.Properties;
 
+import static tests.BaseClass.driver;
+import static tests.BaseClass.js;
+
 public class LoginPage
 {
     Utils utils = new Utils();
@@ -32,7 +35,12 @@ public class LoginPage
     By marketReadinessAssistanceApply_Btn = By.id("go-to-grant");
     By grantActionsProceed_Btn = By.id("keyPage-form-button");
 
-
+    //*******************************
+    /**
+     * loginPortal - Function to login into a given portal
+     * @param - nothing
+     * @return true or false
+     */
     public boolean loginPortal()
     {
         boolean status;
@@ -41,49 +49,49 @@ public class LoginPage
         {
             BaseClass.driver.get(prop.getProperty("Url"));
             Thread.sleep(3000);
-            if(utils.isWebElementDisplayed(userName_Edit, 10))
+            if(utils.isWebElementDisplayed(signIN_Btn, 10))
             {
-                Assert.assertTrue(utils.ClickElement(userName_Edit,15));
-                Assert.assertTrue(utils.TypeTextToElement(userName_Edit,"public"));
-                Assert.assertTrue(utils.TypeTextToElement(password_Edit,"Let$BeC001"));
-                Assert.assertTrue(utils.ClickElement(signIN_Btn, 15));
+                Assert.assertTrue(utils.clickElement(userName_Edit,15));
+                Assert.assertTrue(utils.typeTextToElement(userName_Edit, utils.getTestDataFromJSON("TD_LoginPage","userName")));
+                Assert.assertTrue(utils.typeTextToElement(password_Edit, utils.getTestDataFromJSON("TD_LoginPage","password")));
+                Assert.assertTrue(utils.clickElement(signIN_Btn, 15));
                 //BGP Login Page
                 Assert.assertTrue(utils.isWebElementDisplayed(bgpLoginPageTitle_Image, 10));
-                Assert.assertTrue(utils.ClickElement(bgpLoginPageLogin_Btn, 15));
+                Assert.assertTrue(utils.clickElement(bgpLoginPageLogin_Btn, 15));
                 // CorpPass Page
-                Assert.assertTrue(utils.TypeTextToElement(corpPassManualLoginEntityID_Edit,"BGPQEDEMO"));
-                Assert.assertTrue(utils.TypeTextToElement(corpPassManualLoginUserID_Edit,"S1234567A"));
-                Assert.assertTrue(utils.TypeTextToElement(corpPassManualLoginUseRole_Edit,"Acceptor"));
-                Assert.assertTrue(utils.TypeTextToElement(corpPassManualLoginUseFullName_Edit,"Tan Ah Kow"));
-                Assert.assertTrue(utils.ClickElement(corpPassManualLogin_Btn,10));
+                Assert.assertTrue(utils.typeTextToElement(corpPassManualLoginEntityID_Edit,utils.getTestDataFromJSON("TD_LoginPage","entityID")));
+                Assert.assertTrue(utils.typeTextToElement(corpPassManualLoginUserID_Edit,utils.getTestDataFromJSON("TD_LoginPage","userID")));
+                Assert.assertTrue(utils.typeTextToElement(corpPassManualLoginUseRole_Edit,utils.getTestDataFromJSON("TD_LoginPage","userRole")));
+                Assert.assertTrue(utils.typeTextToElement(corpPassManualLoginUseFullName_Edit,utils.getTestDataFromJSON("TD_LoginPage","userFullName")));
+                Assert.assertTrue(utils.clickElement(corpPassManualLogin_Btn,10));
                 // My Grants Page
                 Assert.assertTrue(utils.isWebElementDisplayed(myGrantsPageTitle_Text,20));
-                Assert.assertTrue(utils.ClickElement(getNewGrants_Link, 10));
-                Assert.assertTrue(utils.ClickElement(getNewGrantsSectors_Link, 10));
-                Assert.assertTrue(utils.ClickElement(bringMyBusinessOverseas_Link, 10));
-                Assert.assertTrue(utils.ClickElement(marketReadinessAssistance_Link, 10));
-                Assert.assertTrue(utils.ClickElement(marketReadinessAssistanceApply_Btn, 10));
-                Assert.assertTrue(utils.ClickElement(grantActionsProceed_Btn, 10));
+                Assert.assertTrue(utils.clickElement(getNewGrants_Link, 10));
+                Assert.assertTrue(utils.clickElement(getNewGrantsSectors_Link, 10));
+                Assert.assertTrue(utils.clickElement(bringMyBusinessOverseas_Link, 10));
+                Assert.assertTrue(utils.clickElement(marketReadinessAssistance_Link, 10));
+                Assert.assertTrue(utils.clickElement(marketReadinessAssistanceApply_Btn, 10));
+                Assert.assertTrue(utils.clickElement(grantActionsProceed_Btn, 10));
             }
             else if (utils.isWebElementDisplayed(bgpLoginPageLogin_Btn, 10))
             {
                 //BGP Login Page
                 Assert.assertTrue(utils.isWebElementDisplayed(bgpLoginPageTitle_Image, 10));
-                Assert.assertTrue(utils.ClickElement(bgpLoginPageLogin_Btn, 15));
+                Assert.assertTrue(utils.clickElement(bgpLoginPageLogin_Btn, 15));
                 // CorpPass Page
-                Assert.assertTrue(utils.TypeTextToElement(corpPassManualLoginEntityID_Edit,"BGPQEDEMO"));
-                Assert.assertTrue(utils.TypeTextToElement(corpPassManualLoginUserID_Edit,"S1234567A"));
-                Assert.assertTrue(utils.TypeTextToElement(corpPassManualLoginUseRole_Edit,"Acceptor"));
-                Assert.assertTrue(utils.TypeTextToElement(corpPassManualLoginUseFullName_Edit,"Tan Ah Kow"));
-                Assert.assertTrue(utils.ClickElement(corpPassManualLogin_Btn,10));
+                Assert.assertTrue(utils.typeTextToElement(corpPassManualLoginEntityID_Edit,utils.getTestDataFromJSON("TD_LoginPage","entityID")));
+                Assert.assertTrue(utils.typeTextToElement(corpPassManualLoginUserID_Edit,utils.getTestDataFromJSON("TD_LoginPage","userID")));
+                Assert.assertTrue(utils.typeTextToElement(corpPassManualLoginUseRole_Edit,utils.getTestDataFromJSON("TD_LoginPage","userRole")));
+                Assert.assertTrue(utils.typeTextToElement(corpPassManualLoginUseFullName_Edit,utils.getTestDataFromJSON("TD_LoginPage","userFullName")));
+                Assert.assertTrue(utils.clickElement(corpPassManualLogin_Btn,10));
                 // My Grants Page
                 Assert.assertTrue(utils.isWebElementDisplayed(myGrantsPageTitle_Text,20));
-                Assert.assertTrue(utils.ClickElement(getNewGrants_Link, 10));
-                Assert.assertTrue(utils.ClickElement(getNewGrantsSectors_Link, 10));
-                Assert.assertTrue(utils.ClickElement(bringMyBusinessOverseas_Link, 10));
-                Assert.assertTrue(utils.ClickElement(marketReadinessAssistance_Link, 10));
-                Assert.assertTrue(utils.ClickElement(marketReadinessAssistanceApply_Btn, 10));
-                Assert.assertTrue(utils.ClickElement(grantActionsProceed_Btn, 10));
+                Assert.assertTrue(utils.clickElement(getNewGrants_Link, 10));
+                Assert.assertTrue(utils.clickElement(getNewGrantsSectors_Link, 10));
+                Assert.assertTrue(utils.clickElement(bringMyBusinessOverseas_Link, 10));
+                Assert.assertTrue(utils.clickElement(marketReadinessAssistance_Link, 10));
+                Assert.assertTrue(utils.clickElement(marketReadinessAssistanceApply_Btn, 10));
+                Assert.assertTrue(utils.clickElement(grantActionsProceed_Btn, 10));
             }
             status = true;
         }

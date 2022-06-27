@@ -42,15 +42,22 @@ public class ContactDetailsPage
 
     String warningMessageText = "We need a response for this field";
 
+    //*******************************
+    /**
+     * clickAndVerifyContactDetailsPage - Function to clickAndVerifyContactDetailsPage
+     * @param - nothing
+     * @return true or false
+     */
     public boolean clickAndVerifyContactDetailsPage()
     {
-        boolean status = false;
+        boolean status;
         try
         {
+            Thread.sleep(2000);
+//            utils.clickElement(contactDetails_Link, 25);
             driver.findElement(By.xpath("//span[contains(text(),'Contact Details')]")).click();
-//            Assert.assertTrue(utils.clickElement(contactDetails_Link, 20));
-                logger.info("Successfully Launched ContactDetails Page");
-                status = true;
+            logger.info("Successfully Launched ContactDetails Page");
+            status = true;
         }
         catch(Exception e)
         {
@@ -62,13 +69,18 @@ public class ContactDetailsPage
         return status;
     }
 
-
+    //*******************************
+    /**
+     * enterMainContactPersonDetails - Function to enterMainContactPersonDetails
+     * @param - nothing
+     * @return true or false
+     */
     public boolean enterMainContactPersonDetails()
     {
-        boolean status = false;
+        boolean status;
         try
         {
-            if(utils.isWebElementDisplayed(contactDetailsPageTitle_Text, 10))
+            if(utils.isWebElementDisplayed(contactDetailsPageTitle_Text, 20))
             {
                 Assert.assertTrue(utils.typeTextToElement(mainContactPersonName_Edit,utils.getTestDataFromJSON("TD_ContactDetailsPage","personName")),"Failed to type into the element: " + mainContactPersonName_Edit.toString());
                 Assert.assertTrue(utils.typeTextToElement(mainContactPersonJobTitle_Edit,utils.getTestDataFromJSON("TD_ContactDetailsPage","personJobTitle")));
@@ -88,12 +100,18 @@ public class ContactDetailsPage
         return status;
     }
 
+    //*******************************
+    /**
+     * enterMailingAddress - Function to enterMailingAddress
+     * @param - nothing
+     * @return true or false
+     */
     public boolean enterMailingAddress()
     {
-        boolean status = false;
+        boolean status;
         try
         {
-            if(utils.isWebElementDisplayed(mailingAddressPostalCode_Edit, 10))
+            if(utils.isWebElementDisplayed(mailingAddressPostalCode_Edit, 20))
             {
                 Assert.assertTrue(utils.typeTextToElement(mailingAddressPostalCode_Edit,utils.getTestDataFromJSON("TD_ContactDetailsPage","mailingAddressPostalCode")));
                 driver.findElement(mailingAddressPostalCode_Edit).sendKeys(Keys.ENTER);
@@ -113,9 +131,15 @@ public class ContactDetailsPage
         return status;
     }
 
+    //*******************************
+    /**
+     * enteringMailingAddress_withSameAsCheckbox - Function to enteringMailingAddress_withSameAsCheckbox
+     * @param - nothing
+     * @return true or false
+     */
     public boolean enteringMailingAddress_withSameAsCheckbox()
     {
-        boolean status = false;
+        boolean status;
         try
         {
             js.executeScript("arguments[0].scrollIntoView();", driver.findElement(mainContactPersonEmail_Edit));
@@ -141,9 +165,15 @@ public class ContactDetailsPage
         return status;
     }
 
+    //*******************************
+    /**
+     * enteringLetterOfOfferAddress - Function to enteringLetterOfOfferAddress
+     * @param - nothing
+     * @return true or false
+     */
     public boolean enteringLetterOfOfferAddress()
     {
-        boolean status = false;
+        boolean status;
         try
         {
             js.executeScript("arguments[0].scrollIntoView();", driver.findElement(letterOfOfferAddressTitle_Text));
@@ -165,9 +195,15 @@ public class ContactDetailsPage
         return status;
     }
 
+    //*******************************
+    /**
+     * enteringLetterOfOfferAddress_withSameAsCheckbox - Function to enteringLetterOfOfferAddress_withSameAsCheckbox
+     * @param - nothing
+     * @return true or false
+     */
     public boolean enteringLetterOfOfferAddress_withSameAsCheckbox()
     {
-        boolean status = false;
+        boolean status;
         try
         {
             js.executeScript("arguments[0].scrollIntoView();", driver.findElement(letterOfOfferAddressTitle_Text));

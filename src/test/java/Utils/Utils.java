@@ -4,7 +4,6 @@ import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.omg.CORBA.TIMEOUT;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -14,12 +13,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
-import tests.BaseClass;
 
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.util.*;
 
 import static tests.BaseClass.ROOTPATH;
@@ -32,10 +29,15 @@ public class Utils {
     public static String Locators_JSON_Path;
     public static String TestData_JSON_Path;
     public final Logger logger = LoggerFactory.getLogger(Utils.class);
-    String str_obj_Locators;
     public By By;
     public By element;
-    Properties prop = readConfigFile();
+
+    //*******************************
+    /**
+     * extractingJSONStringFromJSONFile - Function to Extract String specific value from JSON Name
+     * @param - JSON_FileName
+     * @return JSON Object
+     */
     public JSONObject extractingJSONStringFromJSONFile(String JSON_FileName)
     {
         String ExtractedJSONString = "";
@@ -80,6 +82,12 @@ public class Utils {
             return null;
         }
     }
+    //*******************************
+    /**
+     * extractValueFromJSONName - Function to Extract specific value from JSON Name
+     * @param - json_obj, JSON_Key
+     * @return JSON Object of the specific JSON Key
+     */
     public Object extractValueFromJSONName(JSONObject json_obj, String key) throws JSONException {
         Object finalresult = null;
         try {
@@ -115,7 +123,12 @@ public class Utils {
         }
     }
 
-    // To Extract specific value from JSON Key
+    //*******************************
+    /**
+     * extractValueFromJSONFile - Function to Extract specific value from JSON Key
+     * @param - JSON_FileName, JSON_Key
+     * @return JSON String of the specific JSON Key
+     */
     public String extractValueFromJSONFile(String JSON_FileName, String key)
     {
         JSONObject json_obj = null;
@@ -127,7 +140,12 @@ public class Utils {
         return str_Value;
     }
 
-    //Wait
+    //*******************************
+    /**
+     * waitForVisibility - Function to wait for an Element
+     * @param - by element, time duration to wait
+     * @return nothing
+     */
     public void waitForVisibility(By by, int seconds)
     {
         try
@@ -143,44 +161,12 @@ public class Utils {
         }
 
     }
-    //**********************************
-    public By CreateLocatorObjFromLocatorType(String JSON_FileName, String objJSONKey)
-    {
-        try
-        {
-            String[] str_locator_arr = objJSONKey.split("#");
-            str_obj_Locators = extractValueFromJSONFile(JSON_FileName, objJSONKey);
-            if ("ID".equals(str_locator_arr[0].toUpperCase()))
-            {
-                By = By.id(str_obj_Locators);
-                return By;
-            }else if ("XPATH".equals(str_locator_arr[0].toUpperCase()))
-            {
-                By = By.xpath(str_obj_Locators);
-                return By;
-            }else if("NAME".equals(str_locator_arr[0].toUpperCase())){
-                By = By.name(str_obj_Locators);
-                return By;
-            }
-            else if("LINK".equals(str_locator_arr[0].toUpperCase())){
-                By = By.linkText(str_obj_Locators);
-                return By;
-            }
-            else if("CLASSNAME".equals(str_locator_arr[0].toUpperCase())){
-                By = By.className(str_obj_Locators);
-                return By;
-            }
-            return By;
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-            System.out.println(e.getCause());
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
     //*******************************
+    /**
+     * clickElement - Function to click an Element
+     * @param - element, time duration to wait
+     * @return true or false
+     */
     public boolean clickElement(By element,int seconds) {
         try
         {
@@ -198,6 +184,11 @@ public class Utils {
     }
 
     //*******************************
+    /**
+     * submitElement - Function to click an Element which has submit type
+     * @param - element, time duration to wait
+     * @return true or false
+     */
     public boolean submitElement(By element ,int seconds) {
         try
         {
@@ -214,6 +205,11 @@ public class Utils {
         }
     }
     //*******************************
+    /**
+     * getWebElement - Function to get an Element
+     * @param - element, time duration to wait
+     * @return WebElement
+     */
     public WebElement getWebElement(By webElement ,int seconds)
     {
         WebElement element;
@@ -232,7 +228,11 @@ public class Utils {
         }
     }
     //*******************************
-    //TypeTextToElement
+    /**
+     * typeTextToElement - Function to type the text into an Element
+     * @param - element, ValueToType
+     * @return true or false
+     */
     public boolean typeTextToElement(By element,  String ValueToType)
     {
         try
@@ -251,7 +251,11 @@ public class Utils {
         }
     }
     //*******************************
-    //GetTextFromElement
+    /**
+     * getTextFromElement - Function to get text value of an Element
+     * @param - element
+     * @return string text value of an Element
+     */
     public String getTextFromElement(By element)
     {
         String str_getText = "";
@@ -272,7 +276,11 @@ public class Utils {
     }
 
     //*******************************
-    //GetAttributeFromElement
+    /**
+     * getAttributeFromElement - Function to get attribute value of an Element
+     * @param - element, attributeName
+     * @return string attribute value of an Element
+     */
     public String getAttributeFromElement(By element, String attributeName)
     {
         String str_getText = "";
@@ -293,7 +301,11 @@ public class Utils {
     }
 
     //*******************************
-    //getFutureYearFromCurrent
+    /**
+     * getFutureYearFromCurrent - Function to get future year from the current year
+     * @param - number of year, date format
+     * @return Future year in the specific Date format
+     */
     public String getFutureYearFromCurrent(int year, String format)
     {
         String specificDate = "";
@@ -318,7 +330,11 @@ public class Utils {
     }
 
     //*******************************
-    //getPreviousYearFromCurrent
+    /**
+     * getPreviousYearFromCurrent - Function to get previous year from the current year
+     * @param - number of year, date format
+     * @return previous year in the specific Date format
+     */
     public String getPreviousYearFromCurrent(int year, String format)
     {
         String specificDate = "";
@@ -343,7 +359,11 @@ public class Utils {
     }
 
     //*******************************
-    //getFutureMonthFromCurrent
+    /**
+     * getFutureMonthFromCurrent - Function to get future Month from the current month
+     * @param - number of months, date format
+     * @return Future Month in the specific Date format
+     */
     public String getFutureMonthFromCurrent(int month, String format)
     {
         String specificDate = "";
@@ -369,7 +389,11 @@ public class Utils {
 
 
     //*******************************
-    //getFutureMonthFromCurrent
+    /**
+     * getFutureDayFromCurrent - Function to get future Day from the today
+     * @param - number of days, date format
+     * @return Future Day in the specific Date format
+     */
     public String getFutureDayFromCurrent(int days, String format)
     {
         String specificDate = "";
@@ -394,13 +418,17 @@ public class Utils {
     }
 
     //*******************************
-    //getTestDataFromJSON
-    public String getTestDataFromJSON(String fileName, String JSONKey)
+    /**
+     * getTestDataFromJSON - Function to get TD from JSON file
+     * @param - JSONfileName, JSONKey
+     * @return Test Data String
+     */
+    public String getTestDataFromJSON(String JSONfileName, String JSONKey)
     {
         String strTestData = "";
         try
         {
-            strTestData = extractValueFromJSONFile(fileName, JSONKey);
+            strTestData = extractValueFromJSONFile(JSONfileName, JSONKey);
         }
         catch(Exception e)
         {
@@ -411,7 +439,11 @@ public class Utils {
     }
 
     //*******************************
-    //getFrameSize
+    /**
+     * getFrameSize - Function to get the size of the frame
+     * @param - Nothing
+     * @return integer
+     */
     public int getFrameSize()
     {
         int size=0;
@@ -426,13 +458,18 @@ public class Utils {
         return size;
     }
     //*******************************
-    public void switchToFrame(int frameid)
+    /**
+     * switchToFrame - Function to switch from one to another
+     * @param -frameID
+     * @return nothing
+     */
+    public void switchToFrame(int frameID)
     {
         try {
-            if(frameid<0)
+            if(frameID<0)
                 driver.switchTo().defaultContent();
             else
-                driver.switchTo().frame(frameid);
+                driver.switchTo().frame(frameID);
         }
         catch(Exception ex)
         {
@@ -440,6 +477,11 @@ public class Utils {
         }
     }
     //*******************************
+    /**
+     * readConfigFile - Function to reads Property file and returns properties
+     * @param - nothing
+     * @return properties from the Config file
+     */
     public Properties readConfigFile()
     {
         File configFilePath;
@@ -466,6 +508,11 @@ public class Utils {
         return props;
     }
     //*******************************
+    /**
+     * isWebElementNotDisplayed - Function to verify the web element should not display status
+     * @param -locator webelement to find
+     * @return returns the webelement status
+     */
     public boolean isWebElementNotDisplayed(By element, int seconds)
     {
         boolean flag = false;
@@ -488,12 +535,11 @@ public class Utils {
         }
         return flag;
     }
-//*******************************
+    //*******************************
     /**
-     * Returns the web element display status
-     *
-     * @param -locator webelement to find
-     * @return returns the webelement status
+     * isWebElementDisplayed - Function to check the web element displayed or not
+     * @param -locator webelement to find, Time duration to wait
+     * @return true or false
      */
     public boolean isWebElementDisplayed(By element, int seconds)
     {
@@ -518,8 +564,13 @@ public class Utils {
         }
         return flag;
     }
+
     //*******************************
-    // Find multiple elements with similar xpath
+    /**
+     * getWebElements - Function to get the list of elements with similar xpath
+     * @param - element
+     * @return list of elements
+     */
     public List<WebElement> getWebElements(By element)
     {
         List<WebElement> webElements = new ArrayList<WebElement>();
@@ -535,7 +586,13 @@ public class Utils {
         }
         return webElements;
     }
+
     //*******************************
+    /**
+     * getScreenShot - Function to capture the screenshot
+     * @param - filename (for new file)
+     * @return returns Screenshot Path
+     */
     public String getScreenShot(String fileName) throws Exception
     {
         String folderName = "Failedscreenshots";
@@ -559,5 +616,105 @@ public class Utils {
             FileUtils.copyFile(srcFile, new File(screenShotPath));
         }
         return screenShotPath;
+    }
+
+    //*******************************
+    /**
+     * isWebElementsTextDisplayed - Function to check if the list of web elements text verified successfully
+     * @param - elementsTextArray
+     * @return returns true or false
+     */
+    public boolean isWebElementsTextDisplayed(String[] elementsTextArray, int seconds)
+    {
+        boolean flag = false;
+        try
+        {
+            for (int i= 0; i<elementsTextArray.length; i++) {
+                if (driver.findElement(By.xpath("//*[contains(text(),'" + elementsTextArray[i] + "')]")).isDisplayed()) {
+                    logger.info("WebElement " + elementsTextArray[i] + " was displayed");
+                    flag = true;
+                } else {
+                    logger.error("WebElement " + elementsTextArray[i] + "was not displayed");
+                    flag = false;
+                }
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            flag = false;
+        }
+        return flag;
+    }
+
+    //*******************************
+    /**
+     * verifyWebElementsFromTDArray - Function to verify if the list of web elements find successfully
+     * @param - TD JSON File and TD JSON Key
+     * @return returns true or false
+     */
+    public boolean verifyWebElementsFromTDArray(String[] TD_JSON_File, String[] TD_JSON_Key)
+    {
+        boolean flag = false;
+        String TDValue = "";
+        try
+        {
+
+            for (int i= 0; i<TD_JSON_File.length; i++)
+            {
+                for (int j= 0; j<TD_JSON_Key.length; j++)
+                {
+                    TDValue = getTestDataFromJSON(TD_JSON_File[i], TD_JSON_Key[j]);
+                    if (driver.findElement(By.xpath("//*[contains(text()," + TDValue + ")]")).isDisplayed())
+                    {
+                        logger.info("WebElement " + TDValue + "was displayed");
+                        flag = true;
+                    }
+                }
+                if (flag = false)
+                {
+                    Assert.fail("WebElement " + TDValue + "was displayed");
+                    logger.error("WebElement " + TDValue + "was not displayed");
+                    break;
+                }
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            flag = false;
+        }
+        return flag;
+    }
+
+    //*******************************
+    /**
+     * verifyHashMapValue - Function to verify HashMap values
+     * @param - Hashmap
+     * @return true or false
+     */
+    public boolean verifyHashMapValue(Map<String,String> hashMap)
+    {
+        boolean flag = false;
+        String TDValue = "";
+        try
+        {
+          for (Map.Entry<String, String> entry : hashMap.entrySet())
+            {
+                TDValue = getTestDataFromJSON(entry.getValue(), entry.getKey());
+                if (driver.findElement(By.xpath("//*[contains(text(),'" + TDValue + "')]")).isDisplayed())
+                {
+                    logger.info("WebElement " + TDValue + "was displayed");
+                    flag = true;
+                }
+                else{
+                    Assert.fail("WebElement " + TDValue + "was displayed");
+                    logger.error("WebElement " + TDValue + "was not displayed");
+                }
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            flag = false;
+        }
+        return flag;
     }
 }

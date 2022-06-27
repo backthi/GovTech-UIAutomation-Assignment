@@ -23,7 +23,7 @@ public class ProposalPage
 
     public final Logger logger = LoggerFactory.getLogger(ProposalPage.class);
 
-    By Proposal_Link = By.xpath("//span[contains(text(),'Proposal')]");
+    By proposal_Link = By.xpath("//span[contains(text(),'Proposal')]");
     By submitYourProposal_Text = By.xpath("//h2[contains(text(),'Submit Your Proposal')]");
     By projectTitle_Edit = By.xpath("//input[@id='react-project-title']");
     By startDate_Edit = By.xpath("//input[@id='react-project-start_date']");
@@ -46,12 +46,21 @@ public class ProposalPage
     By startDateAlertText = By.xpath("//*[contains(text(),'Must be today or later')]");
     By startDateWrongAlertText = By.id("react-project-start_date-alert");
     // This date doesn't look right - react-project-start_date-alert
+    By proposalFormErrorNumber_Text = By.xpath("//*[@class='label label-error']");
     By startDateEmptyAlert_Text = By.xpath("//*[contains(text(), 'We need a response for this field')]");
+
+    //*******************************
+    /**
+     * clickAndVerifyProposalPage - Function to clickAndVerifyProposalPage
+     * @param - nothing
+     * @return true or false
+     */
     public boolean clickAndVerifyProposalPage()
     {
-        boolean status = false;
+        boolean status;
         try
         {
+//            utils.clickElement(proposal_Link, 25);
             driver.findElement(By.xpath("//span[contains(text(),'Proposal')]")).click();
             Assert.assertTrue(utils.isWebElementDisplayed(submitYourProposal_Text, 15));
             logger.info("Successfully Launched ContactDetails Page");
@@ -68,36 +77,40 @@ public class ProposalPage
         return status;
     }
 
-
+    //*******************************
+    /**
+     * enterProposalDetails - Function to enterProposalDetails
+     * @param - nothing
+     * @return true or false
+     */
     public boolean enterProposalDetails()
     {
-        boolean status = false;
+        boolean status;
         try
         {
 
             Actions keys = new Actions(driver);
             DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
             Date date = new Date();
-            String currentDate= dateFormat.format(date);
             Assert.assertTrue(utils.typeTextToElement(projectTitle_Edit,utils.getTestDataFromJSON("TD_ProposalPage","projectTitle")));
             Assert.assertTrue(utils.typeTextToElement(startDate_Edit, new SimpleDateFormat("dd MMM yyyy").format(new Date())));
             Thread.sleep(1000);
             Assert.assertTrue(utils.typeTextToElement(endDate_Edit, utils.getFutureMonthFromCurrent(10, "dd MMM yyyy")));
-            Assert.assertEquals(utils.getTextFromElement(projectDuration_Text),"11 months");
+            Assert.assertEquals(utils.getTextFromElement(projectDuration_Text),utils.getTestDataFromJSON("TD_ProposalPage","projectDuration"));
             Assert.assertTrue(utils.typeTextToElement(projectDescription_Edit, utils.getTestDataFromJSON("TD_ProposalPage", "projectDescription")));
             js.executeScript("arguments[0].scrollIntoView();", driver.findElement(projectDescription_Edit));
             Thread.sleep(1000);
             Assert.assertTrue(utils.clickElement(activityDropDownArrow_Btn, 15));
             Thread.sleep(1000);
             keys.sendKeys(Keys.chord(Keys.DOWN, Keys.UP, Keys.DOWN, Keys.ENTER)).perform();
-            Assert.assertEquals(utils.getTextFromElement(activitySelectedItem_Text), "Market Entry");
-            Assert.assertTrue(utils.typeTextToElement(activityType_Edit,"Supervising"));
-            Assert.assertTrue(utils.typeTextToElement(shareHoldingPercentage_Edit,"50"));
+            Assert.assertEquals(utils.getTextFromElement(activitySelectedItem_Text), utils.getTestDataFromJSON("TD_ProposalPage","Activity"));
+            Assert.assertTrue(utils.typeTextToElement(activityType_Edit,utils.getTestDataFromJSON("TD_ProposalPage","activityType")));
+            Assert.assertTrue(utils.typeTextToElement(shareHoldingPercentage_Edit,utils.getTestDataFromJSON("TD_ProposalPage","shareHoldingPercentage")));
             Thread.sleep(1000);
             Assert.assertTrue(utils.clickElement(By.xpath("//*[@class='Select is-clearable is-searchable Select--single']"), 15));
             Thread.sleep(1000);
             keys.sendKeys(Keys.chord(Keys.DOWN, Keys.DOWN, Keys.DOWN, Keys.ENTER)).perform();
-            Assert.assertEquals(utils.getTextFromElement(targetMarketSelectedItem_Text), "Algeria");
+            Assert.assertEquals(utils.getTextFromElement(targetMarketSelectedItem_Text), utils.getTestDataFromJSON("TD_ProposalPage","targetMarketSelectedItem"));
             Assert.assertTrue(utils.clickElement(lastQuestionYes_Btn, 15));
             Thread.sleep(1000);
             js.executeScript("arguments[0].scrollIntoView();", driver.findElement(selectFiles_Btn));
@@ -105,7 +118,7 @@ public class ProposalPage
 
             driver.findElement(selectFiles_Input).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
             Thread.sleep(1000);
-            Assert.assertTrue(utils.typeTextToElement(Remarks_Edit, utils.getTestDataFromJSON("TD_ProposalPage", "Remarks")));
+            Assert.assertTrue(utils.typeTextToElement(Remarks_Edit, utils.getTestDataFromJSON("TD_ProposalPage", "proposalRemarks")));
             Assert.assertTrue(utils.clickElement(GlobalValues.save_Btn, 15));
             Assert.assertTrue(utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10));
             status = true;
@@ -120,10 +133,15 @@ public class ProposalPage
         return status;
     }
 
-
+    //*******************************
+    /**
+     * verifyDates - Function to verifyDates
+     * @param - nothing
+     * @return true or false
+     */
     public boolean verifyDates()
     {
-        boolean status = false;
+        boolean status;
         Actions keys = new Actions(driver);
         try
         {
@@ -132,6 +150,7 @@ public class ProposalPage
             Assert.assertTrue(utils.clickElement(startDate_Edit, 10));
             for (int i = 1; i<=startDatetxt.length(); i++)
             {
+                Thread.sleep(1000);
                 keys.sendKeys(Keys.chord(Keys.SHIFT, Keys.CONTROL, Keys.LEFT, Keys.DELETE)).perform();
             }
             Assert.assertTrue(utils.isWebElementDisplayed(startDateEmptyAlert_Text, 10));
@@ -139,6 +158,35 @@ public class ProposalPage
             Assert.assertTrue(utils.isWebElementDisplayed(startDateAlertText, 10));
             Assert.assertTrue(utils.typeTextToElement(startDate_Edit, new SimpleDateFormat("dd MMM yyyy").format(new Date())));
             Assert.assertEquals(utils.getTextFromElement(startDateWrongAlertText), "This date doesn't look right");
+            status = true;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            System.out.println(e.getCause());
+            System.out.println(e.getMessage());
+            status = false;
+        }
+        return status;
+    }
+
+    //*******************************
+    /**
+     * enterStartDateAfterReview - Function to enterStartDateAfterReview
+     * @param - nothing
+     * @return true or false
+     */
+    public boolean enterStartDateAfterReview()
+    {
+        boolean status;
+        try
+        {
+            Assert.assertEquals(utils.getTextFromElement(proposalFormErrorNumber_Text), utils.getTestDataFromJSON("TD_ProposalPage","proposalFormErrorNumber"));
+            Assert.assertTrue(utils.isWebElementDisplayed(startDateEmptyAlert_Text, 10));
+//            Assert.assertTrue(utils.typeTextToElement(startDate_Edit, utils.getFutureDayFromCurrent(1, "dd MMM yyyy")));
+            Assert.assertTrue(utils.typeTextToElement(startDate_Edit, new SimpleDateFormat("dd MMM yyyy").format(new Date())));
+            js.executeScript("arguments[0].scrollIntoView();", driver.findElement(Remarks_Edit));
+            Assert.assertTrue(utils.clickElement(GlobalValues.save_Btn, 15));
             status = true;
         }
         catch(Exception e)

@@ -45,11 +45,18 @@ public class BusinessImpactPage
     By nonTangibleBenefits_Edit = By.xpath("//textarea[@id='react-project_impact-benefits_remarks']");
     String startDateAlertText = "Must be today or later";
 
+    //*******************************
+    /**
+     * clickAndVerifyBusinessImpactPage - Function to clickAndVerifyBusinessImpactPage
+     * @param - nothing
+     * @return true or false
+     */
     public boolean clickAndVerifyBusinessImpactPage()
     {
-        boolean status = false;
+        boolean status;
         try
         {
+            Thread.sleep(1000);
             driver.findElement(By.xpath("//span[contains(text(),'Business Impact')]")).click();
 //            Assert.assertTrue(utils.clickElement(businessImpact_Link, 15));
             Assert.assertTrue(utils.isWebElementDisplayed(businessImpactTitle_Text, 15));
@@ -58,16 +65,22 @@ public class BusinessImpactPage
         catch(Exception e)
         {
             e.printStackTrace();
-            System.out.println(e.getCause());
-            System.out.println(e.getMessage());
+            e.getCause();
+            e.getMessage();
             status = false;
         }
         return status;
     }
 
+    //*******************************
+    /**
+     * enterFYEndDate - Function to enterFYEndDate
+     * @param - nothing
+     * @return true or false
+     */
     public boolean enterFYEndDate()
     {
-        boolean status = false;
+        boolean status;
         try
         {
             DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
@@ -95,17 +108,22 @@ public class BusinessImpactPage
         catch(Exception e)
         {
             e.printStackTrace();
-            System.out.println(e.getCause());
-            System.out.println(e.getMessage());
+            e.getCause();
+            e.getMessage();
             status = false;
         }
         return status;
     }
 
-
+    //*******************************
+    /**
+     * enteringOverseasSalesDetails - Function to enteringOverseasSalesDetails
+     * @param - nothing
+     * @return true or false
+     */
     public boolean enteringOverseasSalesDetails()
     {
-        boolean status = false;
+        boolean status;
         try
         {
             if(utils.isWebElementDisplayed(quantitativeImpactTile_Text, 10))
@@ -120,16 +138,22 @@ public class BusinessImpactPage
         catch(Exception e)
         {
             e.printStackTrace();
-            System.out.println(e.getCause());
-            System.out.println(e.getMessage());
+            e.getCause();
+            e.getMessage();
             status = false;
         }
         return status;
     }
 
+    //*******************************
+    /**
+     * enteringOverseasInvestmentsDetails - Function to enteringOverseasInvestmentsDetails
+     * @param - nothing
+     * @return true or false
+     */
     public boolean enteringOverseasInvestmentsDetails()
     {
-        boolean status = false;
+        boolean status;
         try
         {
             if(utils.isWebElementDisplayed(quantitativeImpactTile_Text, 10))
@@ -151,9 +175,15 @@ public class BusinessImpactPage
         return status;
     }
 
+    //*******************************
+    /**
+     * enteringRationaleAndNonTangibleBenefitsDetails - Function to enteringRationaleAndNonTangibleBenefitsDetails
+     * @param - nothing
+     * @return true or false
+     */
     public boolean enteringRationaleAndNonTangibleBenefitsDetails()
     {
-        boolean status = false;
+        boolean status;
         try
         {
             if(utils.isWebElementDisplayed(quantitativeImpactTile_Text, 10))
@@ -168,8 +198,8 @@ public class BusinessImpactPage
         catch(Exception e)
         {
             e.printStackTrace();
-            System.out.println(e.getCause());
-            System.out.println(e.getMessage());
+            e.getCause();
+            e.getMessage();
             status = false;
         }
         return status;

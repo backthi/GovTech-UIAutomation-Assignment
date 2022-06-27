@@ -1,9 +1,11 @@
 package tests;
 
 import Utils.Utils;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.*;
 
+import java.util.HashMap;
 import java.util.Properties;
 
 public class gowTechWGPTests extends BaseClass
@@ -13,21 +15,21 @@ public class gowTechWGPTests extends BaseClass
     ContactDetailsPage contactDetailsPage = new ContactDetailsPage();
     BusinessImpactPage businessImpactPage = new BusinessImpactPage();
     ProposalPage proposalPage = new ProposalPage();
-    Utils utils = new Utils();
-    Properties props = utils.readConfigFile();
+    CostPage costPage = new CostPage();
+    DeclareAndReviewPage declareAndReviewPage = new DeclareAndReviewPage();
 
     @Test (testName = "Login to BGP Portal", priority=0)
     public void verifyLogin()
     {
         try
         {
-            loginPage.loginPortal();
+            Assert.assertTrue(loginPage.loginPortal());
         }
         catch(Exception e)
         {
             e.printStackTrace();
-            System.out.println(e.getCause());
-            System.out.println(e.getMessage());
+            e.getCause();
+            e.getMessage();
         }
     }
 
@@ -36,13 +38,13 @@ public class gowTechWGPTests extends BaseClass
     {
         try
         {
-            eligibilityPage.checkYourEligibility();
+            Assert.assertTrue(eligibilityPage.fillingEligibility());
         }
         catch(Exception e)
         {
             e.printStackTrace();
-            System.out.println(e.getCause());
-            System.out.println(e.getMessage());
+            e.getCause();
+            e.getMessage();
         }
     }
 
@@ -51,54 +53,105 @@ public class gowTechWGPTests extends BaseClass
     {
         try
         {
-            contactDetailsPage.clickAndVerifyContactDetailsPage();
-            contactDetailsPage.enterMainContactPersonDetails();
-            contactDetailsPage.enterMailingAddress();
-            contactDetailsPage.enteringMailingAddress_withSameAsCheckbox();
-            contactDetailsPage.enteringLetterOfOfferAddress();
-            contactDetailsPage.enteringLetterOfOfferAddress_withSameAsCheckbox();
+            Assert.assertTrue(contactDetailsPage.clickAndVerifyContactDetailsPage());
+            Assert.assertTrue(contactDetailsPage.enterMainContactPersonDetails());
+            Assert.assertTrue(contactDetailsPage.enterMailingAddress());
+            Assert.assertTrue(contactDetailsPage.enteringMailingAddress_withSameAsCheckbox());
+            Assert.assertTrue(contactDetailsPage.enteringLetterOfOfferAddress());
+            Assert.assertTrue(contactDetailsPage.enteringLetterOfOfferAddress_withSameAsCheckbox());
         }
         catch(Exception e)
         {
             e.printStackTrace();
-            System.out.println(e.getCause());
-            System.out.println(e.getMessage());
+            e.getCause();
+            e.getMessage();
         }
     }
 
-    @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingBusinessImpactForm",priority=3)
-    public void fillingBusinessImpactForm()
-    {
-        try
-        {
-            businessImpactPage.clickAndVerifyBusinessImpactPage();
-            businessImpactPage.enterFYEndDate();
-            businessImpactPage.enteringOverseasSalesDetails();
-            businessImpactPage.enteringOverseasInvestmentsDetails();
-            businessImpactPage.enteringRationaleAndNonTangibleBenefitsDetails();
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-            System.out.println(e.getCause());
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingProposalForm",priority=4)
+    @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingProposalForm",priority=3)
     public void fillingProposalForm()
     {
         try
         {
-            proposalPage.clickAndVerifyProposalPage();
-            proposalPage.enterProposalDetails();
-            proposalPage.verifyDates();
+            Assert.assertTrue(proposalPage.clickAndVerifyProposalPage());
+            Assert.assertTrue(proposalPage.enterProposalDetails());
         }
         catch(Exception e)
         {
             e.printStackTrace();
-            System.out.println(e.getCause());
-            System.out.println(e.getMessage());
+            e.getCause();
+            e.getMessage();
         }
     }
+
+    @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingBusinessImpactForm",priority=4)
+    public void fillingBusinessImpactForm()
+    {
+        try
+        {
+            Assert.assertTrue(businessImpactPage.clickAndVerifyBusinessImpactPage());
+            Assert.assertTrue(businessImpactPage.enterFYEndDate());
+            Assert.assertTrue(businessImpactPage.enteringOverseasSalesDetails());
+            Assert.assertTrue(businessImpactPage.enteringOverseasInvestmentsDetails());
+            Assert.assertTrue(businessImpactPage.enteringRationaleAndNonTangibleBenefitsDetails());
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            e.getCause();
+            e.getMessage();
+        }
+    }
+
+    @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingCostForm",priority=5)
+    public void fillingCostForm()
+    {
+        try
+        {
+            Assert.assertTrue(costPage.clickAndVerifyCostPage());
+            Assert.assertTrue(costPage.enterThirdPartyVendorsDetails());
+            Assert.assertTrue(costPage.enteringOfficeSpaceRentalDetails());
+            Assert.assertTrue(costPage.enteringSalaryDetails());
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            e.getCause();
+            e.getMessage();
+        }
+    }
+
+    @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingDeclareAndReviewForm",priority=6)
+    public void fillingDeclareAndReviewForm()
+    {
+        try
+        {
+            Assert.assertTrue(declareAndReviewPage.clickAndVerifyDeclareAndVerify());
+            Assert.assertTrue(declareAndReviewPage.fillingAllQuestions());
+            Assert.assertTrue(declareAndReviewPage.clickOnReview());
+            Assert.assertTrue(declareAndReviewPage.reviewAllData());
+            Assert.assertTrue(declareAndReviewPage.verifyApplicationSubmitted());
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            e.getCause();
+            e.getMessage();
+        }
+    }
+
+//    @Test (dependsOnMethods = { "fillingDeclareAndReviewForm" }, testName = "verifySubmittedApplication",priority=7)
+//    public void verifySubmittedApplication()
+//    {
+//        try
+//        {
+//            Assert.assertTrue(declareAndReviewPage.verifyApplicationSubmitted());
+//        }
+//        catch(Exception e)
+//        {
+//            e.printStackTrace();
+//            e.getCause();
+//            e.getMessage();
+//        }
+//    }
 }
