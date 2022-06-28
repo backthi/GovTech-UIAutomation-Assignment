@@ -24,7 +24,7 @@ public class gowTechWGPNegativeTests extends BaseClass
     @Test (testName = "Login to BGP Portal", priority=0)
     public void verifyLogin(Method method)
     {
-        startTest(method.getName(), "verify Login is successfully executed");
+        startTest(method.getName(), "Should verify Login is successful");
         try
         {
             loginPage.loginPortal();

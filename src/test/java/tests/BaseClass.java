@@ -80,13 +80,6 @@ public class BaseClass extends Utils
                 ScreenShot_Path = ScreenShot_Path.replace("\\", "/");
                 ExtentReport_ConfigFilePath = ExtentReport_ConfigFilePath.replace("\\", "/");
             }
-//            htmlReporter = new ExtentHtmlReporter(ExtentReport_FilePath);
-//            htmlReporter.config().setTheme(Theme.DARK);
-//            htmlReporter.config().setDocumentTitle("ExtentReport");
-//            htmlReporter.config().setEncoding("utf-8");
-//            htmlReporter.config().setReportName("GowTech Web Automation Test Report");
-//            extent = new ExtentReports();
-//            extent.attachReporter(htmlReporter);
         }
         catch(Exception e)
         {
@@ -104,9 +97,6 @@ public class BaseClass extends Utils
         try
         {
             startTest(getClass().getName(), "Executing Test Name: " + getClass().getName());
-//            parent = extent.createTest(getClass().getName());
-//            parentTest.set(parent);
-//            report = extent.startTest(getClass().getName());
             Utils utils = new Utils();
             Properties props = utils.readConfigFile();
             if(browser.equalsIgnoreCase("chrome"))
@@ -148,66 +138,19 @@ public class BaseClass extends Utils
         return driver.get();
     }
 
-//    @BeforeMethod
-//    public void setupMethod(Method method) {
-//        startTest(method.getName(), "");
-////        report = parent.createNode(method.getName());
-////        childTest.set(report);
-//    }
-
-//    @AfterMethod
-//    public void getResult(ITestResult result) throws IOException
-//    {
-//        try
-//        {
-//            if (result.getStatus() == ITestResult.FAILURE)
-//            {
-//                report.log(FAIL, result.getName() + " is FAILED due to below issues:");
-//                report.log(FAIL, "Issue is: " + Arrays.toString(result.getThrowable().getStackTrace()));
-//                String screenshotPath = utils.getScreenShot(result.getName());
-//                InputStream in = new FileInputStream(screenshotPath);
-//                byte[] imageBytes = IOUtils.toByteArray(in);
-//                String base64 = Base64.getEncoder().encodeToString(imageBytes);
-//                report.log(FAIL,"Failed Screenshot:  ", report.addBase64ScreenShot("data:image/png;base64,"+base64));
-//            }
-//            else if (result.getStatus() == ITestResult.SUCCESS)
-//            {
-//                report.log(PASS, result.getName() + " is PASSED");
-//            }
-//            else if (result.getStatus() == ITestResult.SKIP)
-//            {
-////                report.createNode(result.getInstanceName());
-//                report.log(SKIP, result.getName() + " : " + result.getTestName() + " is SKIPPED");
-//                report.log(SKIP, result.getThrowable());
-//            }
-//            extent.endTest(report);
-//            extent.flush();
-//        }
-//        catch(Exception e)
-//        {
-//            e.printStackTrace();
-//            e.getMessage();
-//        }
-//    }
-
-    @AfterClass
-    public void classTeardown()
-    {
-//        getDriver().close();
-        if(getDriver()!=null)
-        {
-            getDriver().quit();
-        }
-    }
 
     @AfterTest
-    public void teardown()
+    @Parameters("browser")
+    public void teardown(String browser)
     {
-//        getDriver().close();
-//        if(getDriver()!=null)
-//        {
-//            getDriver().quit();
-//        }
+        if(browser.equalsIgnoreCase("chrome"))
+        {
+            getDriver().close();
+            getDriver().quit();
+        }
+        else {
+            getDriver().quit();
+        }
     }
 
     @AfterSuite
