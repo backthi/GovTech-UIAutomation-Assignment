@@ -5,7 +5,10 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.*;
 
+import java.lang.reflect.Method;
 import java.util.Properties;
+
+import static Utils.extentreports.ExtentTestManager.startTest;
 
 public class gowTechWGPNegativeTests extends BaseClass
 {
@@ -19,8 +22,9 @@ public class gowTechWGPNegativeTests extends BaseClass
 
 
     @Test (testName = "Login to BGP Portal", priority=0)
-    public void verifyLogin()
+    public void verifyLogin(Method method)
     {
+        startTest(method.getName(), "verify Login is successfully executed");
         try
         {
             loginPage.loginPortal();
@@ -34,8 +38,9 @@ public class gowTechWGPNegativeTests extends BaseClass
     }
 
     @Test (dependsOnMethods = { "verifyLogin" }, testName = "Filling Data on Eligibility Form", priority=1)
-    public void fillingEligibilityForm()
+    public void fillingEligibilityForm(Method method)
     {
+        startTest(method.getName(), "fillingEligibilityForm");
         try
         {
             Assert.assertTrue(eligibilityPage.fillingEligibility());
@@ -49,8 +54,9 @@ public class gowTechWGPNegativeTests extends BaseClass
     }
 
     @Test (dependsOnMethods = { "verifyLogin" },testName = "Filling Data on ContactDetails Form",priority=2)
-    public void fillingContactDetailsForm()
+    public void fillingContactDetailsForm(Method method)
     {
+        startTest(method.getName(), "fillingContactDetailsForm");
         try
         {
             Assert.assertTrue(contactDetailsPage.clickAndVerifyContactDetailsPage());
@@ -69,8 +75,9 @@ public class gowTechWGPNegativeTests extends BaseClass
     }
 
     @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingProposalForm",priority=3)
-    public void fillingProposalForm()
+    public void fillingProposalForm(Method method)
     {
+        startTest(method.getName(), "fillingProposalForm");
         try
         {
             Assert.assertTrue(proposalPage.clickAndVerifyProposalPage());
@@ -86,8 +93,9 @@ public class gowTechWGPNegativeTests extends BaseClass
     }
 
     @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingCostForm",priority=4)
-    public void fillingCostForm()
+    public void fillingCostForm(Method method)
     {
+        startTest(method.getName(), "fillingCostForm");
         try
         {
             Assert.assertTrue(costPage.clickAndVerifyCostPage());
@@ -104,8 +112,9 @@ public class gowTechWGPNegativeTests extends BaseClass
     }
 
     @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingDeclareAndReviewForm",priority=5)
-    public void fillingDeclareAndReviewForm()
+    public void fillingDeclareAndReviewForm(Method method)
     {
+        startTest(method.getName(), "fillingDeclareAndReviewForm");
         try
         {
             Assert.assertTrue(declareAndReviewPage.clickAndVerifyDeclareAndVerify());

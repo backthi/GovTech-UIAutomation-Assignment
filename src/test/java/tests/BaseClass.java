@@ -11,8 +11,9 @@ import Utils.*;
 //import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 //import com.aventstack.extentreports.reporter.configuration.Theme;
 
-import com.relevantcodes.extentreports.ExtentReports;
-import com.relevantcodes.extentreports.ExtentTest;
+import Utils.extentreports.ExtentManager;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -41,9 +42,7 @@ import java.util.concurrent.TimeUnit;
 
 import static Utils.GlobalValues.*;
 
-//import static com.aventstack.extentreports.Status.FAIL;
-//import static com.relevantcodes.extentreports.LogStatus.*;
-import static com.relevantcodes.extentreports.LogStatus.*;
+import static Utils.extentreports.ExtentTestManager.startTest;
 import static org.openqa.selenium.OutputType.BASE64;
 
 public class BaseClass extends Utils
@@ -88,14 +87,6 @@ public class BaseClass extends Utils
 //            htmlReporter.config().setReportName("GowTech Web Automation Test Report");
 //            extent = new ExtentReports();
 //            extent.attachReporter(htmlReporter);
-            extent = new ExtentReports (ExtentReport_FilePath, true);
-            extent
-                    .addSystemInfo("Host Name", "GowTechUIAutomation")
-                    .addSystemInfo("Environment", "Automation Testing")
-                    .addSystemInfo("User Name", "Backthi");
-            //loading the external xml file (i.e., extent-config.xml) which was placed under the base directory
-            //You could find the xml file below. Create xml file in your project and copy past the code mentioned below
-            extent.loadConfig(new File(ExtentReport_ConfigFilePath));
         }
         catch(Exception e)
         {
@@ -112,6 +103,7 @@ public class BaseClass extends Utils
     {
         try
         {
+            startTest(getClass().getName(), "Executing Test Name: " + getClass().getName());
 //            parent = extent.createTest(getClass().getName());
 //            parentTest.set(parent);
 //            report = extent.startTest(getClass().getName());
@@ -156,18 +148,18 @@ public class BaseClass extends Utils
         return driver.get();
     }
 
-    @BeforeMethod
-    public void setupMethod(Method method) {
-//        report = extent.startTest(method.getName());
-//        report = parent.createNode(method.getName());
-//        childTest.set(report);
-    }
+//    @BeforeMethod
+//    public void setupMethod(Method method) {
+//        startTest(method.getName(), "");
+////        report = parent.createNode(method.getName());
+////        childTest.set(report);
+//    }
 
-    @AfterMethod
-    public void getResult(ITestResult result) throws IOException
-    {
-        try
-        {
+//    @AfterMethod
+//    public void getResult(ITestResult result) throws IOException
+//    {
+//        try
+//        {
 //            if (result.getStatus() == ITestResult.FAILURE)
 //            {
 //                report.log(FAIL, result.getName() + " is FAILED due to below issues:");
@@ -190,31 +182,32 @@ public class BaseClass extends Utils
 //            }
 //            extent.endTest(report);
 //            extent.flush();
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-            e.getMessage();
-        }
-    }
-//    @AfterClass
-//    public void classTeardown()
-//    {
-////        getDriver().close();
-//        if(getDriver()!=null)
+//        }
+//        catch(Exception e)
 //        {
-//            getDriver().quit();
+//            e.printStackTrace();
+//            e.getMessage();
 //        }
 //    }
 
-    @AfterTest
-    public void teardown()
+    @AfterClass
+    public void classTeardown()
     {
-        getDriver().close();
+//        getDriver().close();
         if(getDriver()!=null)
         {
             getDriver().quit();
         }
+    }
+
+    @AfterTest
+    public void teardown()
+    {
+//        getDriver().close();
+//        if(getDriver()!=null)
+//        {
+//            getDriver().quit();
+//        }
     }
 
     @AfterSuite
@@ -222,7 +215,7 @@ public class BaseClass extends Utils
     {
         try
         {
-            extent.flush();
+            ExtentManager.extentReports.flush();
 //            extent.close();
         }
         catch(Exception e)
