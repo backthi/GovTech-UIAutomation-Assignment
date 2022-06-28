@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="gowTechWGPTestSuite">
-    <test name="gowTechWGPFormsE2ETests">
-        <classes>
-            <class name="tests.gowTechWGPTests"></class>
-        </classes>
-    </test>
+<suite name="gowTechWGPTestSuiteExecution">
+    <suite-files>
+<!--        <suite-file path="XMLs/WGPTest-E2E.xml"></suite-file>-->
+        <suite-file path="XMLs/WGPTest-E2E-NegativeScenarios.xml"></suite-file>
+        <suite-file path="XMLs/WGPTest-E2E-Parallel.xml"></suite-file>
+    </suite-files>
 </suite>
