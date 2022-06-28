@@ -16,8 +16,7 @@ public class gowTechWGPNegativeTests extends BaseClass
     ProposalPage proposalPage = new ProposalPage();
     CostPage costPage = new CostPage();
     DeclareAndReviewPage declareAndReviewPage = new DeclareAndReviewPage();
-    Utils utils = new Utils();
-    Properties props = utils.readConfigFile();
+
 
     @Test (testName = "Login to BGP Portal", priority=0)
     public void verifyLogin()
@@ -55,10 +54,10 @@ public class gowTechWGPNegativeTests extends BaseClass
         try
         {
             Assert.assertTrue(contactDetailsPage.clickAndVerifyContactDetailsPage());
-            Assert.assertTrue(contactDetailsPage.enterMainContactPersonDetails());
-            Assert.assertTrue(contactDetailsPage.enterMailingAddress());
+            Assert.assertTrue(contactDetailsPage.validateMainContactPersonDetails());
+            Assert.assertTrue(contactDetailsPage.validateMailingAddress());
             Assert.assertTrue(contactDetailsPage.enteringMailingAddress_withSameAsCheckbox());
-            Assert.assertTrue(contactDetailsPage.enteringLetterOfOfferAddress());
+            Assert.assertTrue(contactDetailsPage.validateLetterOfOfferAddress());
             Assert.assertTrue(contactDetailsPage.enteringLetterOfOfferAddress_withSameAsCheckbox());
         }
         catch(Exception e)
@@ -75,7 +74,7 @@ public class gowTechWGPNegativeTests extends BaseClass
         try
         {
             Assert.assertTrue(proposalPage.clickAndVerifyProposalPage());
-            Assert.assertTrue(proposalPage.enterProposalDetails());
+            Assert.assertTrue(proposalPage.validateProposalDetails());
             Assert.assertTrue(proposalPage.verifyDates());
         }
         catch(Exception e)
@@ -86,26 +85,7 @@ public class gowTechWGPNegativeTests extends BaseClass
         }
     }
 
-    @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingBusinessImpactForm",priority=4)
-    public void fillingBusinessImpactForm()
-    {
-        try
-        {
-            Assert.assertTrue(businessImpactPage.clickAndVerifyBusinessImpactPage());
-            Assert.assertTrue(businessImpactPage.enterFYEndDate());
-            Assert.assertTrue(businessImpactPage.enteringOverseasSalesDetails());
-            Assert.assertTrue(businessImpactPage.enteringOverseasInvestmentsDetails());
-            Assert.assertTrue(businessImpactPage.enteringRationaleAndNonTangibleBenefitsDetails());
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-            e.getCause();
-            e.getMessage();
-        }
-    }
-
-    @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingCostForm",priority=5)
+    @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingCostForm",priority=4)
     public void fillingCostForm()
     {
         try
@@ -123,7 +103,7 @@ public class gowTechWGPNegativeTests extends BaseClass
         }
     }
 
-    @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingDeclareAndReviewForm",priority=6)
+    @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingDeclareAndReviewForm",priority=5)
     public void fillingDeclareAndReviewForm()
     {
         try
@@ -132,6 +112,12 @@ public class gowTechWGPNegativeTests extends BaseClass
             Assert.assertTrue(declareAndReviewPage.fillingAllQuestionsWithOtherOptions());
             Assert.assertTrue(declareAndReviewPage.clickOnReview());
             Assert.assertTrue(proposalPage.enterStartDateAfterReview());
+
+            Assert.assertTrue(businessImpactPage.validateFYEndDate());
+            Assert.assertTrue(businessImpactPage.enteringOverseasSalesDetails());
+            Assert.assertTrue(businessImpactPage.enteringOverseasInvestmentsDetails());
+            Assert.assertTrue(businessImpactPage.enteringRationaleAndNonTangibleBenefitsDetails());
+
             Assert.assertTrue(declareAndReviewPage.clickOnDeclareAndReviewAndReview());
             Assert.assertTrue(declareAndReviewPage.reviewAllData());
             Assert.assertTrue(declareAndReviewPage.verifyApplicationSubmitted());

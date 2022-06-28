@@ -3,11 +3,13 @@ package pages;
 import Utils.GlobalValues;
 import Utils.Utils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import tests.BaseClass;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -91,7 +93,7 @@ public class CostPage
         try
         {
             Thread.sleep(1000);
-            driver.findElement(By.xpath("//span[contains(text(),'Cost')]")).click();
+            BaseClass.getDriver().findElement(By.xpath("//span[contains(text(),'Cost')]")).click();
             Assert.assertTrue(utils.isWebElementDisplayed(provideDetailsOfCost_Text, 15));
             logger.info("Successfully Launched Cost Page");
 
@@ -116,24 +118,25 @@ public class CostPage
     public boolean enterThirdPartyVendorsDetails()
     {
         boolean status;
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
         try
         {
-            Thread.sleep(1000);
-            Assert.assertTrue(utils.clickElement(thirdPartyVendorsSection_Link, 10));
+            Thread.sleep(2000);
+            Assert.assertTrue(utils.clickElement(thirdPartyVendorsSection_Link, 20));
             Assert.assertTrue(utils.isWebElementDisplayed(thirdPartyVendors_Text, 10));
             Assert.assertTrue(utils.clickElement(addNewItem_Edit, 10));
             Assert.assertTrue(utils.clickElement(whereIsYourVendorRegisteredOverseas_radioBtn, 20));
             Thread.sleep(1000);
             Assert.assertTrue(utils.isWebElementDisplayed(thirdPartyAttachFileWarningMessage_Text,10));
             Assert.assertTrue(utils.typeTextToElement(nameOfVendor_Edit, utils.getTestDataFromJSON("TD_CostPage", "thirdPartyNameOfVendor")));
-            js.executeScript("arguments[0].scrollIntoView();", driver.findElement(thirdPartySelectFiles_Btn));
-            driver.findElement(thirdPartySelectFilesInput_Text).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+            js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(thirdPartySelectFiles_Btn));
+            BaseClass.getDriver().findElement(thirdPartySelectFilesInput_Text).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
 
             Assert.assertTrue(utils.typeTextToElement(thirdPartyEstimatedCostBillingCurrency_Edit,utils.getTestDataFromJSON("TD_CostPage", "thirdPartyMonthlySalaryInBillingCountry")));
             Assert.assertEquals(utils.getTextFromElement(thirdPartyEstimatedCost_Edit), utils.getTestDataFromJSON("TD_CostPage", "thirdPartyEstimatedCost"));
             Assert.assertTrue(utils.typeTextToElement(thirdPartyRemarks_Edit, utils.getTestDataFromJSON("TD_CostPage", "thirdPartyRemarks")));
 
-            js.executeScript("arguments[0].scrollIntoView();", driver.findElement(provideDetailsOfCost_Text));
+            js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(provideDetailsOfCost_Text));
             Assert.assertTrue(utils.clickElement(thirdPartyVendorsSection_Link, 10));
 
             status = true;
@@ -157,6 +160,7 @@ public class CostPage
     public boolean enteringOfficeSpaceRentalDetails()
     {
         boolean status;
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
         try
         {
             Thread.sleep(2000);
@@ -171,11 +175,11 @@ public class CostPage
             Assert.assertEquals(utils.getTextFromElement(officeRentalsMonthlyRentalCost_Text), utils.getTestDataFromJSON("TD_CostPage", "officeRentalsMonthlyRentalCostVerify"));
             Assert.assertEquals(utils.getTextFromElement(officeRentalsEstimatedTotalCost_Text), utils.getTestDataFromJSON("TD_CostPage", "officeRentalsEstimatedTotalCostVerify"));
 
-            js.executeScript("arguments[0].scrollIntoView();", driver.findElement(officeRentalSelectFiles_Btn));
-            driver.findElement(officeRentalSelectFilesInput_Edit).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+            js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(officeRentalSelectFiles_Btn));
+            BaseClass.getDriver().findElement(officeRentalSelectFilesInput_Edit).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
             Assert.assertTrue(utils.typeTextToElement(officeRentalRemarks_Edit, utils.getTestDataFromJSON("TD_CostPage", "officeRentalRemarks")));
 
-            js.executeScript("arguments[0].scrollIntoView();", driver.findElement(thirdPartyVendorsSection_Link));
+            js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(thirdPartyVendorsSection_Link));
             Assert.assertTrue(utils.clickElement(officeSpaceRental_Link, 10));
             status = true;
         }
@@ -198,7 +202,8 @@ public class CostPage
     public boolean enteringSalaryDetails()
     {
         boolean status;
-        Actions keys = new Actions(driver);
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        Actions keys = new Actions(BaseClass.getDriver());
         try
         {
             Thread.sleep(2000);
@@ -206,7 +211,7 @@ public class CostPage
             Assert.assertTrue(utils.clickElement(salaryAddNewItem_Edit, 10));
             Assert.assertTrue(utils.typeTextToElement(salaryName_Edit, utils.getTestDataFromJSON("TD_CostPage", "salaryName")));
             Thread.sleep(1000);
-            js.executeScript("arguments[0].scrollIntoView();", driver.findElement(salary_Link));
+            js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(salary_Link));
             Assert.assertTrue(utils.typeTextToElement(salaryDesignation_Edit, utils.getTestDataFromJSON("TD_CostPage", "salaryDesignation")));
             Assert.assertTrue(utils.typeTextToElement(salaryPassportNo_Edit,utils.getTestDataFromJSON("TD_CostPage", "salaryPassportNo")));
 
@@ -217,15 +222,15 @@ public class CostPage
             Assert.assertTrue(utils.typeTextToElement(salaryRoleInProject_Edit, utils.getTestDataFromJSON("TD_CostPage", "salaryRoleInProject")));
             Assert.assertTrue(utils.typeTextToElement(salaryProjectInvolvement_Edit,utils.getTestDataFromJSON("TD_CostPage", "salaryProjectInvolvement")));
             Assert.assertTrue(utils.typeTextToElement(salaryMonthlySalaryInBillingCountry_Edit, utils.getTestDataFromJSON("TD_CostPage", "salaryMonthlySalaryInBillingCountry")));
-            js.executeScript("arguments[0].scrollIntoView();", driver.findElement(salaryProjectInvolvement_Edit));
+            js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(salaryProjectInvolvement_Edit));
             Assert.assertTrue(utils.isWebElementDisplayed(salaryMonthlySalary_Text, 10));
             Assert.assertEquals(utils.getTextFromElement(salaryEstimatedCost_Text), utils.getTestDataFromJSON("TD_CostPage", "salaryEstimatedCostVerify"));
 
-            js.executeScript("arguments[0].scrollIntoView();", driver.findElement(salarySelectFiles_Btn));
-            driver.findElement(salarySelectFilesInput_File).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.docx");
+            js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(salarySelectFiles_Btn));
+            BaseClass.getDriver().findElement(salarySelectFilesInput_File).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.docx");
             Assert.assertTrue(utils.typeTextToElement(salaryRemarks_Edit, utils.getTestDataFromJSON("TD_CostPage", "salaryRemarks")));
 
-            js.executeScript("arguments[0].scrollIntoView();", driver.findElement(officeSpaceRental_Link));
+            js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(officeSpaceRental_Link));
             Assert.assertTrue(utils.clickElement(salary_Link, 10));
             Assert.assertTrue(utils.clickElement(GlobalValues.save_Btn, 15));
             Assert.assertTrue(utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10));

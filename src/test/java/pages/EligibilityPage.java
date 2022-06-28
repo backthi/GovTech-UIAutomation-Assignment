@@ -4,6 +4,8 @@ import Utils.Utils;
 import Utils.GlobalValues;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -11,9 +13,9 @@ import tests.BaseClass;
 
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.Set;
 
-import static tests.BaseClass.driver;
-import static tests.BaseClass.js;
+import static tests.BaseClass.*;
 
 public class EligibilityPage
 {
@@ -47,35 +49,63 @@ public class EligibilityPage
 
     //*******************************
     /**
-     * fillingEligibility - Function to fill Eligibility Page
+     * loginPortal - Function to login into a given portal
      * @param - nothing
      * @return true or false
      */
     public boolean fillingEligibility()
     {
         boolean status;
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
         try
         {
             if(utils.isWebElementDisplayed(checkYourAvailability_Text, 25))
             {
                 Assert.assertTrue(utils.clickElement(firstQuestion_No_RadioBtn,15));
                 Assert.assertEquals(utils.getTextFromElement(firstQuestionWarningMessage_Text),utils.getTestDataFromJSON("TD_EligibilityPage","warningMessageText"));
-                String currentPageHandle = driver.getWindowHandle();
+                String currentPageHandle = BaseClass.getDriver().getWindowHandle();
                 Assert.assertTrue(utils.clickElement(FAQ_Link, 10));
-                ArrayList<String> tabHandles = new ArrayList<String>(driver.getWindowHandles());
+                ArrayList<String> tabHandles = new ArrayList<String>(BaseClass.getDriver().getWindowHandles());
 
                 String pageTitle = utils.getTestDataFromJSON("TD_EligibilityPage","FAQPageTitle");
                 boolean myNewTabFound = false;
-
-                for(String eachHandle : tabHandles)
+                Properties props = utils.readConfigFile();
+                if (props.getProperty("Browser").equalsIgnoreCase("Chrome"))
                 {
-                    driver.switchTo().window(eachHandle);
-                    if(driver.getTitle().equalsIgnoreCase(pageTitle)) // Check the Page Title
+                    for(String eachHandle : tabHandles)
                     {
-                        driver.close();
-                        driver.switchTo().window(currentPageHandle);
-                        myNewTabFound = true;
+                        BaseClass.getDriver().switchTo().window(eachHandle);
+                        if(BaseClass.getDriver().getTitle().equalsIgnoreCase(pageTitle)) // Check the Page Title
+                        {
+                            BaseClass.getDriver().close();
+                            BaseClass.getDriver().switchTo().window(currentPageHandle);
+                            myNewTabFound = true;
+                        }
                     }
+                }
+                else
+                {
+                    String parent= BaseClass.getDriver().getWindowHandle();
+                    WebDriverWait wait = new WebDriverWait(BaseClass.getDriver(),5);
+                    wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+                    Set<String> s1= BaseClass.getDriver().getWindowHandles();
+                    for(String s2:s1)
+                    {
+                        if(!currentPageHandle.equalsIgnoreCase(s2))
+                        {
+                            BaseClass.getDriver().switchTo().window(s2);
+                            Thread.sleep(5000);
+                            System.out.println(BaseClass.getDriver().getWindowHandle());
+                            System.out.println("get title of window"+BaseClass.getDriver().getTitle());
+                            if(BaseClass.getDriver().getTitle().equalsIgnoreCase(pageTitle)) // Check the Page Title
+                            {
+                                BaseClass.getDriver().close();
+                                BaseClass.getDriver().switchTo().window(parent);
+                            }
+                        }
+                    }
+                    BaseClass.getDriver().switchTo().window(currentPageHandle);
+                    myNewTabFound = true;
                 }
                 if(myNewTabFound)
                 {
@@ -89,7 +119,7 @@ public class EligibilityPage
                 Assert.assertEquals(utils.getTextFromElement(fourthQuestionWarningMessage_Text),warningMessageText);
                 Assert.assertTrue(utils.clickElement(fifthQuestion_No_RadioBtn,15));
                 Assert.assertEquals(utils.getTextFromElement(fifthQuestionWarningMessage_Text),warningMessageText);
-                js.executeScript("arguments[0].scrollIntoView();", driver.findElement(checkYourAvailability_Text));
+                js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(checkYourAvailability_Text));
                 Assert.assertTrue(utils.clickElement(secondQuestion_Yes_RadioBtn,15));
                 Assert.assertTrue(utils.clickElement(thirdQuestion_Yes_RadioBtn,15));
                 Assert.assertTrue(utils.clickElement(fourthQuestion_Yes_RadioBtn,15));

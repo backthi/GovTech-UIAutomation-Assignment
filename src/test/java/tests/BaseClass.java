@@ -2,17 +2,18 @@ package tests;
 
 import Utils.Utils;
 import Utils.*;
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.MediaEntityBuilder;
-import com.aventstack.extentreports.Status;
-import com.aventstack.extentreports.markuputils.ExtentColor;
-import com.aventstack.extentreports.markuputils.MarkupHelper;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import com.aventstack.extentreports.reporter.configuration.Theme;
-//import com.relevantcodes.extentreports.ExtentReports;
-//import com.relevantcodes.extentreports.ExtentTest;
-//import com.relevantcodes.extentreports.HTMLReporter;
+//import com.aventstack.extentreports.ExtentReports;
+//import com.aventstack.extentreports.ExtentTest;
+//import com.aventstack.extentreports.MediaEntityBuilder;
+//import com.aventstack.extentreports.Status;
+//import com.aventstack.extentreports.markuputils.ExtentColor;
+//import com.aventstack.extentreports.markuputils.MarkupHelper;
+//import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+//import com.aventstack.extentreports.reporter.configuration.Theme;
+
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.*;
@@ -40,15 +41,16 @@ import java.util.concurrent.TimeUnit;
 
 import static Utils.GlobalValues.*;
 
-import static com.aventstack.extentreports.Status.FAIL;
+//import static com.aventstack.extentreports.Status.FAIL;
 //import static com.relevantcodes.extentreports.LogStatus.*;
+import static com.relevantcodes.extentreports.LogStatus.*;
 import static org.openqa.selenium.OutputType.BASE64;
 
 public class BaseClass extends Utils
 {
-    public static WebDriver driver;
+//    public static WebDriver driver;
     public static JavascriptExecutor js;
-    public ExtentHtmlReporter htmlReporter;
+//    public HTMLR htmlReporter;
     public ExtentReports extent;
     public ExtentTest parent;
     public ExtentTest report;
@@ -57,10 +59,12 @@ public class BaseClass extends Utils
     public static String ROOTPATH;
     File file;
     public static String ExtentReport_FilePath;
+    public static String ExtentReport_ConfigFilePath;
     public static String ScreenShot_Path;
     Utils utils = new Utils();
 
     ITestResult result;
+    public static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     @BeforeSuite
     public void reportSetup()
@@ -69,19 +73,29 @@ public class BaseClass extends Utils
         {
             setRootPath();
             ExtentReport_FilePath = ROOTPATH + "\\test-output\\ExtentReport.html";
+            ExtentReport_ConfigFilePath = ROOTPATH + "\\src\\test\\resources\\Config\\extent-config.xml";
             ScreenShot_Path = ROOTPATH + "\\src\\test\\resources\\FailedScreenshots\\" + BaseClass.getcurrentdateandtime()+ ".png";
             if(System.getProperty("os.name").toLowerCase().contains("mac") || System.getProperty("os.name").toLowerCase().contains("linux"))
             {
                 ExtentReport_FilePath = ExtentReport_FilePath.replace("\\", "/");
                 ScreenShot_Path = ScreenShot_Path.replace("\\", "/");
+                ExtentReport_ConfigFilePath = ExtentReport_ConfigFilePath.replace("\\", "/");
             }
-            htmlReporter = new ExtentHtmlReporter(ExtentReport_FilePath);
-            htmlReporter.config().setTheme(Theme.DARK);
-            htmlReporter.config().setDocumentTitle("ExtentReport");
-            htmlReporter.config().setEncoding("utf-8");
-            htmlReporter.config().setReportName("GowTech Web Automation Test Report");
-            extent = new ExtentReports();
-            extent.attachReporter(htmlReporter);
+//            htmlReporter = new ExtentHtmlReporter(ExtentReport_FilePath);
+//            htmlReporter.config().setTheme(Theme.DARK);
+//            htmlReporter.config().setDocumentTitle("ExtentReport");
+//            htmlReporter.config().setEncoding("utf-8");
+//            htmlReporter.config().setReportName("GowTech Web Automation Test Report");
+//            extent = new ExtentReports();
+//            extent.attachReporter(htmlReporter);
+            extent = new ExtentReports (ExtentReport_FilePath, true);
+            extent
+                    .addSystemInfo("Host Name", "GowTechUIAutomation")
+                    .addSystemInfo("Environment", "Automation Testing")
+                    .addSystemInfo("User Name", "Backthi");
+            //loading the external xml file (i.e., extent-config.xml) which was placed under the base directory
+            //You could find the xml file below. Create xml file in your project and copy past the code mentioned below
+            extent.loadConfig(new File(ExtentReport_ConfigFilePath));
         }
         catch(Exception e)
         {
@@ -92,51 +106,42 @@ public class BaseClass extends Utils
 
     }
 
-    @BeforeClass
-    public void setup()
+    @BeforeTest
+    @Parameters("browser")
+    public void setup(String browser)
     {
         try
         {
-            parent = extent.createTest(getClass().getName());
-            parentTest.set(parent);
+//            parent = extent.createTest(getClass().getName());
+//            parentTest.set(parent);
+//            report = extent.startTest(getClass().getName());
             Utils utils = new Utils();
             Properties props = utils.readConfigFile();
-            if (props.getProperty("Browser").toUpperCase().equals("CHROME"))
+            if(browser.equalsIgnoreCase("chrome"))
             {
+                WebDriverManager.chromedriver().setup();
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--disable-notifications");
                 if (props.getProperty("Headless").toUpperCase().equals("YES"))
                 {
                     options.addArguments("--headless");
                 }
-                if(System.getProperty("os.name").toLowerCase().contains("mac") || System.getProperty("os.name").toLowerCase().contains("linux"))
-                {
-                    System.setProperty("webdriver.chrome.driver", ROOTPATH + "/src/test/resources/DriverExe/Chrome/chromedriver");
-                }
-                else if(System.getProperty("os.name").toLowerCase().contains("windows"))
-                {
-                    System.setProperty("webdriver.chrome.driver", ROOTPATH + "\\src\\test\\resources\\DriverExe\\Chrome\\chromedriver.exe");
-                }
-                driver = new ChromeDriver(options);
+                driver.set(new ChromeDriver(options));
             }
-            else if (props.getProperty("Browser").toUpperCase().equals("FIREFOX"))
+            else if(browser.equalsIgnoreCase("firefox"))
             {
+                WebDriverManager.firefoxdriver().setup();
                 FirefoxOptions options = new FirefoxOptions();
                 options.addArguments("--disable-notifications");
                 options.addArguments("--disable-dev-shm-usage");
-                if(System.getProperty("os.name").toLowerCase().contains("mac") || System.getProperty("os.name").toLowerCase().contains("linux"))
-                {
-                    System.setProperty("webdriver.gecko.driver", ROOTPATH + "/src/test/resources/DriverExe/FireFox/geckodriver");
-                }
-                else if(System.getProperty("os.name").toLowerCase().contains("windows"))
-                {
-                    System.setProperty("webdriver.gecko.driver", ROOTPATH + "\\src\\test\\resources\\DriverExe\\FireFox\\geckodriver.exe");
-                }
-                driver = new FirefoxDriver(options);
+                driver.set(new FirefoxDriver(options));
+                Thread.sleep(10000);
+                getDriver().manage().deleteAllCookies();
+
             }
-            driver.manage().window().maximize();
-            driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
-            js = (JavascriptExecutor) driver;
+            getDriver().manage().window().maximize();
+            getDriver().manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+            js = (JavascriptExecutor) getDriver();
             Thread.sleep(2000);
         }
         catch (Exception e)
@@ -146,39 +151,45 @@ public class BaseClass extends Utils
             e.printStackTrace();
         }
     }
+    public static WebDriver getDriver() {
+        //Get driver from ThreadLocalMap
+        return driver.get();
+    }
 
     @BeforeMethod
-    public synchronized void setupMethod(Method method) {
-        report = parent.createNode(method.getName());
-        childTest.set(report);
+    public void setupMethod(Method method) {
+//        report = extent.startTest(method.getName());
+//        report = parent.createNode(method.getName());
+//        childTest.set(report);
     }
 
     @AfterMethod
-    public synchronized void getResult(ITestResult result) throws IOException
+    public void getResult(ITestResult result) throws IOException
     {
         try
         {
-            if (result.getStatus() == ITestResult.FAILURE)
-            {
-                report.log(FAIL, MarkupHelper.createLabel(result.getName() + " is FAILED due to below issues:", ExtentColor.RED ));
-                report.log(FAIL, "Issue is: " + Arrays.toString(result.getThrowable().getStackTrace()));
-                String screenshotPath = utils.getScreenShot(result.getName());
-                InputStream in = new FileInputStream(screenshotPath);
-                byte[] imageBytes = IOUtils.toByteArray(in);
-                String base64 = Base64.getEncoder().encodeToString(imageBytes);
-                report.log(FAIL,"Failed Screenshot:  ", MediaEntityBuilder.createScreenCaptureFromBase64String("data:image/png;base64,"+base64).build());
-            }
-            else if (result.getStatus() == ITestResult.SUCCESS)
-            {
-                report.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " is PASSED", ExtentColor.GREEN));
-            }
-            else if (result.getStatus() == ITestResult.SKIP)
-            {
-                report.createNode(result.getInstanceName());
-                report.log(Status.SKIP, MarkupHelper.createLabel(result.getName() + " : " + result.getTestName() + " is SKIPPED", ExtentColor.ORANGE));
-                report.log(Status.SKIP, result.getThrowable());
-            }
-            extent.flush();
+//            if (result.getStatus() == ITestResult.FAILURE)
+//            {
+//                report.log(FAIL, result.getName() + " is FAILED due to below issues:");
+//                report.log(FAIL, "Issue is: " + Arrays.toString(result.getThrowable().getStackTrace()));
+//                String screenshotPath = utils.getScreenShot(result.getName());
+//                InputStream in = new FileInputStream(screenshotPath);
+//                byte[] imageBytes = IOUtils.toByteArray(in);
+//                String base64 = Base64.getEncoder().encodeToString(imageBytes);
+//                report.log(FAIL,"Failed Screenshot:  ", report.addBase64ScreenShot("data:image/png;base64,"+base64));
+//            }
+//            else if (result.getStatus() == ITestResult.SUCCESS)
+//            {
+//                report.log(PASS, result.getName() + " is PASSED");
+//            }
+//            else if (result.getStatus() == ITestResult.SKIP)
+//            {
+////                report.createNode(result.getInstanceName());
+//                report.log(SKIP, result.getName() + " : " + result.getTestName() + " is SKIPPED");
+//                report.log(SKIP, result.getThrowable());
+//            }
+//            extent.endTest(report);
+//            extent.flush();
         }
         catch(Exception e)
         {
@@ -186,12 +197,24 @@ public class BaseClass extends Utils
             e.getMessage();
         }
     }
+//    @AfterClass
+//    public void classTeardown()
+//    {
+////        getDriver().close();
+//        if(getDriver()!=null)
+//        {
+//            getDriver().quit();
+//        }
+//    }
 
-    @AfterClass
+    @AfterTest
     public void teardown()
     {
-        driver.close();
-        driver.quit();
+        getDriver().close();
+        if(getDriver()!=null)
+        {
+            getDriver().quit();
+        }
     }
 
     @AfterSuite

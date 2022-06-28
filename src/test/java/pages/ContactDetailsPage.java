@@ -3,13 +3,15 @@ package pages;
 import Utils.Utils;
 import Utils.GlobalValues;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import tests.BaseClass;
 
-import static tests.BaseClass.driver;
-import static tests.BaseClass.js;
+import static tests.BaseClass.*;
 
 public class ContactDetailsPage
 {
@@ -40,8 +42,6 @@ public class ContactDetailsPage
 
     By withoutEntering_ValidationMessage = By.xpath("//p[@id='react-contact_info-designation-alert']");  // getText() - We need a response for this field
 
-    String warningMessageText = "We need a response for this field";
-
     //*******************************
     /**
      * clickAndVerifyContactDetailsPage - Function to clickAndVerifyContactDetailsPage
@@ -55,7 +55,7 @@ public class ContactDetailsPage
         {
             Thread.sleep(2000);
 //            utils.clickElement(contactDetails_Link, 25);
-            driver.findElement(By.xpath("//span[contains(text(),'Contact Details')]")).click();
+            BaseClass.getDriver().findElement(By.xpath("//span[contains(text(),'Contact Details')]")).click();
             logger.info("Successfully Launched ContactDetails Page");
             status = true;
         }
@@ -102,6 +102,58 @@ public class ContactDetailsPage
 
     //*******************************
     /**
+     * enterMainContactPersonDetails - Function to enterMainContactPersonDetails
+     * @param - nothing
+     * @return true or false
+     */
+    public boolean validateMainContactPersonDetails()
+    {
+        boolean status;
+        Actions keys = new Actions(BaseClass.getDriver());
+        try
+        {
+            if(utils.isWebElementDisplayed(contactDetailsPageTitle_Text, 20))
+            {
+                Assert.assertTrue(utils.verifyEmptyFiledAlertMessage(mainContactPersonName_Edit, "a"));
+                Assert.assertTrue(utils.typeTextToElement(mainContactPersonName_Edit,utils.getTestDataFromJSON("TD_ContactDetailsPage","personName")),"Failed to type into the element: " + mainContactPersonName_Edit.toString());
+
+                Assert.assertTrue(utils.verifyEmptyFiledAlertMessage(mainContactPersonJobTitle_Edit, "a"));
+                Assert.assertTrue(utils.typeTextToElement(mainContactPersonJobTitle_Edit,utils.getTestDataFromJSON("TD_ContactDetailsPage","personJobTitle")));
+
+                Assert.assertTrue(utils.typeTextToElement(mainContactPersonContactNo_Edit, "a"));
+                Assert.assertEquals(utils.getTextFromElement(mainContactPersonContactNo_Edit), "");
+
+                Assert.assertTrue(utils.verifyEmptyFiledAlertMessage(mainContactPersonContactNo_Edit, "1"));
+                Assert.assertTrue(utils.typeTextToElement(mainContactPersonContactNo_Edit,utils.getTestDataFromJSON("TD_ContactDetailsPage","personContactNo")));
+
+
+                Assert.assertTrue(utils.typeTextToElement(mainContactPersonEmail_Edit, "a"));
+                Thread.sleep(1000);
+                keys.sendKeys(Keys.chord(Keys.SHIFT, Keys.CONTROL, Keys.LEFT, Keys.DELETE)).perform();
+                Thread.sleep(2000);
+                BaseClass.getDriver().findElement(mainContactPersonEmail_Edit).sendKeys(Keys.TAB);
+                Thread.sleep(2000);
+                Assert.assertTrue(utils.typeTextToElement(mainContactPersonEmail_Edit, "addfefew"));
+                Assert.assertTrue(utils.isWebElementDisplayedByText("seem like a valid email address", 15));
+                utils.clearEntireText(mainContactPersonEmail_Edit);
+                Assert.assertTrue(utils.typeTextToElement(mainContactPersonEmail_Edit,utils.getTestDataFromJSON("TD_ContactDetailsPage","personEmail")));
+
+                Assert.assertTrue(utils.typeTextToElement(mainContactPersonAlternateEmail_Edit,utils.getTestDataFromJSON("TD_ContactDetailsPage","personAlternateEmail")));
+            }
+            status = true;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            System.out.println(e.getCause());
+            System.out.println(e.getMessage());
+            status = false;
+        }
+        return status;
+    }
+
+    //*******************************
+    /**
      * enterMailingAddress - Function to enterMailingAddress
      * @param - nothing
      * @return true or false
@@ -114,10 +166,39 @@ public class ContactDetailsPage
             if(utils.isWebElementDisplayed(mailingAddressPostalCode_Edit, 20))
             {
                 Assert.assertTrue(utils.typeTextToElement(mailingAddressPostalCode_Edit,utils.getTestDataFromJSON("TD_ContactDetailsPage","mailingAddressPostalCode")));
-                driver.findElement(mailingAddressPostalCode_Edit).sendKeys(Keys.ENTER);
-                Thread.sleep(2000);
+                Thread.sleep(1000);
                 Assert.assertEquals(utils.getAttributeFromElement(mailingAddressBlockHouseNo_Edit, "Value"),utils.getTestDataFromJSON("TD_ContactDetailsPage","mailingAddressBlkHouseNo"));
                 Assert.assertEquals(utils.getAttributeFromElement(mailingAddressStreet_Edit, "Value"),utils.getTestDataFromJSON("TD_ContactDetailsPage","mailingAddressStreetName"));
+            }
+            status = true;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            System.out.println(e.getCause());
+            System.out.println(e.getMessage());
+            status = false;
+        }
+        return status;
+    }
+
+    //*******************************
+    /**
+     * validateMailingAddress - Function to validateMailingAddress
+     * @param - nothing
+     * @return true or false
+     */
+    public boolean validateMailingAddress()
+    {
+        boolean status;
+        Actions keys = new Actions(BaseClass.getDriver());
+        try
+        {
+            if(utils.isWebElementDisplayed(mailingAddressPostalCode_Edit, 20))
+            {
+                Assert.assertTrue(utils.verifyEmptyFiledAlertMessage(mailingAddressPostalCode_Edit, "1"));
+                Assert.assertTrue(utils.typeTextToElement(mailingAddressPostalCode_Edit,utils.getTestDataFromJSON("TD_ContactDetailsPage","mailingAddressPostalCode")));
+                Thread.sleep(1000);
             }
             status = true;
         }
@@ -140,9 +221,10 @@ public class ContactDetailsPage
     public boolean enteringMailingAddress_withSameAsCheckbox()
     {
         boolean status;
+        JavascriptExecutor js = (JavascriptExecutor) BaseClass.getDriver();
         try
         {
-            js.executeScript("arguments[0].scrollIntoView();", driver.findElement(mainContactPersonEmail_Edit));
+            js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(mainContactPersonEmail_Edit));
             if(utils.isWebElementDisplayed(mailingAddressTitle_Text, 10))
             {
                 Assert.assertTrue(utils.clickElement(mailingAddressSameAsRegisteredAddress_ChkBox, 15));
@@ -174,13 +256,51 @@ public class ContactDetailsPage
     public boolean enteringLetterOfOfferAddress()
     {
         boolean status;
+        JavascriptExecutor js = (JavascriptExecutor) BaseClass.getDriver();
         try
         {
-            js.executeScript("arguments[0].scrollIntoView();", driver.findElement(letterOfOfferAddressTitle_Text));
+            js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(letterOfOfferAddressTitle_Text));
             if(utils.isWebElementDisplayed(letterOfOfferAddressTitle_Text, 10))
             {
                 Assert.assertTrue(utils.typeTextToElement(letterOfOfferAddresseeName_Edit, utils.getTestDataFromJSON("TD_ContactDetailsPage","letterOfOfferAddresseeName")));
                 Assert.assertTrue(utils.typeTextToElement(letterOfOfferAddresseeJobTitle_Edit, utils.getTestDataFromJSON("TD_ContactDetailsPage","letterOfOfferAddresseeJobTitle")));
+                Assert.assertTrue(utils.typeTextToElement(letterOfOfferAddresseeEmail_Edit, utils.getTestDataFromJSON("TD_ContactDetailsPage","letterOfOfferAddresseeEmail")));
+            }
+            status = true;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            e.getCause();
+            e.getMessage();
+            status = false;
+        }
+        return status;
+    }
+
+    //*******************************
+    /**
+     * validateLetterOfOfferAddress - Function to validateLetterOfOfferAddress
+     * @param - nothing
+     * @return true or false
+     */
+    public boolean validateLetterOfOfferAddress()
+    {
+        boolean status;
+        JavascriptExecutor js = (JavascriptExecutor) BaseClass.getDriver();
+        Actions keys = new Actions(BaseClass.getDriver());
+        try
+        {
+            js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(letterOfOfferAddressTitle_Text));
+            if(utils.isWebElementDisplayed(letterOfOfferAddressTitle_Text, 10))
+            {
+                Assert.assertTrue(utils.verifyEmptyFiledAlertMessage(letterOfOfferAddresseeName_Edit, "s"));
+                Assert.assertTrue(utils.typeTextToElement(letterOfOfferAddresseeName_Edit, utils.getTestDataFromJSON("TD_ContactDetailsPage","letterOfOfferAddresseeName")));
+
+                Assert.assertTrue(utils.verifyEmptyFiledAlertMessage(letterOfOfferAddresseeJobTitle_Edit, "s"));
+                Assert.assertTrue(utils.typeTextToElement(letterOfOfferAddresseeJobTitle_Edit, utils.getTestDataFromJSON("TD_ContactDetailsPage","letterOfOfferAddresseeJobTitle")));
+
+                Assert.assertTrue(utils.verifyEmptyFiledAlertMessage(letterOfOfferAddresseeEmail_Edit, "s"));
                 Assert.assertTrue(utils.typeTextToElement(letterOfOfferAddresseeEmail_Edit, utils.getTestDataFromJSON("TD_ContactDetailsPage","letterOfOfferAddresseeEmail")));
             }
             status = true;
@@ -204,9 +324,10 @@ public class ContactDetailsPage
     public boolean enteringLetterOfOfferAddress_withSameAsCheckbox()
     {
         boolean status;
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
         try
         {
-            js.executeScript("arguments[0].scrollIntoView();", driver.findElement(letterOfOfferAddressTitle_Text));
+            js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(letterOfOfferAddressTitle_Text));
             if(utils.isWebElementDisplayed(letterOfOfferAddressTitle_Text, 10))
             {
                 Assert.assertTrue(utils.clickElement(letterOfOfferAddresseeSameAsMainContactPerson_ChkBox, 15));
@@ -222,12 +343,10 @@ public class ContactDetailsPage
         catch(Exception e)
         {
             e.printStackTrace();
-            System.out.println(e.getCause());
-            System.out.println(e.getMessage());
+            e.getCause();
+            e.getMessage();
             status = false;
         }
         return status;
     }
-
-    // Need to add Negative Scenarios - All Field Validations
 }

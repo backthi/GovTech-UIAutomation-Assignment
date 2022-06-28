@@ -37,8 +37,8 @@ public class LoginPage
 
     //*******************************
     /**
-     * loginPortal - Function to login into a given portal
-     * @param - nothing
+     * loginPortal - Function to login into a portal
+     * @param - Hashmap
      * @return true or false
      */
     public boolean loginPortal()
@@ -47,7 +47,7 @@ public class LoginPage
         Properties prop = utils.readConfigFile();
         try
         {
-            BaseClass.driver.get(prop.getProperty("Url"));
+            BaseClass.getDriver().get(prop.getProperty("Url"));
             Thread.sleep(3000);
             if(utils.isWebElementDisplayed(signIN_Btn, 10))
             {

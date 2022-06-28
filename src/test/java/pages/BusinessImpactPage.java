@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import tests.BaseClass;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -44,6 +45,7 @@ public class BusinessImpactPage
     By rationaleForProjections_Edit = By.xpath("//textarea[@id='react-project_impact-rationale_remarks']");
     By nonTangibleBenefits_Edit = By.xpath("//textarea[@id='react-project_impact-benefits_remarks']");
     String startDateAlertText = "Must be today or later";
+    By businessImpactFormErrorNumber_Text = By.xpath("//body/div[2]/div[2]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/ul[1]/li[4]/a[1]/div[1]/span[1]");
 
     //*******************************
     /**
@@ -57,7 +59,7 @@ public class BusinessImpactPage
         try
         {
             Thread.sleep(1000);
-            driver.findElement(By.xpath("//span[contains(text(),'Business Impact')]")).click();
+            BaseClass.getDriver().findElement(By.xpath("//span[contains(text(),'Business Impact')]")).click();
 //            Assert.assertTrue(utils.clickElement(businessImpact_Link, 15));
             Assert.assertTrue(utils.isWebElementDisplayed(businessImpactTitle_Text, 15));
             status = true;
@@ -89,7 +91,52 @@ public class BusinessImpactPage
             Thread.sleep(2000);
             if (props.getProperty("Headless").toUpperCase().equals("YES"))
             {
-                driver.findElement(By.id("react-project_impact-fy_end_date_0")).sendKeys(currentDate);
+                BaseClass.getDriver().findElement(By.id("react-project_impact-fy_end_date_0")).sendKeys(currentDate);
+            }
+            else
+            {
+                Assert.assertTrue(utils.typeTextToElement(fYEndDate_Edit, currentDate));
+            }
+            Assert.assertTrue(utils.isWebElementDisplayed(currentFy_Text, 15));
+            Assert.assertTrue(utils.isWebElementDisplayed(projectionForNext3Years_Text, 10));
+            String fyEndDate_1_Date = utils.getFutureYearFromCurrent(1, "dd MMM yyyy");
+            Assert.assertEquals(utils.getTextFromElement(fyEndDate_1_Text), fyEndDate_1_Date);
+            String fyEndDate_2_Date = utils.getFutureYearFromCurrent(2, "dd MMM yyyy");
+            Assert.assertEquals(utils.getTextFromElement(fyEndDate_2_Text), fyEndDate_2_Date);
+            String fyEndDate_3_Date = utils.getFutureYearFromCurrent(3, "dd MMM yyyy");
+            Assert.assertEquals(utils.getTextFromElement(fyEndDate_3_Text), fyEndDate_3_Date);
+            status = true;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            e.getCause();
+            e.getMessage();
+            status = false;
+        }
+        return status;
+    }
+
+    //*******************************
+    /**
+     * enterFYEndDate - Function to enterFYEndDate
+     * @param - nothing
+     * @return true or false
+     */
+    public boolean validateFYEndDate()
+    {
+        boolean status;
+        try
+        {
+            Assert.assertTrue(utils.isWebElementDisplayed(businessImpactTitle_Text, 15));
+            Assert.assertEquals(utils.getTextFromElement(businessImpactFormErrorNumber_Text), "11");
+            DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
+            Date date = new Date();
+            String currentDate= dateFormat.format(date);
+            Thread.sleep(2000);
+            if (props.getProperty("Headless").toUpperCase().equals("YES"))
+            {
+                BaseClass.getDriver().findElement(By.id("react-project_impact-fy_end_date_0")).sendKeys(currentDate);
             }
             else
             {

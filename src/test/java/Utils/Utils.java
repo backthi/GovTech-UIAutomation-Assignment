@@ -4,15 +4,14 @@ import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import tests.BaseClass;
 
 import java.io.*;
 import java.text.DateFormat;
@@ -150,9 +149,9 @@ public class Utils {
     {
         try
         {
-            wait = new WebDriverWait(driver, seconds);
+            wait = new WebDriverWait(BaseClass.getDriver(), seconds);
             wait.until(ExpectedConditions.visibilityOfElementLocated(by));
-            Assert.assertNotNull(driver.findElement(by));
+            Assert.assertNotNull(BaseClass.getDriver().findElement(by));
         }
         catch(Exception e)
         {
@@ -171,7 +170,7 @@ public class Utils {
         try
         {
             waitForVisibility(element,seconds);
-            driver.findElement(element).click();
+            BaseClass.getDriver().findElement(element).click();
             return true;
         }
         catch(Exception e)
@@ -193,7 +192,7 @@ public class Utils {
         try
         {
             waitForVisibility(element,seconds);
-            driver.findElement(element).submit();
+            BaseClass.getDriver().findElement(element).submit();
             return true;
         }
         catch(Exception e)
@@ -216,7 +215,7 @@ public class Utils {
         try
         {
             waitForVisibility(webElement,seconds);
-            element = driver.findElement(webElement);
+            element = BaseClass.getDriver().findElement(webElement);
             return element;
         }
         catch(Exception e)
@@ -238,8 +237,8 @@ public class Utils {
         try
         {
             waitForVisibility(element, 20);
-            driver.findElement(element).click();
-            driver.findElement(element).sendKeys(ValueToType);
+            BaseClass.getDriver().findElement(element).click();
+            BaseClass.getDriver().findElement(element).sendKeys(ValueToType);
             return true;
         }
         catch(Exception e)
@@ -262,7 +261,7 @@ public class Utils {
         try
         {
             waitForVisibility(element, 20);
-            str_getText = driver.findElement(element).getText();
+            str_getText = BaseClass.getDriver().findElement(element).getText();
             return str_getText;
         }
 
@@ -287,7 +286,7 @@ public class Utils {
         try
         {
             waitForVisibility(element, 20);
-            str_getText = driver.findElement(element).getAttribute(attributeName);
+            str_getText = BaseClass.getDriver().findElement(element).getAttribute(attributeName);
             return str_getText;
         }
 
@@ -448,7 +447,7 @@ public class Utils {
     {
         int size=0;
         try {
-            size = driver.findElements(By.tagName("iframe")).size();
+            size = BaseClass.getDriver().findElements(By.tagName("iframe")).size();
         }
         catch(Exception ex)
         {
@@ -467,9 +466,9 @@ public class Utils {
     {
         try {
             if(frameID<0)
-                driver.switchTo().defaultContent();
+                BaseClass.getDriver().switchTo().defaultContent();
             else
-                driver.switchTo().frame(frameID);
+                BaseClass.getDriver().switchTo().frame(frameID);
         }
         catch(Exception ex)
         {
@@ -519,7 +518,7 @@ public class Utils {
         try
         {
             waitForVisibility(element,seconds);
-            if (driver.findElement(element).isDisplayed())
+            if (BaseClass.getDriver().findElement(element).isDisplayed())
             {
                 logger.error("WebElement " + element + "was displayed");
                 flag = false;
@@ -547,7 +546,7 @@ public class Utils {
         try
         {
             waitForVisibility(element,seconds);
-            if (driver.findElement(element).isDisplayed())
+            if (BaseClass.getDriver().findElement(element).isDisplayed())
             {
                 logger.info("WebElement " + element + "was displayed");
                 flag = true;
@@ -567,6 +566,109 @@ public class Utils {
 
     //*******************************
     /**
+     * isWebElementDisplayedByText - Function to check the web element displayed or not
+     * @param -locator webelement to find, Time duration to wait
+     * @return true or false
+     */
+    public boolean isWebElementDisplayedByText(String text, int seconds)
+    {
+        boolean flag = false;
+        By by;
+        try
+        {
+            by = By.xpath("//*[contains(text(),'"+ text +"')]");
+            waitForVisibility(by,seconds);
+            if (BaseClass.getDriver().findElement(by).isDisplayed())
+            {
+                logger.info("WebElement " + element + "was displayed");
+                flag = true;
+            }
+            else
+            {
+                logger.error("WebElement " + element + "was not displayed");
+                flag = false;
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            flag = false;
+        }
+        return flag;
+    }
+
+//*******************************
+    /**
+     * clearTextFromEdit - Function to check the web element displayed or not
+     * @param -locator webelement to find, Time duration to wait
+     * @return true or false
+     */
+    public void clearTextFromEdit(By element, int seconds)
+    {
+        try
+        {
+            waitForVisibility(element,seconds);
+            BaseClass.getDriver().findElement(element).clear();
+            logger.info("WebElement " + element + "was displayed");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //*******************************
+    /**
+     * verifyEmptyFiledAlertMessage - Function to check the web element displayed or not
+     * @param -locator webelement to find, Time duration to wait
+     * @return true or false
+     */
+    public boolean verifyEmptyFiledAlertMessage(By element, String valueToType)
+    {
+        boolean flag = false;
+        Actions keys = new Actions(BaseClass.getDriver());
+        try
+        {
+            Assert.assertTrue(typeTextToElement(element, valueToType));
+            Thread.sleep(1000);
+            keys.sendKeys(Keys.chord(Keys.SHIFT, Keys.CONTROL, Keys.LEFT, Keys.DELETE)).perform();
+            Thread.sleep(2000);
+            BaseClass.getDriver().findElement(element).sendKeys(Keys.TAB);
+            Thread.sleep(2000);
+            By warningMessageEmptyField_Text = By.xpath("//*[contains(text(), 'We need a response for this field')]");
+            Assert.assertTrue(isWebElementDisplayed(warningMessageEmptyField_Text, 15));
+            Thread.sleep(2000);
+            flag = true;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            flag = false;
+        }
+        return flag;
+    }
+
+    //*******************************
+    /**
+     * clearEntireText - Function to clearEntireText
+     * @param -locator webelement to find, Time duration to wait
+     * @return nothing
+     */
+    public void clearEntireText(By element)
+    {
+        try
+        {
+            Assert.assertTrue(clickElement(element, 10));
+            Thread.sleep(2000);
+            BaseClass.getDriver().findElement(element).sendKeys(Keys.CLEAR);
+            Thread.sleep(2000);
+            clearTextFromEdit(element, 10);
+            Thread.sleep(1000);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //*******************************
+    /**
      * getWebElements - Function to get the list of elements with similar xpath
      * @param - element
      * @return list of elements
@@ -575,7 +677,7 @@ public class Utils {
     {
         List<WebElement> webElements = new ArrayList<WebElement>();
         try {
-            webElements = driver.findElements(element);
+            webElements = BaseClass.getDriver().findElements(element);
             return webElements;
 
         }
@@ -630,7 +732,7 @@ public class Utils {
         try
         {
             for (int i= 0; i<elementsTextArray.length; i++) {
-                if (driver.findElement(By.xpath("//*[contains(text(),'" + elementsTextArray[i] + "')]")).isDisplayed()) {
+                if (BaseClass.getDriver().findElement(By.xpath("//*[contains(text(),'" + elementsTextArray[i] + "')]")).isDisplayed()) {
                     logger.info("WebElement " + elementsTextArray[i] + " was displayed");
                     flag = true;
                 } else {
@@ -664,7 +766,7 @@ public class Utils {
                 for (int j= 0; j<TD_JSON_Key.length; j++)
                 {
                     TDValue = getTestDataFromJSON(TD_JSON_File[i], TD_JSON_Key[j]);
-                    if (driver.findElement(By.xpath("//*[contains(text()," + TDValue + ")]")).isDisplayed())
+                    if (BaseClass.getDriver().findElement(By.xpath("//*[contains(text()," + TDValue + ")]")).isDisplayed())
                     {
                         logger.info("WebElement " + TDValue + "was displayed");
                         flag = true;
@@ -700,7 +802,7 @@ public class Utils {
           for (Map.Entry<String, String> entry : hashMap.entrySet())
             {
                 TDValue = getTestDataFromJSON(entry.getValue(), entry.getKey());
-                if (driver.findElement(By.xpath("//*[contains(text(),'" + TDValue + "')]")).isDisplayed())
+                if (BaseClass.getDriver().findElement(By.xpath("//*[contains(text(),'" + TDValue + "')]")).isDisplayed())
                 {
                     logger.info("WebElement " + TDValue + "was displayed");
                     flag = true;
