@@ -238,7 +238,7 @@ public class BusinessImpactPage
                 Assert.assertTrue(utils.typeTextToElement(rationaleForProjections_Edit, utils.getTestDataFromJSON("TD_BusinessImpactPage","rationaleForProjectionsEdit")));
                 Assert.assertTrue(utils.typeTextToElement(nonTangibleBenefits_Edit,utils.getTestDataFromJSON("TD_BusinessImpactPage","rationaleForProjectionsEdit")));
                 Assert.assertTrue(utils.clickElement(GlobalValues.save_Btn, 15));
-                Assert.assertTrue(utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10));
+                utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10);
             }
             status = true;
         }

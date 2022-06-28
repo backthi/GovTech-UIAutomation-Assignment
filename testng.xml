@@ -7,7 +7,7 @@
     </listeners>
     <suite-files>
 <!--        <suite-file path="XMLs/WGPTest-E2E.xml"></suite-file>-->
-        <suite-file path="XMLs/WGPTest-E2E-NegativeScenarios.xml"></suite-file>
+<!--        <suite-file path="XMLs/WGPTest-E2E-NegativeScenarios.xml"></suite-file>-->
         <suite-file path="XMLs/WGPTest-E2E-Parallel.xml"></suite-file>
     </suite-files>
 </suite>
