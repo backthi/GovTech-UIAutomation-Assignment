@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import tests.BaseClass;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -130,7 +131,18 @@ public class CostPage
             Assert.assertTrue(utils.isWebElementDisplayed(thirdPartyAttachFileWarningMessage_Text,10));
             Assert.assertTrue(utils.typeTextToElement(nameOfVendor_Edit, utils.getTestDataFromJSON("TD_CostPage", "thirdPartyNameOfVendor")));
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(thirdPartySelectFiles_Btn));
-            BaseClass.getDriver().findElement(thirdPartySelectFilesInput_Text).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+            Thread.sleep(2000);
+            if(System.getProperty("os.name").toLowerCase().contains("mac"))
+            {
+                BaseClass.getDriver().findElement(thirdPartySelectFilesInput_Text).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+            }
+            else
+            {
+                File file = new File(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+                String filepath = file.getAbsolutePath();
+                BaseClass.getDriver().findElement(thirdPartySelectFilesInput_Text).sendKeys(filepath);
+            }
+//            BaseClass.getDriver().findElement(thirdPartySelectFilesInput_Text).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
 
             Assert.assertTrue(utils.typeTextToElement(thirdPartyEstimatedCostBillingCurrency_Edit,utils.getTestDataFromJSON("TD_CostPage", "thirdPartyMonthlySalaryInBillingCountry")));
             Assert.assertEquals(utils.getTextFromElement(thirdPartyEstimatedCost_Edit), utils.getTestDataFromJSON("TD_CostPage", "thirdPartyEstimatedCost"));
@@ -176,7 +188,18 @@ public class CostPage
             Assert.assertEquals(utils.getTextFromElement(officeRentalsEstimatedTotalCost_Text), utils.getTestDataFromJSON("TD_CostPage", "officeRentalsEstimatedTotalCostVerify"));
 
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(officeRentalSelectFiles_Btn));
-            BaseClass.getDriver().findElement(officeRentalSelectFilesInput_Edit).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+            Thread.sleep(2000);
+            if(System.getProperty("os.name").toLowerCase().contains("mac"))
+            {
+                BaseClass.getDriver().findElement(officeRentalSelectFilesInput_Edit).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+            }
+            else
+            {
+                File file = new File(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+                String filepath = file.getAbsolutePath();
+                BaseClass.getDriver().findElement(officeRentalSelectFilesInput_Edit).sendKeys(filepath);
+            }
+//            BaseClass.getDriver().findElement(officeRentalSelectFilesInput_Edit).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
             Assert.assertTrue(utils.typeTextToElement(officeRentalRemarks_Edit, utils.getTestDataFromJSON("TD_CostPage", "officeRentalRemarks")));
 
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(thirdPartyVendorsSection_Link));
@@ -227,7 +250,18 @@ public class CostPage
             Assert.assertEquals(utils.getTextFromElement(salaryEstimatedCost_Text), utils.getTestDataFromJSON("TD_CostPage", "salaryEstimatedCostVerify"));
 
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(salarySelectFiles_Btn));
-            BaseClass.getDriver().findElement(salarySelectFilesInput_File).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.docx");
+            Thread.sleep(2000);
+            if(System.getProperty("os.name").toLowerCase().contains("mac"))
+            {
+                BaseClass.getDriver().findElement(salarySelectFilesInput_File).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+            }
+            else
+            {
+                File file = new File(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+                String filepath = file.getAbsolutePath();
+                BaseClass.getDriver().findElement(salarySelectFilesInput_File).sendKeys(filepath);
+            }
+//            BaseClass.getDriver().findElement(salarySelectFilesInput_File).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.docx");
             Assert.assertTrue(utils.typeTextToElement(salaryRemarks_Edit, utils.getTestDataFromJSON("TD_CostPage", "salaryRemarks")));
 
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(officeSpaceRental_Link));
