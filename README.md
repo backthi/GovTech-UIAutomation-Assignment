@@ -1,4 +1,3 @@
-# Features/Highlights of the Project:
 
     *) Covered Both Happy Path and Negative Path E2E Flow
     *) Cross-Browser Compatibility - Works on Chrome Browser as well as FireFox Browser
@@ -83,14 +82,14 @@
           should redirect to the section with the missing details. An error number should also be shown in the sidebar next to the offending section)
           - including Negative Scenarios UserStory 1, User Story 2 and field Validation
 
-      3) By Default, When tests are started running, first "XMLs/WGPTest-E2E-Parallel.xml" will be running and followed by
-          - WGPTest-E2E-NegativeScenarios.xml
-
-     4) If you want to run these 2 XMLs simultaneously(Already WGPTest-E2E-Parallel is parallel), open "pom.xml" under your framework folder,
-            - Go to the bottom of pom.xml file, under "Property", update "value" as "2"
-            - This will run 3 scripts simultaneously (1 Nagative Test, 2 Happy Flow tests(one for Chrome, one for firefox))
+      3) By Default, When tests are started running, these 2 files(Already WGPTest-E2E-Parallel is parallel) will be running simultaneously
+            - This will run 3 scripts in parallel (1 Nagative Test, 2 Happy Flow tests(one for Chrome, one for firefox))
             - This reduces the 3/4th of the execution time
             - Please refer the video "GowTechUIAutoAssignment_3TCsAtATime_ParallelPoolSize_Video.mp4" for more details
+
+      4) If you want to run one after the other, open "pom.xml" under your framework folder,
+            - Go to the bottom of pom.xml file, under "Property", update "value" as "1"
+
 
 # TestResults Reports(Once Test is executed):
 
