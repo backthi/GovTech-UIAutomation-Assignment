@@ -19,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static tests.BaseClass.ROOTPATH;
-import static tests.BaseClass.driver;
 
 public class Utils {
     public int INDENTATION = 4;
@@ -700,9 +699,9 @@ public class Utils {
         String folderName = "Failedscreenshots";
         File srcFile = null;
         String screenShotPath = null;
-        if(driver!=null)
+        if(BaseClass.getDriver()!=null)
         {
-            TakesScreenshot scrShot =((TakesScreenshot)driver);
+            TakesScreenshot scrShot =((TakesScreenshot)BaseClass.getDriver());
             srcFile = scrShot.getScreenshotAs(OutputType.FILE);
             DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy__hh_mm_ssaa");
             File dir = new File(System.getProperty("user.dir") + "/" + folderName);

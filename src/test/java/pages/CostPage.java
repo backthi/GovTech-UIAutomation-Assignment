@@ -233,7 +233,7 @@ public class CostPage
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(officeSpaceRental_Link));
             Assert.assertTrue(utils.clickElement(salary_Link, 10));
             Assert.assertTrue(utils.clickElement(GlobalValues.save_Btn, 15));
-            Assert.assertTrue(utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10));
+            utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10);
             status = true;
         }
         catch(Exception e)

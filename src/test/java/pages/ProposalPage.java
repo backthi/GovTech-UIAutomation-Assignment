@@ -128,7 +128,7 @@ public class ProposalPage
 
             Assert.assertTrue(utils.typeTextToElement(Remarks_Edit, utils.getTestDataFromJSON("TD_ProposalPage", "proposalRemarks")));
             Assert.assertTrue(utils.clickElement(GlobalValues.save_Btn, 15));
-            Assert.assertTrue(utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10));
+            utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10);
             status = true;
         }
         catch(Exception e)
@@ -191,7 +191,7 @@ public class ProposalPage
             Thread.sleep(2000);
             Assert.assertTrue(utils.typeTextToElement(Remarks_Edit, utils.getTestDataFromJSON("TD_ProposalPage", "proposalRemarks")));
             Assert.assertTrue(utils.clickElement(GlobalValues.save_Btn, 15));
-            Assert.assertTrue(utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10));
+            utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10);
             status = true;
         }
         catch(Exception e)

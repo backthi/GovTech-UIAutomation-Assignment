@@ -177,7 +177,7 @@ public class DeclareAndReviewPage
             Thread.sleep(1000);
             Assert.assertTrue(utils.clickElement(theApplicantHerebyAcknowledge_ChkBox,15));
             Assert.assertTrue(utils.clickElement(GlobalValues.save_Btn, 15));
-            Assert.assertTrue(utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 20));
+            utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 20);
             status = true;
         }
         catch(Exception e)

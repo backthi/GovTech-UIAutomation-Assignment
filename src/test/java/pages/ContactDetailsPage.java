@@ -336,7 +336,7 @@ public class ContactDetailsPage
                 Assert.assertEquals(utils.getAttributeFromElement(letterOfOfferAddresseeJobTitle_Edit,"Value"),utils.getTestDataFromJSON("TD_ContactDetailsPage","personJobTitle"));
                 Assert.assertEquals(utils.getAttributeFromElement(letterOfOfferAddresseeEmail_Edit, "Value"),utils.getTestDataFromJSON("TD_ContactDetailsPage","personEmail"));
                 Assert.assertTrue(utils.clickElement(GlobalValues.save_Btn, 15));
-                Assert.assertTrue(utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10));
+                utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10);
             }
             status = true;
         }
