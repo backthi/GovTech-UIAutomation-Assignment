@@ -104,6 +104,7 @@ public class BaseClass extends Utils
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--disable-notifications");
+                options.setAcceptInsecureCerts(true);
                 if (props.getProperty("Headless").toUpperCase().equals("YES"))
                 {
                     options.addArguments("--headless");
@@ -118,12 +119,12 @@ public class BaseClass extends Utils
                 options.addArguments("--disable-dev-shm-usage");
                 driver.set(new FirefoxDriver(options));
                 Thread.sleep(10000);
-                getDriver().manage().deleteAllCookies();
             }
             if(browser.equalsIgnoreCase("firefox"))
             {
                 getDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             }
+            getDriver().manage().deleteAllCookies();
             getDriver().manage().window().maximize();
             getDriver().manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
             js = (JavascriptExecutor) getDriver();
@@ -152,7 +153,7 @@ public class BaseClass extends Utils
             getDriver().quit();
         }
         else {
-            getDriver().quit();
+//            getDriver().quit();
         }
     }
 
