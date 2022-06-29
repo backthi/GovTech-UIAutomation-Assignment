@@ -23,14 +23,6 @@
             <version>3.141.59</version>
         </dependency>
 
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.seleniumhq.selenium</groupId>-->
-<!--            <artifactId>selenium-java</artifactId>-->
-<!--            <version>4.3.0</version>-->
-<!--        </dependency>-->
-
-
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
@@ -100,7 +92,7 @@
                     <properties>
                         <property>
                             <name>suitethreadpoolsize</name>
-                            <value>1</value>
+                            <value>2</value>
                         </property>
                     </properties>
                 </configuration>

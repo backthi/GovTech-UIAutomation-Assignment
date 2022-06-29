@@ -54,8 +54,8 @@ public class ContactDetailsPage
         try
         {
             Thread.sleep(2000);
-            utils.clickElement(contactDetails_Link, 25);
-//            BaseClass.getDriver().findElement(By.xpath("//span[contains(text(),'Contact Details')]")).click();
+//            utils.clickElement(contactDetails_Link, 25);
+            BaseClass.getDriver().findElement(By.xpath("//span[contains(text(),'Contact Details')]")).click();
             logger.info("Successfully Launched ContactDetails Page");
             status = true;
         }
@@ -134,25 +134,8 @@ public class ContactDetailsPage
                 BaseClass.getDriver().findElement(mainContactPersonEmail_Edit).sendKeys(Keys.TAB);
                 Thread.sleep(2000);
                 Assert.assertTrue(utils.typeTextToElement(mainContactPersonEmail_Edit, "addfefew"));
-                Thread.sleep(1000);
-                BaseClass.getDriver().findElement(mainContactPersonEmail_Edit).sendKeys(Keys.TAB);
-                Thread.sleep(1000);
                 Assert.assertTrue(utils.isWebElementDisplayedByText("seem like a valid email address", 15));
                 utils.clearEntireText(mainContactPersonEmail_Edit);
-                String personalEmail = utils.getAttributeFromElement(mainContactPersonEmail_Edit, "Value");
-                if (personalEmail.length() > 0)
-                {
-                    utils.clickElement(mainContactPersonEmail_Edit, 10);
-                    for (int i = 1; i<=personalEmail.length(); i++)
-                    {
-                        Thread.sleep(1000);
-                        keys.sendKeys(Keys.chord(Keys.SHIFT, Keys.CONTROL, Keys.LEFT, Keys.DELETE)).perform();
-                    }
-                }
-                else
-                {
-                    logger.info("personalEmail Edit is empty ");
-                }
                 Assert.assertTrue(utils.typeTextToElement(mainContactPersonEmail_Edit,utils.getTestDataFromJSON("TD_ContactDetailsPage","personEmail")));
 
                 Assert.assertTrue(utils.typeTextToElement(mainContactPersonAlternateEmail_Edit,utils.getTestDataFromJSON("TD_ContactDetailsPage","personAlternateEmail")));
@@ -353,7 +336,7 @@ public class ContactDetailsPage
                 Assert.assertEquals(utils.getAttributeFromElement(letterOfOfferAddresseeJobTitle_Edit,"Value"),utils.getTestDataFromJSON("TD_ContactDetailsPage","personJobTitle"));
                 Assert.assertEquals(utils.getAttributeFromElement(letterOfOfferAddresseeEmail_Edit, "Value"),utils.getTestDataFromJSON("TD_ContactDetailsPage","personEmail"));
                 Assert.assertTrue(utils.clickElement(GlobalValues.save_Btn, 15));
-                utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10);
+                Assert.assertTrue(utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10));
             }
             status = true;
         }

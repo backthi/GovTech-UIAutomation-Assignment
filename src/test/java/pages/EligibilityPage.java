@@ -83,10 +83,6 @@ public class EligibilityPage
                         }
                     }
                 }
-                if(myNewTabFound = true)
-                {
-                    BaseClass.getDriver().switchTo().window(currentPageHandle);
-                }
                 else
                 {
                     String parent= BaseClass.getDriver().getWindowHandle();
@@ -129,7 +125,7 @@ public class EligibilityPage
                 Assert.assertTrue(utils.clickElement(fourthQuestion_Yes_RadioBtn,15));
                 Assert.assertTrue(utils.clickElement(fifthQuestion_Yes_RadioBtn,15));
                 Assert.assertTrue(utils.clickElement(GlobalValues.save_Btn, 15));
-                utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10);
+                Assert.assertTrue(utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10));
             }
             status = true;
         }
