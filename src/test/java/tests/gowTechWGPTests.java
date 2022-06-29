@@ -61,7 +61,6 @@ public class gowTechWGPTests extends BaseClass
         {
             Assert.assertTrue(contactDetailsPage.clickAndVerifyContactDetailsPage());
             Assert.assertTrue(contactDetailsPage.enterMainContactPersonDetails());
-            Assert.assertTrue(contactDetailsPage.enterMailingAddress());
             Assert.assertTrue(contactDetailsPage.enteringMailingAddress_withSameAsCheckbox());
             Assert.assertTrue(contactDetailsPage.enteringLetterOfOfferAddress());
             Assert.assertTrue(contactDetailsPage.enteringLetterOfOfferAddress_withSameAsCheckbox());
