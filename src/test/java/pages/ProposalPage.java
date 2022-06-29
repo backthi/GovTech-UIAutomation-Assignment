@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import tests.BaseClass;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -120,8 +121,9 @@ public class ProposalPage
             Thread.sleep(1000);
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(selectFiles_Btn));
             Thread.sleep(1000);
-
-            BaseClass.getDriver().findElement(selectFiles_Input).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+            File file = new File(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.docx");
+            String filepath = file.getAbsolutePath();
+            BaseClass.getDriver().findElement(selectFiles_Input).sendKeys(filepath);
             Thread.sleep(1000);
 
             Assert.assertTrue(utils.typeTextToElement(Remarks_Edit, utils.getTestDataFromJSON("TD_ProposalPage", "proposalRemarks")));
@@ -179,8 +181,9 @@ public class ProposalPage
             Thread.sleep(1000);
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(selectFiles_Btn));
             Thread.sleep(1000);
-
-            BaseClass.getDriver().findElement(selectFiles_Input).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+            File file = new File(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+            String filepath = file.getAbsolutePath();
+            BaseClass.getDriver().findElement(selectFiles_Input).sendKeys(filepath);
             Thread.sleep(1000);
             utils.clickElement(remove_Btn, 15);
             Thread.sleep(1000);

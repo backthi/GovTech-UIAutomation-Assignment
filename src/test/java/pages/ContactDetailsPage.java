@@ -40,7 +40,6 @@ public class ContactDetailsPage
     By letterOfOfferAddresseeEmail_Edit = By.xpath("//input[@id='react-contact_info-offeree_email']");
     By letterOfOfferAddresseeSameAsMainContactPerson_ChkBox = By.xpath("//input[@id='react-contact_info-copied']");
 
-    By withoutEntering_ValidationMessage = By.xpath("//p[@id='react-contact_info-designation-alert']");  // getText() - We need a response for this field
 
     //*******************************
     /**
@@ -54,8 +53,7 @@ public class ContactDetailsPage
         try
         {
             Thread.sleep(2000);
-//            utils.clickElement(contactDetails_Link, 25);
-            BaseClass.getDriver().findElement(By.xpath("//span[contains(text(),'Contact Details')]")).click();
+            utils.clickElement(contactDetails_Link, 25);
             logger.info("Successfully Launched ContactDetails Page");
             status = true;
         }
@@ -353,7 +351,7 @@ public class ContactDetailsPage
                 Assert.assertEquals(utils.getAttributeFromElement(letterOfOfferAddresseeJobTitle_Edit,"Value"),utils.getTestDataFromJSON("TD_ContactDetailsPage","personJobTitle"));
                 Assert.assertEquals(utils.getAttributeFromElement(letterOfOfferAddresseeEmail_Edit, "Value"),utils.getTestDataFromJSON("TD_ContactDetailsPage","personEmail"));
                 Assert.assertTrue(utils.clickElement(GlobalValues.save_Btn, 15));
-                Assert.assertTrue(utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10));
+                utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10);
             }
             status = true;
         }

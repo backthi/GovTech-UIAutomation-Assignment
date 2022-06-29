@@ -129,7 +129,7 @@ public class EligibilityPage
                 Assert.assertTrue(utils.clickElement(fourthQuestion_Yes_RadioBtn,15));
                 Assert.assertTrue(utils.clickElement(fifthQuestion_Yes_RadioBtn,15));
                 Assert.assertTrue(utils.clickElement(GlobalValues.save_Btn, 15));
-                Assert.assertTrue(utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10));
+                utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10);
             }
             status = true;
         }

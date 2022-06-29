@@ -60,7 +60,6 @@ public class BusinessImpactPage
         {
             Thread.sleep(1000);
             BaseClass.getDriver().findElement(By.xpath("//span[contains(text(),'Business Impact')]")).click();
-//            Assert.assertTrue(utils.clickElement(businessImpact_Link, 15));
             Assert.assertTrue(utils.isWebElementDisplayed(businessImpactTitle_Text, 15));
             status = true;
         }
