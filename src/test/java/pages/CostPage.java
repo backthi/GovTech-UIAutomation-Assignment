@@ -143,7 +143,7 @@ public class CostPage
                 BaseClass.getDriver().findElement(thirdPartySelectFilesInput_Text).sendKeys(filepath);
             }
 //            BaseClass.getDriver().findElement(thirdPartySelectFilesInput_Text).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
-
+            Thread.sleep(2000);
             Assert.assertTrue(utils.typeTextToElement(thirdPartyEstimatedCostBillingCurrency_Edit,utils.getTestDataFromJSON("TD_CostPage", "thirdPartyMonthlySalaryInBillingCountry")));
             Assert.assertEquals(utils.getTextFromElement(thirdPartyEstimatedCost_Edit), utils.getTestDataFromJSON("TD_CostPage", "thirdPartyEstimatedCost"));
             Assert.assertTrue(utils.typeTextToElement(thirdPartyRemarks_Edit, utils.getTestDataFromJSON("TD_CostPage", "thirdPartyRemarks")));
@@ -191,14 +191,15 @@ public class CostPage
             Thread.sleep(2000);
             if(System.getProperty("os.name").toLowerCase().contains("mac"))
             {
-                BaseClass.getDriver().findElement(officeRentalSelectFilesInput_Edit).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+                BaseClass.getDriver().findElement(officeRentalSelectFilesInput_Edit).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.docx");
             }
             else
             {
-                File file = new File(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+                File file = new File(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.docx");
                 String filepath = file.getAbsolutePath();
                 BaseClass.getDriver().findElement(officeRentalSelectFilesInput_Edit).sendKeys(filepath);
             }
+            Thread.sleep(2000);
 //            BaseClass.getDriver().findElement(officeRentalSelectFilesInput_Edit).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
             Assert.assertTrue(utils.typeTextToElement(officeRentalRemarks_Edit, utils.getTestDataFromJSON("TD_CostPage", "officeRentalRemarks")));
 
@@ -253,14 +254,15 @@ public class CostPage
             Thread.sleep(2000);
             if(System.getProperty("os.name").toLowerCase().contains("mac"))
             {
-                BaseClass.getDriver().findElement(salarySelectFilesInput_File).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+                BaseClass.getDriver().findElement(salarySelectFilesInput_File).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.docx");
             }
             else
             {
-                File file = new File(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+                File file = new File(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.docx");
                 String filepath = file.getAbsolutePath();
                 BaseClass.getDriver().findElement(salarySelectFilesInput_File).sendKeys(filepath);
             }
+            Thread.sleep(2000);
 //            BaseClass.getDriver().findElement(salarySelectFilesInput_File).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.docx");
             Assert.assertTrue(utils.typeTextToElement(salaryRemarks_Edit, utils.getTestDataFromJSON("TD_CostPage", "salaryRemarks")));
 

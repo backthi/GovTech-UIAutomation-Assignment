@@ -15,7 +15,7 @@
            4) Reporting: ExtentReport
            5) Project Management Tool: Maven
            6) CI/CD Pipeline: Jenkins
-           7) Language Plugin: JDK (Java)
+           7) Language Plugin: JDK 8 (Java)
     *) **Enhancements**:
            1) Dockerize the project
            2) Report Portal - For TestResults DashBoard
@@ -24,7 +24,7 @@
     GitHub URL:
         - https://github.com/backthi/GowTech-UIAutomation-Assignment
     Google Drive Links:
-        1) Framework Link: https://drive.google.com/file/d/1TLBrikVh5ThF6Xt-Ir74cuPkm41GtGWX/view?usp=sharing
+        1) Framework Link: https://drive.google.com/file/d/1B_bqLyk2QmwYEjooeXUOIKWmay-ly5qb/view?usp=sharing 
         2) Execution Videos Links: https://drive.google.com/file/d/1pawYf-iGetu6Vhyk6wbY1RIEVB2I5upp/view?usp=sharing 
 
 # Initial Pre-requisites:

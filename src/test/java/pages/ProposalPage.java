@@ -135,7 +135,7 @@ public class ProposalPage
                 BaseClass.getDriver().findElement(selectFiles_Input).sendKeys(filepath);
             }
 //            BaseClass.getDriver().findElement(selectFiles_Input).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
             Assert.assertTrue(utils.typeTextToElement(Remarks_Edit, utils.getTestDataFromJSON("TD_ProposalPage", "proposalRemarks")));
             Assert.assertTrue(utils.clickElement(GlobalValues.save_Btn, 15));
@@ -204,7 +204,7 @@ public class ProposalPage
                 BaseClass.getDriver().findElement(selectFiles_Input).sendKeys(filepath);
             }
 //            BaseClass.getDriver().findElement(selectFiles_Input).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
-            Thread.sleep(1000);
+            Thread.sleep(2000);
             utils.clickElement(remove_Btn, 15);
             Thread.sleep(1000);
             utils.isWebElementDisplayedByText("Delete Confirmation", 10);
