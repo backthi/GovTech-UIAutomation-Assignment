@@ -83,10 +83,6 @@ public class EligibilityPage
                         }
                     }
                 }
-                if(myNewTabFound = true)
-                {
-                    BaseClass.getDriver().switchTo().window(currentPageHandle);
-                }
                 else
                 {
                     String parent= BaseClass.getDriver().getWindowHandle();
