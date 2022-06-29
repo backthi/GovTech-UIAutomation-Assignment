@@ -700,7 +700,7 @@ public class Utils {
         String folderName = "Failedscreenshots";
         File srcFile = null;
         String screenShotPath = null;
-        if(driver!=null)
+        if(BaseClass.getDriver()!=null)
         {
             TakesScreenshot scrShot =((TakesScreenshot)driver);
             srcFile = scrShot.getScreenshotAs(OutputType.FILE);

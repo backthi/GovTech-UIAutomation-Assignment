@@ -21,7 +21,7 @@ public class gowTechWGPTests extends BaseClass
     CostPage costPage = new CostPage();
     DeclareAndReviewPage declareAndReviewPage = new DeclareAndReviewPage();
 
-    @Test (testName = "Login to BGP Portal", priority=0)
+    @Test (testName = "Login to BGP Portal", description=" Verify Login Functionality",priority=0)
     public void verifyLogin(Method method)
     {
         startTest(method.getName(), "verifyLogin");
@@ -37,7 +37,7 @@ public class gowTechWGPTests extends BaseClass
         }
     }
 
-    @Test (dependsOnMethods = { "verifyLogin" }, testName = "Filling Data on Eligibility Form", priority=1)
+    @Test (dependsOnMethods = { "verifyLogin" }, testName = "Filling Data on Eligibility Form", description="Enter all the details under Eligibility Form", priority=1)
     public void fillingEligibilityForm(Method method)
     {
         startTest(method.getName(), "fillingEligibilityForm");
@@ -53,7 +53,7 @@ public class gowTechWGPTests extends BaseClass
         }
     }
 
-    @Test (dependsOnMethods = { "verifyLogin" },testName = "Filling Data on ContactDetails Form",priority=2)
+    @Test (dependsOnMethods = { "verifyLogin" },testName = "Filling Data on ContactDetails Form",description="Enter all the details under ContactDetails Form", priority=2)
     public void fillingContactDetailsForm(Method method)
     {
         startTest(method.getName(), "fillingContactDetailsForm");
@@ -74,7 +74,7 @@ public class gowTechWGPTests extends BaseClass
         }
     }
 
-    @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingProposalForm",priority=3)
+    @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingProposalForm", description="Enter all the details under Proposal Form",priority=3)
     public void fillingProposalForm(Method method)
     {
         startTest(method.getName(), "fillingProposalForm");
@@ -91,7 +91,7 @@ public class gowTechWGPTests extends BaseClass
         }
     }
 
-    @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingBusinessImpactForm",priority=4)
+    @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingBusinessImpactForm",description="Enter all the details under BusinessImpact Form",priority=4)
     public void fillingBusinessImpactForm(Method method)
     {
         startTest(method.getName(), "fillingBusinessImpactForm");
@@ -111,7 +111,7 @@ public class gowTechWGPTests extends BaseClass
         }
     }
 
-    @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingCostForm",priority=5)
+    @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingCostForm", description="Enter all the details under Cost Form",priority=5)
     public void fillingCostForm(Method method)
     {
         startTest(method.getName(), "fillingCostForm");
@@ -130,7 +130,7 @@ public class gowTechWGPTests extends BaseClass
         }
     }
 
-    @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingDeclareAndReviewForm",priority=6)
+    @Test (dependsOnMethods = { "verifyLogin" }, testName = "fillingDeclareAndReviewForm",description="Enter all the details under Declare And Review Form",priority=6)
     public void fillingDeclareAndReviewForm(Method method)
     {
         startTest(method.getName(), "fillingDeclareAndReviewForm");

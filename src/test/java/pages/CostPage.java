@@ -131,7 +131,7 @@ public class CostPage
             Assert.assertTrue(utils.typeTextToElement(nameOfVendor_Edit, utils.getTestDataFromJSON("TD_CostPage", "thirdPartyNameOfVendor")));
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(thirdPartySelectFiles_Btn));
             BaseClass.getDriver().findElement(thirdPartySelectFilesInput_Text).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
-
+            Thread.sleep(1000);
             Assert.assertTrue(utils.typeTextToElement(thirdPartyEstimatedCostBillingCurrency_Edit,utils.getTestDataFromJSON("TD_CostPage", "thirdPartyMonthlySalaryInBillingCountry")));
             Assert.assertEquals(utils.getTextFromElement(thirdPartyEstimatedCost_Edit), utils.getTestDataFromJSON("TD_CostPage", "thirdPartyEstimatedCost"));
             Assert.assertTrue(utils.typeTextToElement(thirdPartyRemarks_Edit, utils.getTestDataFromJSON("TD_CostPage", "thirdPartyRemarks")));
