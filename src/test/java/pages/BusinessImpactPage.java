@@ -128,6 +128,7 @@ public class BusinessImpactPage
         boolean status;
         try
         {
+            Thread.sleep(2000);
             Assert.assertTrue(utils.isWebElementDisplayed(businessImpactTitle_Text, 15));
             Assert.assertEquals(utils.getTextFromElement(businessImpactFormErrorNumber_Text), "11");
             DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
@@ -173,8 +174,9 @@ public class BusinessImpactPage
         boolean status;
         try
         {
-            if(utils.isWebElementDisplayed(quantitativeImpactTile_Text, 10))
+            if(utils.isWebElementDisplayed(quantitativeImpactTile_Text, 15))
             {
+                Thread.sleep(2000);
                 Assert.assertTrue(utils.typeTextToElement(overseasSales1st_Edit,utils.getTestDataFromJSON("TD_BusinessImpactPage","overseasSales1stEdit")));
                 Assert.assertTrue(utils.typeTextToElement(overseasSales2nd_Edit,utils.getTestDataFromJSON("TD_BusinessImpactPage","overseasSales2ndEdit")));
                 Assert.assertTrue(utils.typeTextToElement(overseasSales3rd_Edit,utils.getTestDataFromJSON("TD_BusinessImpactPage","overseasSales3rdEdit")));
@@ -203,8 +205,9 @@ public class BusinessImpactPage
         boolean status;
         try
         {
-            if(utils.isWebElementDisplayed(quantitativeImpactTile_Text, 10))
+            if(utils.isWebElementDisplayed(quantitativeImpactTile_Text, 15))
             {
+                Thread.sleep(2000);
                 Assert.assertTrue(utils.typeTextToElement(overseasInvestments1st_Edit, utils.getTestDataFromJSON("TD_BusinessImpactPage","overseasInvestments1stEdit")));
                 Assert.assertTrue(utils.typeTextToElement(overseasInvestments2nd_Edit, utils.getTestDataFromJSON("TD_BusinessImpactPage","overseasInvestments2ndEdit")));
                 Assert.assertTrue(utils.typeTextToElement(overseasInvestments3rd_Edit, utils.getTestDataFromJSON("TD_BusinessImpactPage","overseasInvestments3rdEdit")));
@@ -233,8 +236,9 @@ public class BusinessImpactPage
         boolean status;
         try
         {
-            if(utils.isWebElementDisplayed(quantitativeImpactTile_Text, 10))
+            if(utils.isWebElementDisplayed(quantitativeImpactTile_Text, 15))
             {
+                Thread.sleep(2000);
                 Assert.assertTrue(utils.typeTextToElement(rationaleForProjections_Edit, utils.getTestDataFromJSON("TD_BusinessImpactPage","rationaleForProjectionsEdit")));
                 Assert.assertTrue(utils.typeTextToElement(nonTangibleBenefits_Edit,utils.getTestDataFromJSON("TD_BusinessImpactPage","rationaleForProjectionsEdit")));
                 Assert.assertTrue(utils.clickElement(GlobalValues.save_Btn, 15));

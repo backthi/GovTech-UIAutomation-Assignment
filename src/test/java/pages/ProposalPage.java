@@ -65,6 +65,7 @@ public class ProposalPage
         try
         {
 //            utils.clickElement(proposal_Link, 25);
+            Thread.sleep(2000);
             BaseClass.getDriver().findElement(By.xpath("//span[contains(text(),'Proposal')]")).click();
             Assert.assertTrue(utils.isWebElementDisplayed(submitYourProposal_Text, 15));
             logger.info("Successfully Launched ContactDetails Page");
@@ -96,7 +97,7 @@ public class ProposalPage
             Actions keys = new Actions(BaseClass.getDriver());
             DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
             Date date = new Date();
-            Thread.sleep(1000);
+            Thread.sleep(2000);
             Assert.assertTrue(utils.typeTextToElement(projectTitle_Edit,utils.getTestDataFromJSON("TD_ProposalPage","projectTitle")));
             Thread.sleep(1000);
             Assert.assertTrue(utils.typeTextToElement(startDate_Edit, new SimpleDateFormat("dd MMM yyyy").format(new Date())));
@@ -165,7 +166,7 @@ public class ProposalPage
         try
         {
             Actions keys = new Actions(BaseClass.getDriver());
-            Thread.sleep(1000);
+            Thread.sleep(2000);
             Assert.assertTrue(utils.typeTextToElement(projectTitle_Edit,utils.getTestDataFromJSON("TD_ProposalPage","projectTitle")));
             Thread.sleep(1000);
             Assert.assertTrue(utils.typeTextToElement(startDate_Edit, new SimpleDateFormat("dd MMM yyyy").format(new Date())));
@@ -238,6 +239,7 @@ public class ProposalPage
         Actions keys = new Actions(BaseClass.getDriver());
         try
         {
+            Thread.sleep(2000);
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(submitYourProposal_Text));
             utils.clearEntireText(startDate_Edit);
             BaseClass.getDriver().findElement(startDate_Edit).sendKeys(Keys.TAB);
@@ -256,7 +258,7 @@ public class ProposalPage
             {
                 logger.info("StartDate Edit is empty ");
             }
-            utils.isWebElementDisplayed(startDateEmptyAlert_Text, 8);
+            utils.isWebElementDisplayed(startDateEmptyAlert_Text, 10);
             utils.typeTextToElement(startDate_Edit, utils.getPreviousYearFromCurrent(1, "dd MMM yyyy"));
             Thread.sleep(1000);
             utils.isWebElementDisplayed(startDateAlertText, 10);
@@ -286,6 +288,7 @@ public class ProposalPage
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         try
         {
+            Thread.sleep(2000);
             Assert.assertEquals(utils.getTextFromElement(proposalFormErrorNumber_Text), utils.getTestDataFromJSON("TD_ProposalPage","proposalFormErrorNumber"));
             Assert.assertTrue(utils.isWebElementDisplayed(startDateEmptyAlert_Text, 10));
             Assert.assertTrue(utils.typeTextToElement(startDate_Edit, new SimpleDateFormat("dd MMM yyyy").format(new Date())));

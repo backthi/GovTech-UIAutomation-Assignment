@@ -61,6 +61,7 @@ public class EligibilityPage
         {
             if(utils.isWebElementDisplayed(checkYourAvailability_Text, 25))
             {
+                Thread.sleep(2000);
                 Assert.assertTrue(utils.clickElement(firstQuestion_No_RadioBtn,15));
                 Assert.assertEquals(utils.getTextFromElement(firstQuestionWarningMessage_Text),utils.getTestDataFromJSON("TD_EligibilityPage","warningMessageText"));
                 String currentPageHandle = BaseClass.getDriver().getWindowHandle();
@@ -85,6 +86,7 @@ public class EligibilityPage
                 }
                 else
                 {
+                    Thread.sleep(2000);
                     String parent= BaseClass.getDriver().getWindowHandle();
                     WebDriverWait wait = new WebDriverWait(BaseClass.getDriver(),5);
                     wait.until(ExpectedConditions.numberOfWindowsToBe(2));
@@ -111,6 +113,7 @@ public class EligibilityPage
                 {
                     logger.info("FAQ Page on New Tab is verified successfully");
                 }
+                Thread.sleep(1000);
                 Assert.assertTrue(utils.clickElement(secondQuestion_No_RadioBtn,15));
                 Assert.assertEquals(utils.getTextFromElement(secondQuestionWarningMessage_Text),warningMessageText);
                 Assert.assertTrue(utils.clickElement(thirdQuestion_No_RadioBtn,15));

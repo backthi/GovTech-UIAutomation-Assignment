@@ -82,6 +82,7 @@ public class ContactDetailsPage
         {
             if(utils.isWebElementDisplayed(contactDetailsPageTitle_Text, 20))
             {
+                Thread.sleep(2000);
                 Assert.assertTrue(utils.typeTextToElement(mainContactPersonName_Edit,utils.getTestDataFromJSON("TD_ContactDetailsPage","personName")),"Failed to type into the element: " + mainContactPersonName_Edit.toString());
                 Assert.assertTrue(utils.typeTextToElement(mainContactPersonJobTitle_Edit,utils.getTestDataFromJSON("TD_ContactDetailsPage","personJobTitle")));
                 Assert.assertTrue(utils.typeTextToElement(mainContactPersonContactNo_Edit,utils.getTestDataFromJSON("TD_ContactDetailsPage","personContactNo")));
@@ -114,6 +115,7 @@ public class ContactDetailsPage
         {
             if(utils.isWebElementDisplayed(contactDetailsPageTitle_Text, 20))
             {
+                Thread.sleep(2000);
                 Assert.assertTrue(utils.verifyEmptyFiledAlertMessage(mainContactPersonName_Edit, "a"));
                 Assert.assertTrue(utils.typeTextToElement(mainContactPersonName_Edit,utils.getTestDataFromJSON("TD_ContactDetailsPage","personName")),"Failed to type into the element: " + mainContactPersonName_Edit.toString());
 
@@ -185,6 +187,7 @@ public class ContactDetailsPage
         {
             if(utils.isWebElementDisplayed(mailingAddressPostalCode_Edit, 20))
             {
+                Thread.sleep(1000);
                 Assert.assertTrue(utils.typeTextToElement(mailingAddressPostalCode_Edit,utils.getTestDataFromJSON("TD_ContactDetailsPage","mailingAddressPostalCode")));
                 Thread.sleep(1000);
                 Assert.assertEquals(utils.getAttributeFromElement(mailingAddressBlockHouseNo_Edit, "Value"),utils.getTestDataFromJSON("TD_ContactDetailsPage","mailingAddressBlkHouseNo"));
@@ -216,6 +219,7 @@ public class ContactDetailsPage
         {
             if(utils.isWebElementDisplayed(mailingAddressPostalCode_Edit, 20))
             {
+                Thread.sleep(1000);
                 Assert.assertTrue(utils.verifyEmptyFiledAlertMessage(mailingAddressPostalCode_Edit, "1"));
                 Assert.assertTrue(utils.typeTextToElement(mailingAddressPostalCode_Edit,utils.getTestDataFromJSON("TD_ContactDetailsPage","mailingAddressPostalCode")));
                 Thread.sleep(1000);
@@ -244,10 +248,12 @@ public class ContactDetailsPage
         JavascriptExecutor js = (JavascriptExecutor) BaseClass.getDriver();
         try
         {
+            Thread.sleep(2000);
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(mainContactPersonEmail_Edit));
             if(utils.isWebElementDisplayed(mailingAddressTitle_Text, 10))
             {
                 Assert.assertTrue(utils.clickElement(mailingAddressSameAsRegisteredAddress_ChkBox, 15));
+                Thread.sleep(2000);
                 // Verify Auto-Populate
                 Assert.assertEquals(utils.getAttributeFromElement(mailingAddressPostalCode_Edit, "Value"),utils.getTestDataFromJSON("TD_ContactDetailsPage","mailngAddreSameAsChkBxPostalCode"));
                 Assert.assertEquals(utils.getAttributeFromElement(mailingAddressBlockHouseNo_Edit, "Value"),utils.getTestDataFromJSON("TD_ContactDetailsPage","mailngAddreSameAsChkBxBlkHouseNo"));
@@ -279,9 +285,11 @@ public class ContactDetailsPage
         JavascriptExecutor js = (JavascriptExecutor) BaseClass.getDriver();
         try
         {
+            Thread.sleep(1000);
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(letterOfOfferAddressTitle_Text));
             if(utils.isWebElementDisplayed(letterOfOfferAddressTitle_Text, 10))
             {
+                Thread.sleep(2000);
                 Assert.assertTrue(utils.typeTextToElement(letterOfOfferAddresseeName_Edit, utils.getTestDataFromJSON("TD_ContactDetailsPage","letterOfOfferAddresseeName")));
                 Assert.assertTrue(utils.typeTextToElement(letterOfOfferAddresseeJobTitle_Edit, utils.getTestDataFromJSON("TD_ContactDetailsPage","letterOfOfferAddresseeJobTitle")));
                 Assert.assertTrue(utils.typeTextToElement(letterOfOfferAddresseeEmail_Edit, utils.getTestDataFromJSON("TD_ContactDetailsPage","letterOfOfferAddresseeEmail")));
@@ -311,9 +319,11 @@ public class ContactDetailsPage
         Actions keys = new Actions(BaseClass.getDriver());
         try
         {
+            Thread.sleep(1000);
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(letterOfOfferAddressTitle_Text));
             if(utils.isWebElementDisplayed(letterOfOfferAddressTitle_Text, 10))
             {
+                Thread.sleep(2000);
                 Assert.assertTrue(utils.verifyEmptyFiledAlertMessage(letterOfOfferAddresseeName_Edit, "s"));
                 Assert.assertTrue(utils.typeTextToElement(letterOfOfferAddresseeName_Edit, utils.getTestDataFromJSON("TD_ContactDetailsPage","letterOfOfferAddresseeName")));
 
@@ -347,11 +357,13 @@ public class ContactDetailsPage
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         try
         {
+            Thread.sleep(1000);
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(letterOfOfferAddressTitle_Text));
             if(utils.isWebElementDisplayed(letterOfOfferAddressTitle_Text, 10))
             {
                 Assert.assertTrue(utils.clickElement(letterOfOfferAddresseeSameAsMainContactPerson_ChkBox, 15));
                 // Verify Auto-Populate
+                Thread.sleep(2000);
                 Assert.assertEquals(utils.getAttributeFromElement(letterOfOfferAddresseeName_Edit,"Value"),utils.getTestDataFromJSON("TD_ContactDetailsPage","personName"));
                 Assert.assertEquals(utils.getAttributeFromElement(letterOfOfferAddresseeJobTitle_Edit,"Value"),utils.getTestDataFromJSON("TD_ContactDetailsPage","personJobTitle"));
                 Assert.assertEquals(utils.getAttributeFromElement(letterOfOfferAddresseeEmail_Edit, "Value"),utils.getTestDataFromJSON("TD_ContactDetailsPage","personEmail"));

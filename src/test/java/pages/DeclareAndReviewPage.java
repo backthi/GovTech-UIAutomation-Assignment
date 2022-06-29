@@ -22,7 +22,6 @@ import static tests.BaseClass.*;
 public class DeclareAndReviewPage
 {
     Utils utils = new Utils();
-//    ThreadLocal<WebDriver> driver;
 
     public final Logger logger = LoggerFactory.getLogger(EligibilityPage.class);
 
@@ -81,7 +80,7 @@ public class DeclareAndReviewPage
         boolean status;
         try
         {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
             BaseClass.getDriver().findElement(By.xpath("//span[contains(text(),'Declare & Review')]")).click();
             Assert.assertTrue(utils.isWebElementDisplayed(declareAndAcknowledgeTerms_Text, 15));
             logger.info("Successfully Launched Declare & Review Page");
@@ -109,6 +108,7 @@ public class DeclareAndReviewPage
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         try
         {
+            Thread.sleep(2000);
             Assert.assertTrue(utils.clickElement(firstQuestion_No_RadioBtn,15));
             Assert.assertTrue(utils.clickElement(secondQuestion_No_RadioBtn,15));
             Assert.assertTrue(utils.clickElement(thirdQuestion_No_RadioBtn,15));
@@ -151,6 +151,7 @@ public class DeclareAndReviewPage
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         try
         {
+            Thread.sleep(2000);
             Assert.assertTrue(utils.clickElement(firstQuestion_No_RadioBtn,15));
             Assert.assertTrue(utils.clickElement(secondQuestion_No_RadioBtn,15));
             Assert.assertTrue(utils.clickElement(thirdQuestion_No_RadioBtn,15));
@@ -201,6 +202,7 @@ public class DeclareAndReviewPage
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         try
         {
+            Thread.sleep(2000);
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(review_Btn));
             Assert.assertTrue(utils.clickElement(review_Btn,15));
 
@@ -234,6 +236,7 @@ public class DeclareAndReviewPage
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         try
         {
+            Thread.sleep(2000);
             BaseClass.getDriver().findElement(By.xpath("//span[contains(text(),'Declare & Review')]")).click();
             Assert.assertTrue(utils.isWebElementDisplayed(declareAndAcknowledgeTerms_Text, 25));
             utils.clickElement(secondQuestion_Text, 10);
@@ -271,6 +274,7 @@ public class DeclareAndReviewPage
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         try
         {
+            Thread.sleep(2000);
             Assert.assertTrue(utils.isWebElementDisplayed(reviewYourApplication_Text, 30));
             js.executeScript("arguments[0].scrollIntoView();",BaseClass.getDriver().findElement(By.xpath("//h2[contains(text(),'Contact Details')]")));
             HashMap<String, String> contactDetailsMap = new HashMap<>();

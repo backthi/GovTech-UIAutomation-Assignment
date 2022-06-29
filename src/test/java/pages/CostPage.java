@@ -93,7 +93,7 @@ public class CostPage
         boolean status;
         try
         {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
             BaseClass.getDriver().findElement(By.xpath("//span[contains(text(),'Cost')]")).click();
             Assert.assertTrue(utils.isWebElementDisplayed(provideDetailsOfCost_Text, 15));
             logger.info("Successfully Launched Cost Page");
@@ -147,7 +147,7 @@ public class CostPage
             Assert.assertTrue(utils.typeTextToElement(thirdPartyEstimatedCostBillingCurrency_Edit,utils.getTestDataFromJSON("TD_CostPage", "thirdPartyMonthlySalaryInBillingCountry")));
             Assert.assertEquals(utils.getTextFromElement(thirdPartyEstimatedCost_Edit), utils.getTestDataFromJSON("TD_CostPage", "thirdPartyEstimatedCost"));
             Assert.assertTrue(utils.typeTextToElement(thirdPartyRemarks_Edit, utils.getTestDataFromJSON("TD_CostPage", "thirdPartyRemarks")));
-
+            Thread.sleep(2000);
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(provideDetailsOfCost_Text));
             Assert.assertTrue(utils.clickElement(thirdPartyVendorsSection_Link, 10));
 
@@ -186,7 +186,7 @@ public class CostPage
 
             Assert.assertEquals(utils.getTextFromElement(officeRentalsMonthlyRentalCost_Text), utils.getTestDataFromJSON("TD_CostPage", "officeRentalsMonthlyRentalCostVerify"));
             Assert.assertEquals(utils.getTextFromElement(officeRentalsEstimatedTotalCost_Text), utils.getTestDataFromJSON("TD_CostPage", "officeRentalsEstimatedTotalCostVerify"));
-
+            Thread.sleep(1000);
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(officeRentalSelectFiles_Btn));
             Thread.sleep(2000);
             if(System.getProperty("os.name").toLowerCase().contains("mac"))
