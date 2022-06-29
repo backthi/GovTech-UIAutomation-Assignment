@@ -10,17 +10,23 @@
 *) Extent Report/ TestNG Reports - For Test Result analysis
 *) All Tests are Independent except the Login
 *) Used All Open-Source Tools:
-1) IDE: Intelij Idea
-2) Automation Tool: Selenium
-3) Execution Tool: TestNG
-4) Reporting: ExtentReport
-5) Project Management Tool: Maven
-6) CI/CD Pipeline: Jenkins
-7) Language Plugin: JDK (Java)
+       1) IDE: Intelij Idea
+       2) Automation Tool: Selenium
+       3) Execution Tool: TestNG
+       4) Reporting: ExtentReport
+       5) Project Management Tool: Maven
+       6) CI/CD Pipeline: Jenkins
+       7) Language Plugin: JDK (Java)
 *) **Enhancements**:
-1) Dockerize the project
-2) Report Portal - For TestResults DashBoard
+       1) Dockerize the project
+       2) Report Portal - For TestResults DashBoard
 *) Note: This project has been implemented on MAC M1 Laptop
+
+GitHub URL:
+    - https://github.com/backthi/GowTech-UIAutomation-Assignment
+Google Drive Links:
+    1) Framework Link: 
+    2) Execution Videos Links: https://drive.google.com/file/d/1pawYf-iGetu6Vhyk6wbY1RIEVB2I5upp/view?usp=sharing 
 
 # Initial Pre-requisites:
     1) Ensure JDK 1.8 is installed on your system and Setup the Environment Variable
@@ -57,9 +63,9 @@
      - Clone/Download this repository: https://github.com/backthi/GowTech-UIAutomation-Assignment using 
        the command "git clone git@github.com:backthi/GowTech-UIAutomation-Assignment.git" or Download the Zip file and Unzip it
      - Once you are inside “GowTech-UIAutomation-Assignment”, Run/Type this command:  "mvn clean test -DsuiteXmlFile=testng.xml"
-       6) By Default, it runs on chrome browser. If we need to run on firefox, Update “Browser” name as “firefox” in Config.Properties file 
+       6) By Default, it runs on firefox browser. If we need to run on chrome, Update “Browser” name as “chrome” in Config.Properties file 
           which is in ../GowTech-UIAutomation-Assignment/src/test/resources/Config.properties path and in "WGPTest-E2E-NegativeScenarios.xml" update
-          "value" as "firefox"
+          "value" as "chrome"
 
 # Test Scripts Details:
     There are 2 XML files(has TestScripts) inside "testng.xml" file which is available direct under the cloned folder

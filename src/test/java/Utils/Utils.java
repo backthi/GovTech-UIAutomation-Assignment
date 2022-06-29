@@ -19,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static tests.BaseClass.ROOTPATH;
-import static tests.BaseClass.driver;
 
 public class Utils {
     public int INDENTATION = 4;
@@ -700,7 +699,8 @@ public class Utils {
         String folderName = "Failedscreenshots";
         File srcFile = null;
         String screenShotPath = null;
-        if(BaseClass.getDriver()!=null)
+        WebDriver driver = BaseClass.getDriver();
+        if(driver!=null)
         {
             TakesScreenshot scrShot =((TakesScreenshot)driver);
             srcFile = scrShot.getScreenshotAs(OutputType.FILE);
