@@ -54,8 +54,8 @@ public class ContactDetailsPage
         try
         {
             Thread.sleep(2000);
-//            utils.clickElement(contactDetails_Link, 25);
-            BaseClass.getDriver().findElement(By.xpath("//span[contains(text(),'Contact Details')]")).click();
+            utils.clickElement(contactDetails_Link, 25);
+//            BaseClass.getDriver().findElement(By.xpath("//span[contains(text(),'Contact Details')]")).click();
             logger.info("Successfully Launched ContactDetails Page");
             status = true;
         }
