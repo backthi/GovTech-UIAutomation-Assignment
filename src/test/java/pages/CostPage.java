@@ -179,6 +179,7 @@ public class CostPage
             Assert.assertTrue(utils.clickElement(officeSpaceRental_Link, 10));
             Assert.assertTrue(utils.isWebElementDisplayed(officeRentalsSection_Text, 10));
             Assert.assertTrue(utils.clickElement(officeRentalsAddNewItem_Edit, 10));
+            Assert.assertTrue(utils.isWebElementDisplayed(officeRentalDescription_Edit, 20));
             Assert.assertTrue(utils.typeTextToElement(officeRentalDescription_Edit, utils.getTestDataFromJSON("TD_CostPage", "officeRentalDescription")));
             Thread.sleep(1000);
             Assert.assertTrue(utils.typeTextToElement(officeRentalDuration_Edit, utils.getTestDataFromJSON("TD_CostPage", "officeRentalDuration")));
