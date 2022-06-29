@@ -12,7 +12,9 @@ import org.testng.Assert;
 import tests.BaseClass;
 
 import java.io.File;
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static tests.BaseClass.*;
 
@@ -31,16 +33,21 @@ public class CostPage
 
     By addNewItem_Edit = By.xpath("//button[@id='react-project_cost-vendors-add-item']");
     By officeRentalsAddNewItem_Edit = By.id("react-project_cost-office_rentals-add-item");
+    //  react-project_cost-office_rentals-add-item
+    // //button[@id='react-project_cost-salaries-add-item']
 
     By salaryAddNewItem_Edit = By.id("react-project_cost-salaries-add-item");
     By whereIsYourVendorRegisteredOverseas_radioBtn = By.xpath("//body/div[2]/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[3]/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/label[2]/span[1]");
     By nameOfVendor_Edit = By.xpath("//input[@id='react-project_cost-vendors-0-vendor_name']");
     By thirdPartyAttachFileWarningMessage_Text = By.xpath("//*[contains(text(),'Please provide the required document(s)')]");
+    // We need a response for this field -  type something, delete all, then tab
+    //  Please provide the required document(s) - for attachment
     By thirdPartySelectFiles_Btn = By.id("react-project_cost-vendors-0-attachments-btn");
     By thirdPartySelectFilesInput_Text = By.id("react-project_cost-vendors-0-attachments-input");
     By thirdPartyEstimatedCostBillingCurrency_Edit = By.xpath("//input[@id='react-project_cost-vendors-0-amount_in_billing_currency']"); // 2000
     By thirdPartyEstimatedCost_Edit = By.id("react-project_cost-vendors-0-estimated_cost");
     By thirdPartyRemarks_Edit = By.id("react-project_cost-vendors-0-remarks");
+    // top - SGD 2,000.00 - text
     By estimatedCostDollars_Text = By.id("react-select-project-activity--value-item");
 
     //Office Space Rental
@@ -52,6 +59,7 @@ public class CostPage
     By officeRentalSelectFiles_Btn = By.id("react-project_cost-office_rentals-0-attachments-btn");
     By officeRentalSelectFilesInput_Edit = By.id("react-project_cost-office_rentals-0-attachments-input");
     By officeRentalRemarks_Edit = By.id("react-project_cost-office_rentals-0-remarks");
+    //  SGD 2,000.00
 
     By officeRentalsMonthlyRentalCost_Text = By.xpath("//*[contains(text(),'SGD 2,000.00')]"); // SGD 2,000.00
     By officeRentalsEstimatedTotalCost_Text = By.id("react-project_cost-office_rentals-0-estimated_cost"); // SGD 18,000.00
@@ -123,9 +131,18 @@ public class CostPage
             Assert.assertTrue(utils.isWebElementDisplayed(thirdPartyAttachFileWarningMessage_Text,10));
             Assert.assertTrue(utils.typeTextToElement(nameOfVendor_Edit, utils.getTestDataFromJSON("TD_CostPage", "thirdPartyNameOfVendor")));
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(thirdPartySelectFiles_Btn));
-            File file = new File(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
-            String filepath = file.getAbsolutePath();
-            BaseClass.getDriver().findElement(thirdPartySelectFilesInput_Text).sendKeys(filepath);
+            Thread.sleep(1000);
+            if(System.getProperty("os.name").toLowerCase().contains("mac"))
+            {
+                BaseClass.getDriver().findElement(thirdPartySelectFilesInput_Text).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+            }
+            else
+            {
+                File file = new File(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+                String filepath = file.getAbsolutePath();
+                BaseClass.getDriver().findElement(thirdPartySelectFilesInput_Text).sendKeys(filepath);
+            }
+//            BaseClass.getDriver().findElement(thirdPartySelectFilesInput_Text).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
             Thread.sleep(1000);
             Assert.assertTrue(utils.typeTextToElement(thirdPartyEstimatedCostBillingCurrency_Edit,utils.getTestDataFromJSON("TD_CostPage", "thirdPartyMonthlySalaryInBillingCountry")));
             Assert.assertEquals(utils.getTextFromElement(thirdPartyEstimatedCost_Edit), utils.getTestDataFromJSON("TD_CostPage", "thirdPartyEstimatedCost"));
@@ -171,9 +188,17 @@ public class CostPage
             Assert.assertEquals(utils.getTextFromElement(officeRentalsEstimatedTotalCost_Text), utils.getTestDataFromJSON("TD_CostPage", "officeRentalsEstimatedTotalCostVerify"));
 
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(officeRentalSelectFiles_Btn));
-            File file = new File(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
-            String filepath = file.getAbsolutePath();
-            BaseClass.getDriver().findElement(officeRentalSelectFilesInput_Edit).sendKeys(filepath);
+            if(System.getProperty("os.name").toLowerCase().contains("mac"))
+            {
+                BaseClass.getDriver().findElement(officeRentalSelectFilesInput_Edit).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.docx");
+            }
+            else
+            {
+                File file = new File(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.docx");
+                String filepath = file.getAbsolutePath();
+                BaseClass.getDriver().findElement(officeRentalSelectFilesInput_Edit).sendKeys(filepath);
+            }
+//            BaseClass.getDriver().findElement(officeRentalSelectFilesInput_Edit).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
             Assert.assertTrue(utils.typeTextToElement(officeRentalRemarks_Edit, utils.getTestDataFromJSON("TD_CostPage", "officeRentalRemarks")));
 
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(thirdPartyVendorsSection_Link));
@@ -224,9 +249,17 @@ public class CostPage
             Assert.assertEquals(utils.getTextFromElement(salaryEstimatedCost_Text), utils.getTestDataFromJSON("TD_CostPage", "salaryEstimatedCostVerify"));
 
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(salarySelectFiles_Btn));
-            File file = new File(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.docx");
-            String filepath = file.getAbsolutePath();
-            BaseClass.getDriver().findElement(salarySelectFilesInput_File).sendKeys(filepath);
+            if(System.getProperty("os.name").toLowerCase().contains("mac"))
+            {
+                BaseClass.getDriver().findElement(salarySelectFilesInput_File).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+            }
+            else
+            {
+                File file = new File(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
+                String filepath = file.getAbsolutePath();
+                BaseClass.getDriver().findElement(salarySelectFilesInput_File).sendKeys(filepath);
+            }
+//            BaseClass.getDriver().findElement(salarySelectFilesInput_File).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.docx");
             Assert.assertTrue(utils.typeTextToElement(salaryRemarks_Edit, utils.getTestDataFromJSON("TD_CostPage", "salaryRemarks")));
 
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(officeSpaceRental_Link));

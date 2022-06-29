@@ -104,6 +104,7 @@ public class BaseClass extends Utils
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--disable-notifications");
+                options.addArguments("--disable-dev-shm-usage");
                 if (props.getProperty("Headless").toUpperCase().equals("YES"))
                 {
                     options.addArguments("--headless");

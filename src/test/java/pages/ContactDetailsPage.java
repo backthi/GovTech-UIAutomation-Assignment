@@ -40,6 +40,7 @@ public class ContactDetailsPage
     By letterOfOfferAddresseeEmail_Edit = By.xpath("//input[@id='react-contact_info-offeree_email']");
     By letterOfOfferAddresseeSameAsMainContactPerson_ChkBox = By.xpath("//input[@id='react-contact_info-copied']");
 
+    By withoutEntering_ValidationMessage = By.xpath("//p[@id='react-contact_info-designation-alert']");  // getText() - We need a response for this field
 
     //*******************************
     /**
@@ -53,7 +54,8 @@ public class ContactDetailsPage
         try
         {
             Thread.sleep(2000);
-            utils.clickElement(contactDetails_Link, 25);
+//            utils.clickElement(contactDetails_Link, 25);
+            BaseClass.getDriver().findElement(By.xpath("//span[contains(text(),'Contact Details')]")).click();
             logger.info("Successfully Launched ContactDetails Page");
             status = true;
         }

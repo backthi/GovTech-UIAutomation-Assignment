@@ -22,6 +22,7 @@ import static tests.BaseClass.*;
 public class DeclareAndReviewPage
 {
     Utils utils = new Utils();
+//    ThreadLocal<WebDriver> driver;
 
     public final Logger logger = LoggerFactory.getLogger(EligibilityPage.class);
 
@@ -126,7 +127,7 @@ public class DeclareAndReviewPage
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(review_Btn));
             Assert.assertTrue(utils.clickElement(theApplicantHerebyAcknowledge_ChkBox,15));
             Assert.assertTrue(utils.clickElement(GlobalValues.save_Btn, 15));
-            utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 20);
+            Assert.assertTrue(utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 20));
             status = true;
         }
         catch(Exception e)

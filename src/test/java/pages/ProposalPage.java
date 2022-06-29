@@ -121,9 +121,18 @@ public class ProposalPage
             Thread.sleep(1000);
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(selectFiles_Btn));
             Thread.sleep(1000);
-            File file = new File(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.docx");
-            String filepath = file.getAbsolutePath();
-            BaseClass.getDriver().findElement(selectFiles_Input).sendKeys(filepath);
+
+            if(System.getProperty("os.name").toLowerCase().contains("mac"))
+            {
+                BaseClass.getDriver().findElement(selectFiles_Input).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.docx");
+            }
+            else
+            {
+                File file = new File(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.docx");
+                String filepath = file.getAbsolutePath();
+                BaseClass.getDriver().findElement(selectFiles_Input).sendKeys(filepath);
+            }
+//            BaseClass.getDriver().findElement(selectFiles_Input).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
             Thread.sleep(1000);
 
             Assert.assertTrue(utils.typeTextToElement(Remarks_Edit, utils.getTestDataFromJSON("TD_ProposalPage", "proposalRemarks")));
@@ -181,9 +190,18 @@ public class ProposalPage
             Thread.sleep(1000);
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(selectFiles_Btn));
             Thread.sleep(1000);
-            File file = new File(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
-            String filepath = file.getAbsolutePath();
-            BaseClass.getDriver().findElement(selectFiles_Input).sendKeys(filepath);
+
+            if(System.getProperty("os.name").toLowerCase().contains("mac"))
+            {
+                BaseClass.getDriver().findElement(selectFiles_Input).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.docx");
+            }
+            else
+            {
+                File file = new File(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.docx");
+                String filepath = file.getAbsolutePath();
+                BaseClass.getDriver().findElement(selectFiles_Input).sendKeys(filepath);
+            }
+//            BaseClass.getDriver().findElement(selectFiles_Input).sendKeys(ROOTPATH + "/src/test/resources/InputFiles/WGP_File.pdf");
             Thread.sleep(1000);
             utils.clickElement(remove_Btn, 15);
             Thread.sleep(1000);

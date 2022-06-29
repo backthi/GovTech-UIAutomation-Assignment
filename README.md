@@ -25,7 +25,7 @@
     GitHub URL:
         - https://github.com/backthi/GowTech-UIAutomation-Assignment
     Google Drive Links:
-        1) Framework Link: 
+        1) Framework Link: https://drive.google.com/file/d/1TLBrikVh5ThF6Xt-Ir74cuPkm41GtGWX/view?usp=sharing
         2) Execution Videos Links: https://drive.google.com/file/d/1pawYf-iGetu6Vhyk6wbY1RIEVB2I5upp/view?usp=sharing 
 
 # Initial Pre-requisites:
@@ -47,6 +47,7 @@
         Refer Video link https://www.youtube.com/watch?v=lPxrPqSyCo8&t=284s
 
 # How To Run the Test:
+    Note: Do not disturb While running
 ### For Google Drive:
           - Download and Unzip the file
           - Open the Command Prompt, and type "cd \Path till Extracted Project folder"

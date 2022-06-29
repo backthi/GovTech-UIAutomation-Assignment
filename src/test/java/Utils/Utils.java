@@ -700,7 +700,7 @@ public class Utils {
         File srcFile = null;
         String screenShotPath = null;
         WebDriver driver = BaseClass.getDriver();
-        if(driver!=null)
+        if(BaseClass.getDriver()!=null)
         {
             TakesScreenshot scrShot =((TakesScreenshot)driver);
             srcFile = scrShot.getScreenshotAs(OutputType.FILE);
