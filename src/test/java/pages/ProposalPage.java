@@ -93,8 +93,6 @@ public class ProposalPage
         try
         {
             Actions keys = new Actions(BaseClass.getDriver());
-            DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
-            Date date = new Date();
             Thread.sleep(1000);
             Assert.assertTrue(utils.typeTextToElement(projectTitle_Edit,utils.getTestDataFromJSON("TD_ProposalPage","projectTitle")));
             Thread.sleep(1000);
@@ -128,7 +126,7 @@ public class ProposalPage
 
             Assert.assertTrue(utils.typeTextToElement(Remarks_Edit, utils.getTestDataFromJSON("TD_ProposalPage", "proposalRemarks")));
             Assert.assertTrue(utils.clickElement(GlobalValues.save_Btn, 15));
-            Assert.assertTrue(utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10));
+            utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10);
             status = true;
         }
         catch(Exception e)
@@ -191,7 +189,7 @@ public class ProposalPage
             Thread.sleep(2000);
             Assert.assertTrue(utils.typeTextToElement(Remarks_Edit, utils.getTestDataFromJSON("TD_ProposalPage", "proposalRemarks")));
             Assert.assertTrue(utils.clickElement(GlobalValues.save_Btn, 15));
-            Assert.assertTrue(utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10));
+            utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 10);
             status = true;
         }
         catch(Exception e)
@@ -218,9 +216,23 @@ public class ProposalPage
         try
         {
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(submitYourProposal_Text));
-            String startDatetxt = utils.getAttributeFromElement(startDate_Edit, "Value");
             utils.clearEntireText(startDate_Edit);
             BaseClass.getDriver().findElement(startDate_Edit).sendKeys(Keys.TAB);
+            Thread.sleep(1000);
+            String startDatetxt = utils.getAttributeFromElement(startDate_Edit, "Value");
+            if (startDatetxt.length() > 0)
+            {
+                utils.clickElement(startDate_Edit, 10);
+                for (int i = 1; i<=startDatetxt.length(); i++)
+                {
+                    Thread.sleep(1000);
+                    keys.sendKeys(Keys.chord(Keys.SHIFT, Keys.CONTROL, Keys.LEFT, Keys.DELETE)).perform();
+                }
+            }
+            else
+            {
+                logger.info("StartDate Edit is empty ");
+            }
             utils.isWebElementDisplayed(startDateEmptyAlert_Text, 8);
             utils.typeTextToElement(startDate_Edit, utils.getPreviousYearFromCurrent(1, "dd MMM yyyy"));
             Thread.sleep(1000);
