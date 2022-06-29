@@ -626,14 +626,14 @@ public class Utils {
         Actions keys = new Actions(BaseClass.getDriver());
         try
         {
-            Assert.assertTrue(typeTextToElement(element, valueToType));
-            Thread.sleep(1000);
+            typeTextToElement(element, valueToType);
+            Thread.sleep(2000);
             keys.sendKeys(Keys.chord(Keys.SHIFT, Keys.CONTROL, Keys.LEFT, Keys.DELETE)).perform();
             Thread.sleep(2000);
             BaseClass.getDriver().findElement(element).sendKeys(Keys.TAB);
             Thread.sleep(2000);
             By warningMessageEmptyField_Text = By.xpath("//*[contains(text(), 'We need a response for this field')]");
-            Assert.assertTrue(isWebElementDisplayed(warningMessageEmptyField_Text, 15));
+            isWebElementDisplayed(warningMessageEmptyField_Text, 15);
             Thread.sleep(2000);
             flag = true;
         }

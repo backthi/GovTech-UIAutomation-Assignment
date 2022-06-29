@@ -119,7 +119,10 @@ public class BaseClass extends Utils
                 driver.set(new FirefoxDriver(options));
                 Thread.sleep(10000);
                 getDriver().manage().deleteAllCookies();
-
+            }
+            if(browser.equalsIgnoreCase("firefox"))
+            {
+                getDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             }
             getDriver().manage().window().maximize();
             getDriver().manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);

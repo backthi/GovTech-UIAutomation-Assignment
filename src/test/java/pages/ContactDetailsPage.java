@@ -153,6 +153,7 @@ public class ContactDetailsPage
                 {
                     logger.info("personalEmail Edit is empty ");
                 }
+                Thread.sleep(2000);
 //                Assert.assertTrue(utils.isWebElementDisplayedByText("seem like a valid email address", 15));
 //                utils.clearEntireText(mainContactPersonEmail_Edit);
                 Assert.assertTrue(utils.typeTextToElement(mainContactPersonEmail_Edit,utils.getTestDataFromJSON("TD_ContactDetailsPage","personEmail")));
