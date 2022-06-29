@@ -1,4 +1,4 @@
-
+# Features/Highlights of the Project:
     *) Covered Both Happy Path and Negative Path E2E Flow
     *) Cross-Browser Compatibility - Works on Chrome Browser as well as FireFox Browser
     *) OS Compatibility - Works on both MAC and Windows
