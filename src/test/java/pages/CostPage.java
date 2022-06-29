@@ -175,7 +175,7 @@ public class CostPage
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         try
         {
-            Thread.sleep(2000);
+            Thread.sleep(5000);
             Assert.assertTrue(utils.clickElement(officeSpaceRental_Link, 10));
             Assert.assertTrue(utils.isWebElementDisplayed(officeRentalsSection_Text, 10));
             Assert.assertTrue(utils.clickElement(officeRentalsAddNewItem_Edit, 10));

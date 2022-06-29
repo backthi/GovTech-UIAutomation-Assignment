@@ -104,7 +104,7 @@ public class BaseClass extends Utils
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--disable-notifications");
-                options.addArguments("--disable-dev-shm-usage");
+//                options.addArguments("--disable-dev-shm-usage");
                 if (props.getProperty("Headless").toUpperCase().equals("YES"))
                 {
                     options.addArguments("--headless");
@@ -119,9 +119,8 @@ public class BaseClass extends Utils
                 options.addArguments("--disable-dev-shm-usage");
                 driver.set(new FirefoxDriver(options));
                 Thread.sleep(10000);
-                getDriver().manage().deleteAllCookies();
-
             }
+            getDriver().manage().deleteAllCookies();
             getDriver().manage().window().maximize();
             getDriver().manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
             js = (JavascriptExecutor) getDriver();
