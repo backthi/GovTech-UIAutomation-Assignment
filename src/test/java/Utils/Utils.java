@@ -19,16 +19,16 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static tests.BaseClass.ROOTPATH;
+import static tests.BaseClass.TestData_JSON_Path;
 
 public class Utils {
     public int INDENTATION = 4;
     public WebDriverWait wait;
     File JSONFile;
-    public static String Locators_JSON_Path;
-    public static String TestData_JSON_Path;
     public final Logger logger = LoggerFactory.getLogger(Utils.class);
     public By By;
     public By element;
+
 
     //*******************************
     /**
@@ -42,21 +42,10 @@ public class Utils {
         JSONObject jsonObj = null;
         String Indent_json_string = "";
         JSONObject Final_jsonObject = null;
-        Locators_JSON_Path = ROOTPATH + "\\src\\test\\java\\locators\\";
-        TestData_JSON_Path = ROOTPATH + "\\src\\test\\resources\\TestData\\";
-        if(System.getProperty("os.name").toLowerCase().contains("mac") || System.getProperty("os.name").toLowerCase().contains("linux"))
-        {
-            Locators_JSON_Path = Locators_JSON_Path.replace("\\", "/");
-            TestData_JSON_Path = TestData_JSON_Path.replace("\\", "/");
-        }
         try {
             if (JSON_FileName.toUpperCase().contains("TD_"))
             {
                 JSONFile = new File(TestData_JSON_Path + JSON_FileName+ ".JSON" );
-            }
-            else
-            {
-                JSONFile = new File(Locators_JSON_Path + JSON_FileName+ ".JSON" );
             }
 
             Reader fileReader = new FileReader(JSONFile);

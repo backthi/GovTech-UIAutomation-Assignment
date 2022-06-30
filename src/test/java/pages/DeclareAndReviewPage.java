@@ -231,7 +231,7 @@ public class DeclareAndReviewPage
      * @param - nothing
      * @return true or false
      */
-    public boolean clickOnDeclareAndReviewAndReview() {
+    public boolean clickOnDeclareAndReviewAndReview() throws InterruptedException {
         boolean status;
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         try
@@ -242,13 +242,16 @@ public class DeclareAndReviewPage
             utils.clickElement(secondQuestion_Text, 10);
             Thread.sleep(2000);
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(theApplicantHerebyAcknowledge_ChkBox));
+            Thread.sleep(2000);
             Assert.assertTrue(utils.clickElement(review_Btn,15));
             status = true;
         }
         catch(org.openqa.selenium.StaleElementReferenceException ex)
         {
             BaseClass.getDriver().navigate().refresh();
+            Thread.sleep(2000);
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(review_Btn));
+            Thread.sleep(2000);
             Assert.assertTrue(utils.clickElement(review_Btn,15));
             status = false;
         }

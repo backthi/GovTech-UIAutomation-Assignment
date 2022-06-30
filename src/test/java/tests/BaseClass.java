@@ -59,6 +59,7 @@ public class BaseClass extends Utils
     File file;
     public static String ExtentReport_FilePath;
     public static String ExtentReport_ConfigFilePath;
+    public static String TestData_JSON_Path;
     public static String ScreenShot_Path;
     Utils utils = new Utils();
 
@@ -74,10 +75,12 @@ public class BaseClass extends Utils
             ExtentReport_FilePath = ROOTPATH + "\\test-output\\ExtentReport.html";
             ExtentReport_ConfigFilePath = ROOTPATH + "\\src\\test\\resources\\Config\\extent-config.xml";
             ScreenShot_Path = ROOTPATH + "\\src\\test\\resources\\FailedScreenshots\\" + BaseClass.getcurrentdateandtime()+ ".png";
+            TestData_JSON_Path = ROOTPATH + "\\src\\test\\resources\\TestData\\";
             if(System.getProperty("os.name").toLowerCase().contains("mac") || System.getProperty("os.name").toLowerCase().contains("linux"))
             {
                 ExtentReport_FilePath = ExtentReport_FilePath.replace("\\", "/");
                 ScreenShot_Path = ScreenShot_Path.replace("\\", "/");
+                TestData_JSON_Path = TestData_JSON_Path.replace("\\", "/");
                 ExtentReport_ConfigFilePath = ExtentReport_ConfigFilePath.replace("\\", "/");
             }
         }
