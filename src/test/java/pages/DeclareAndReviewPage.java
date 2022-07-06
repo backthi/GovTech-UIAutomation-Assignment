@@ -127,7 +127,7 @@ public class DeclareAndReviewPage
             js.executeScript("arguments[0].scrollIntoView();", BaseClass.getDriver().findElement(review_Btn));
             Assert.assertTrue(utils.clickElement(theApplicantHerebyAcknowledge_ChkBox,15));
             Assert.assertTrue(utils.clickElement(GlobalValues.save_Btn, 15));
-            Assert.assertTrue(utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 20));
+            utils.isWebElementDisplayed(GlobalValues.draftSaved_Text, 20);
             status = true;
         }
         catch(Exception e)

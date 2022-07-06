@@ -41,7 +41,7 @@ public class TestListener extends BaseClass implements ITestListener {
     }
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-        Log.info(getTestMethodName(iTestResult) + " test is succeed.");
+        Log.info(getTestMethodName(iTestResult) + " test is passed.");
         //ExtentReports log operation for passed tests.
         getTest().log(Status.PASS, "Test passed");
     }

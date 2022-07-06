@@ -98,7 +98,7 @@ public class EligibilityPage
                             BaseClass.getDriver().switchTo().window(s2);
                             Thread.sleep(5000);
                             System.out.println(BaseClass.getDriver().getWindowHandle());
-                            System.out.println("get title of window"+BaseClass.getDriver().getTitle());
+                            System.out.println("get title of window: "+BaseClass.getDriver().getTitle());
                             if(BaseClass.getDriver().getTitle().equalsIgnoreCase(pageTitle)) // Check the Page Title
                             {
                                 BaseClass.getDriver().close();
