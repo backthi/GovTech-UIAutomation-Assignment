@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="gowTechWGPTestSuiteParallelExecution" parallel = "tests" thread-count = "2">
-    <test name="gowTechWGPTestsChrome">
+<suite name="govTechWGPTestSuiteParallelExecution" parallel = "tests" thread-count = "2">
+    <test name="govTechWGPTestsChrome">
         <parameter name="browser" value="Chrome" />
         <classes>
-            <class name="tests.gowTechWGPTests"></class>
+            <class name="tests.govTechWGPTests"></class>
         </classes>
     </test>
-    <test name="gowTechWGPTestsFireFox">
+    <test name="govTechWGPTestsFireFox">
         <parameter name="browser" value="Firefox" />
         <classes>
-            <class name="tests.gowTechWGPTests"></class>
+            <class name="tests.govTechWGPTests"></class>
         </classes>
     </test>
 </suite>

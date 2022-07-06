@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="gowTechWGPTestSuiteNegativeTestE2E">
-    <test name="gowTechWGPNegativeTests">
+<suite name="govTechWGPTestSuiteNegativeTestE2E">
+    <test name="govTechWGPNegativeTests">
         <parameter name="browser" value="firefox" />
         <classes>
-            <class name="tests.gowTechWGPNegativeTests"></class>
+            <class name="tests.govTechWGPNegativeTests"></class>
         </classes>
     </test>
 </suite>
